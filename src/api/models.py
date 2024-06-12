@@ -16,7 +16,7 @@ class Users(db.Model):
     is_active = db.Column(db.Boolean(), unique=False, nullable=False)
 
     def __repr__(self):
-        return f'<User {self.email}>'
+        return f'<User: {self.email}>'
 
     def serialize(self):
         return {'id': self.id,
@@ -52,7 +52,7 @@ class Criminals(db.Model):
     favourites_amount = db.Column(db.Integer, unique=False, nullable=False)
 
     def __repr__(self):
-        return f'<Criminal {self.title}>'
+        return f'<Criminal: {self.title}>'
 
     def serialize(self):
         return {'id': self.id,
@@ -69,7 +69,7 @@ class Criminals(db.Model):
                 'place_of_birth': self.place_of_birth,
                 'dates_of_birth_used': self.dates_of_birth_used,
                 'eyes': self.eyes,
-                'suspects': self.suspects,
+                'subjects': self.subjects,
                 'images': self.images,
                 'field_offices': self.images,
                 'reward_text': self.reward_text,
@@ -77,7 +77,53 @@ class Criminals(db.Model):
                 'favourites_amount': self.favourites_amount}
 
 
-class Stories(db.Model):
+class MissingPersons(db.Model):
+    __tablename__ = "missing_persons"
+    id = db.Column(db.Integer, primary_key=True)
+    title = db.Column(db.String, unique=False, nullable=False)
+    nationality = db.Column(db.String, unique=False, nullable=False)
+    sex = db.Column(db.String, unique=False, nullable=False)
+    description = db.Column(db.String, unique=False, nullable=False)
+    race = db.Column(db.String, unique=False, nullable=False)
+    remarks = db.Column(db.String, unique=False, nullable=False)
+    hair_raw = db.Column(db.String, unique=False, nullable=False)
+    possible_countries = db.Column(db.String, unique=False, nullable=False) # Array to string
+    place_of_birth = db.Column(db.String, unique=False, nullable=False)
+    dates_of_birth_used = db.Column(db.String, unique=False, nullable=False) # Array to string
+    eyes = db.Column(db.String, unique=False, nullable=False)
+    subjects = db.Column(db.String, unique=False, nullable=False) # Array to string
+    images = db.Column(db.String, unique=False, nullable=False)
+    field_offices = db.Column(db.String, unique=False, nullable=False) # Array to string
+    reward_text = db.Column(db.String, unique=False, nullable=False)
+    weight =db.Column(db.String, unique=False, nullable=False)
+    favourites_amount = db.Column(db.Integer, unique=False, nullable=False)
+
+    def __repr__(self):
+        return f'<Missing_Persons: {self.title}>'
+
+    def serialize(self):
+        return {'id': self.id,
+                'title': self.title,
+                'nationality': self.nationality,
+                'sex': self.sex,
+                'description': self.description,
+                'race': self.race,
+                'remarks': self.remarks,
+                'hair_raw': self.hair_raw,
+                'possible_countries': self.possible_countries,
+                'place_of_birth': self.place_of_birth,
+                'dates_of_birth_used': self.dates_of_birth_used,
+                'eyes': self.eyes,
+                'subjects': self.subjects,
+                'images': self.images,
+                'field_offices': self.images,
+                'reward_text': self.reward_text,
+                'weight': self.weight,
+                'favourites_amount': self.favourites_amount}
+
+
+class StoriesCriminals(db.Model):
+    __tablename__ = "stories_criminals"
     id = db.Column(db.Integer, primary_key=True)
     title = db.Column(db.String, unique=False, nullable=False)
     body = db.Column(db.String, unique=False, nullable=False)
@@ -91,7 +137,7 @@ class Stories(db.Model):
     criminal_to = db.relationship('Criminals',foreign_keys = [criminal_id])
 
     def __repr__(self):
-        return f'<Title {self.title}>'
+        return f'<Title: {self.title}>'
 
     def serialize(self):
         return {'id': self.id,
@@ -105,7 +151,37 @@ class Stories(db.Model):
                 'criminal_id': self.criminal_id}
 
 
-class Saved_Criminals(db.Model):
+class StoriesMissingPersons(db.Model):
+    __tablename__ = "stories_missing_persons"
+    id = db.Column(db.Integer, primary_key=True)
+    title = db.Column(db.String, unique=False, nullable=False)
+    body = db.Column(db.String, unique=False, nullable=False)
+    prompt = db.Column(db.String, unique=False, nullable=False)
+    description = db.Column(db.String, unique=False, nullable=False)
+    creation_date =db.Column(db.Date, unique=False, nullable=False)
+    modification_date = db.Column(db.Date, unique=False, nullable=False)
+    user_id = db.Column(db.Integer, db.ForeignKey("users.id"))
+    user_to = db.relationship('Users',foreign_keys = [user_id])
+    missing_person_id = db.Column(db.Integer, db.ForeignKey("missing_persons.id"))
+    missing_person_to = db.relationship('MissingPersons',foreign_keys = [missing_person_id])
+
+    def __repr__(self):
+        return f'<Title: {self.title}>'
+
+    def serialize(self):
+        return {'id': self.id,
+                'title': self.title,
+                'body': self.body,
+                'prompt': self.prompt,
+                'description': self.description,
+                'creation_date': self.creation_date,
+                'modification_date': self.modification_date,
+                'user_id': self.user_id,
+                'missing_person_id': self.missing_person_id}
+
+
+class SavedCriminals(db.Model):
+    __tablename__ = "saved_criminals"
     id = db.Column(db.Integer, primary_key=True)
     user_id = db.Column(db.Integer, db.ForeignKey("users.id"))
     user_to = db.relationship('Users',foreign_keys = [user_id])
@@ -113,7 +189,7 @@ class Saved_Criminals(db.Model):
     criminal_to = db.relationship('Criminals',foreign_keys = [criminal_id])
 
     def __repr__(self):
-        return f'<Criminal_id {self.criminal_id}>' # Preguntar a Hector
+        return f'< User: {self.user_id} Criminal_id: {self.criminal_id}>' # Esto es lo que se enseña cuando hacemos print
 
     def serialize(self):
         return {'id': self.id,
@@ -121,7 +197,25 @@ class Saved_Criminals(db.Model):
                 'criminal_id': self.criminal_id}
 
 
-class Commentaries(db.Model):
+class SavedMissingPersons(db.Model):
+    __tablename__ = "saved_missing_persons"
+    id = db.Column(db.Integer, primary_key=True)
+    user_id = db.Column(db.Integer, db.ForeignKey("users.id"))
+    user_to = db.relationship('Users',foreign_keys = [user_id])
+    missing_person_id = db.Column(db.Integer, db.ForeignKey("missing_persons.id"))
+    missing_person_to = db.relationship('MissingPersons',foreign_keys = [missing_person_id])
+
+    def __repr__(self):
+        return f'<Missing_Person_id: {self.missing_person_id}>' # Preguntar a Hector
+
+    def serialize(self):
+        return {'id': self.id,
+                'user_id': self.user_id,
+                'missing_person_id': self.missing_person_id}
+
+
+class CommentsCriminals(db.Model):
+    __tablename__ = "comments_criminals"
     id = db.Column(db.Integer, primary_key=True)
     user_id = db.Column(db.Integer, db.ForeignKey("users.id"))
     user_to = db.relationship('Users',foreign_keys = [user_id])
@@ -131,7 +225,7 @@ class Commentaries(db.Model):
     comment_date = db.Column(db.Date, unique=False, nullable=False)
 
     def __repr__(self):
-        return f'<Comment {self.comment}>'
+        return f'<Comment: {self.comment}>'
 
     def serialize(self):
         return {'id': self.id,
@@ -139,5 +233,25 @@ class Commentaries(db.Model):
                 'comment_date': self.comment_date,
                 'criminal_id': self.criminal_id,
                 'user_id': self.user_id}
-    
+
+
+class CommentsMissingPersons(db.Model):
+    __tablename__ = "comments_missing_persons"
+    id = db.Column(db.Integer, primary_key=True)
+    user_id = db.Column(db.Integer, db.ForeignKey("users.id"))
+    user_to = db.relationship('Users',foreign_keys = [user_id])
+    missing_person_id = db.Column(db.Integer, db.ForeignKey("missing_persons.id"))
+    missing_person_to = db.relationship('MissingPersons',foreign_keys = [missing_person_id])
+    comment = db.Column(db.String, unique=False, nullable=False)
+    comment_date = db.Column(db.Date, unique=False, nullable=False)
+
+    def __repr__(self):
+        return f'<Comment: {self.comment}>'
+
+    def serialize(self):
+        return {'id': self.id,
+                'comment': self.comment,
+                'comment_date': self.comment_date,
+                'missing_person_id': self.missing_person_id,
+                'user_id': self.user_id}
     
