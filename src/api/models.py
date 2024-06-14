@@ -8,12 +8,12 @@ class Users(db.Model):
     id = db.Column(db.Integer, primary_key=True)
     email = db.Column(db.String(120), unique=True, nullable=False)
     password = db.Column(db.String(80), unique=False, nullable=False)
-    name = db.Column(db.String, unique=False, nullable=False)
-    surname = db.Column(db.String, unique=False, nullable=False)
-    description = db.Column(db.String, unique=False, nullable=False)
-    avatar = db.Column(db.String, unique=False, nullable=False)
+    name = db.Column(db.String, unique=False, nullable=True)
+    surname = db.Column(db.String, unique=False, nullable=True)
+    description = db.Column(db.String, unique=False, nullable=True)
+    avatar = db.Column(db.String, unique=False, nullable=True)
     is_admin = db.Column(db.Boolean(), unique=False, nullable=False)
-    is_active = db.Column(db.Boolean(), unique=False, nullable=False)
+    is_active = db.Column(db.Boolean(), unique=False, nullable=True)
 
     def __repr__(self):
         return f'<User: {self.email}>'
@@ -206,7 +206,7 @@ class SavedMissingPersons(db.Model):
     missing_person_to = db.relationship('MissingPersons',foreign_keys = [missing_person_id])
 
     def __repr__(self):
-        return f'<Missing_Person_id: {self.missing_person_id}>' # Preguntar a Hector
+        return f'< User: {self.user_id} Missing_person_id: {self.missing_person_id}>'
 
     def serialize(self):
         return {'id': self.id,
@@ -225,7 +225,7 @@ class CommentsCriminals(db.Model):
     comment_date = db.Column(db.Date, unique=False, nullable=False)
 
     def __repr__(self):
-        return f'<Comment: {self.comment}>'
+        return f'< User: {self.user_id} Criminal_id: {self.criminal_id}>'
 
     def serialize(self):
         return {'id': self.id,
@@ -246,7 +246,7 @@ class CommentsMissingPersons(db.Model):
     comment_date = db.Column(db.Date, unique=False, nullable=False)
 
     def __repr__(self):
-        return f'<Comment: {self.comment}>'
+        return f'< User: {self.user_id} Missing_person_id: {self.missing_person_id}>'
 
     def serialize(self):
         return {'id': self.id,
