@@ -158,3 +158,17 @@ def handle_missing_persons():
     db.session.commit()
     response_body['message'] = 'Missing Person creado'
     return response_body, 200
+
+#@api.route('/profile', methods=['GET']) 
+#@api.route('/comments-criminal', methods=['GET','POST']) 
+#@api.route('/comments-criminal/<int: comments_criminals_id>', methods=['GET', 'DELETE']) 
+#@api.route('/comments-missing-persons', methods=['GET','POST']) 
+#@api.route('/comments-missing-persons/<int: comments_missing_person_id>', methods=['GET', 'DELETE']) 
+#@api.route('/saved-criminals', methods=['GET','POST']) 
+#@api.route('/saved-criminals/<int: saved_criminals_id>', methods=['GET', 'DELETE']) 
+#@api.route('/saved-missing-persons', methods=['GET','POST']) 
+#@api.route('/saved-missing-persons/<int: saved_missing_person_id>', methods=['GET', 'DELETE']) 
+#@api.route('/stories-criminals', methods=['GET', 'POST']) 
+#@api.route('/stories-criminals/<int: stories_criminals_id>', methods=['GET', 'PUT, 'DELETE']) 
+#@api.route('/stories-missing-persons', methods=['GET', 'POST']) 
+#@api.route('/stories-missing-persons/<int: missing_persons_id>', methods=['GET', 'PUT, 'DELETE']) 
