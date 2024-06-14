@@ -22,8 +22,8 @@ def handle_hello():
     return response_body, 200
 
 
-@api.route('/singup', methods=['POST'])
-def singup():
+@api.route('/signup', methods=['POST'])
+def signup():
     response_body = {}
     email = request.json.get("email", None).lower()
     password = request.json.get("password", None)
@@ -34,5 +34,36 @@ def singup():
     user.is_admin = False
     db.session.add(user)
     db.session.commit()
+    access_token = create_access_token(identity={ 'user_id': user.id,
+                                                      'user_is_admin': user.is_admin})
     response_body['message'] = 'Usuario registrado'
+    response_body['access_token'] = access_token
     return response_body, 200
+
+
+@api.route('/login', methods=['POST'])
+def login(): 
+    response_body = {}
+    email = request.json.get("email", None).lower()
+    password = request.json.get("password", None)
+    user = db.session.execute(db.select(Users).where(Users.email == email, Users.password == password, Users.is_active == True)).scalar()
+    if user: 
+        access_token = create_access_token(identity={ 'user_id': user.id,
+                                                      'user_is_admin': user.is_admin})
+        response_body['message'] = 'User logueado'
+        response_body['access_token'] = access_token
+        response_body['results'] = user.serialize()
+        return response_body, 200
+    response_body['message'] = 'bad username or password'
+    return response_body, 401
+
+
+@api.route('/users', methods=['GET'])
+def handle_users():
+    response_body = {}
+    rows = db.session.execute(db.select(Users)).scalars()
+    results = [row.serialize() for row in rows]
+    response_body['results'] = results
+    response_body['message'] = 'Listado de Usuarios'
+    return response_body, 200
+
