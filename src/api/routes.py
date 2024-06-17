@@ -9,16 +9,22 @@ from flask_jwt_extended import create_access_token
 from flask_jwt_extended import jwt_required
 from flask_jwt_extended import get_jwt_identity
 from api.models import db, Users, Criminals, MissingPersons, CommentsCriminals, CommentsMissingPersons, SavedCriminals, SavedMissingPersons, StoriesCriminals, StoriesMissingPersons
-
+from openai import OpenAI
+import os
 
 api = Blueprint('api', __name__)
 CORS(api)  # Allow CORS requests to this API
+client = OpenAI(api_key= os.getenv("OPENAI_API_KEY"))
 
 
 @api.route('/hello', methods=['POST', 'GET'])
 def handle_hello():
     response_body = {}
-    response_body["message"] = "Hello! I'm a message that came from the backend, check the network tab on the google inspector and you will see the GET request"
+    completion = client.chat.completions.create(model="gpt-3.5-turbo",
+                                                messages=[{"role": "user", "content": "give me a sentence with 3 words"}])
+    print(completion.choices[0].message)
+    print(completion.choices[0].message.content)
+    response_body["message"] = completion.choices[0].message.content
     return response_body, 200
 
 

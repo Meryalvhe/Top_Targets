@@ -11,6 +11,7 @@ from api.admin import setup_admin
 from api.commands import setup_commands
 from api.models import db
 from flask_jwt_extended import JWTManager
+from openai import OpenAI
 # from models import Person
 
 
@@ -33,6 +34,8 @@ setup_commands(app)  # Add the admin
 app.register_blueprint(api, url_prefix='/api')  # Add all endpoints form the API with a "api" prefix
 app.config["JWT_SECRET_KEY"] = os.getenv("JWT_SECRET_KEY")   
 jwt = JWTManager(app)
+# Configuración OpenAI
+print(os.getenv("OPENAI_API_KEY"))  
 
 
 # Handle/serialize errors like a JSON object
