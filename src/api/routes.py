@@ -41,7 +41,7 @@ def signup():
     db.session.commit()
     access_token = create_access_token(identity={ 'user_id': user.id,
                                                   'user_is_admin': user.is_admin})
-    response_body['message'] = 'User signed up'
+    response_body['message'] = 'User Signed Up'
     response_body['access_token'] = access_token
     return response_body, 200
 
@@ -55,11 +55,11 @@ def login():
     if user: 
         access_token = create_access_token(identity={ 'user_id': user.id,
                                                       'user_is_admin': user.is_admin})
-        response_body['message'] = 'User logued'
+        response_body['message'] = 'User logged in'
         response_body['access_token'] = access_token
         response_body['results'] = user.serialize()
         return response_body, 200
-    response_body['message'] = 'bad username or password'
+    response_body['message'] = 'Wrong Username Or Password'
     return response_body, 401
 
 
@@ -69,7 +69,7 @@ def handle_users():
     rows = db.session.execute(db.select(Users)).scalars()
     results = [row.serialize() for row in rows]
     response_body['results'] = results
-    response_body['message'] = 'User list'
+    response_body['message'] = 'User List'
     return response_body, 200
 
 
@@ -80,9 +80,9 @@ def handle_users_id(user_id):
         user = db.session.execute(db.select(Users).where(Users.id == user_id)).scalar()
         if user:
             response_body['results'] = user.serialize()
-            response_body['message'] = 'User found'
+            response_body['message'] = 'User Found'
             return response_body, 200
-        response_body['message'] = 'User not found'
+        response_body['message'] = 'User Not Found'
         response_body['results'] = {}
         return response_body, 404
     if request.method == 'PUT':
@@ -99,7 +99,7 @@ def handle_users_id(user_id):
             response_body['message'] = 'Datos del usuario actualizados'
             response_body['results'] = user.serialize()
             return response_body, 200
-        response_body['message'] = 'Usuario no encontrado'
+        response_body['message'] = 'User Profile Updated'
         response_body['results'] = {}
         return response_body, 404
     if request.method == 'DELETE':
@@ -107,10 +107,10 @@ def handle_users_id(user_id):
         if user:
             db.session.delete(user)
             db.session.commit()
-            response_body['message'] = 'User deleted'
+            response_body['message'] = 'User Deleted'
             response_body['results'] = {}
             return response_body, 200
-        response_body['message'] = 'User not found'
+        response_body['message'] = 'User Not Found'
         response_body['results'] = {}
         return response_body, 404  
         
@@ -160,13 +160,13 @@ def handle_criminals():
         criminals.favourites_amount = favourites_amount
         db.session.add(criminals)
         db.session.commit()
-        response_body['message'] = 'Criminal created'
+        response_body['message'] = 'Criminal Created'
         return response_body, 200
     if request.method == 'GET':
         rows = db.session.execute(db.select(Criminals)).scalars()
         results = [row.serialize() for row in rows]
         response_body ['results'] = results
-        response_body ['message'] = 'List of criminals'
+        response_body ['message'] = 'List Of Criminals'
         return response_body, 200
 
 
@@ -217,7 +217,7 @@ def handle_missing_persons():
             rows = db.session.execute(db.select(MissingPersons)).scalars()
             results = [row.serialize() for row in rows]
             response_body ['results'] = results
-            response_body ['message'] = 'List of missing persons'
+            response_body ['message'] = 'List Of Missing Persons'
             return response_body, 200
 
 """ @api.route('/profile', methods=['GET']) 
@@ -247,7 +247,7 @@ def handle_comments_criminals():
         comments_criminal.comment_date = comment_date
         db.session.add(comments_criminal)
         db.session.commit()
-        response_body['message'] = 'Created comment'
+        response_body['message'] = 'Created Comment'
         return response_body, 200
 
 @api.route('/comments-criminal/<int:comments_criminal_id>', methods=['GET', 'DELETE']) 
@@ -257,18 +257,18 @@ def handle_comments_criminals_id(comments_criminal_id):
         comments_criminal = db.session.execute(db.select(CommentsCriminals).where(CommentsCriminals.id == comments_criminal_id)).scalar()
         if comments_criminal:
             response_body['results'] = comments_criminal.serialize()
-            response_body['message'] = 'Comment found'
+            response_body['message'] = 'Comment Found'
             return response_body, 200
-        response_body['message'] = 'Comment not found'
+        response_body['message'] = 'Comment Not Found'
         response_body['results'] = {}
     if request.method == 'DELETE':
         comments_criminal = db.session.execute(db.select(CommentsCriminals).where(CommentsCriminals.id == comments_criminal_id)).scalar()
         if comments_criminal:
             db.session.delete(comments_criminal)
             db.session.commit()
-            response_body['message'] = 'Comment deleted'
+            response_body['message'] = 'Comment Deleted'
             response_body['results'] = {}
-        response_body['message'] = 'Comment not found'
+        response_body['message'] = 'Comment Not Found'
         response_body['results'] = {}
         return response_body, 200
 
@@ -377,7 +377,7 @@ def handle_saved_missing_persons():
         rows = db.session.execute(db.select(SavedMissingPersons)).scalars()
         results = [row.serialize() for row in rows]
         response_body['results'] = results
-        response_body['message'] = 'Saved Missing Persons list'
+        response_body['message'] = 'Saved Missing Persons List'
         return response_body, 200
     if request.method == 'POST':
         response_body = {}
@@ -424,7 +424,7 @@ def handle_stories_criminals():
         rows = db.session.execute(db.select(StoriesCriminals)).scalars()
         results = [row.serialize() for row in rows]
         response_body['results'] = results
-        response_body['message'] = 'Stories Criminals List'
+        response_body['message'] = 'Story Criminals List'
         return response_body, 200
     if request.method == 'POST':
         response_body = {}
@@ -447,7 +447,7 @@ def handle_stories_criminals():
         stories_criminals.modification_date = modification_date
         db.session.add(stories_criminals)
         db.session.commit()
-        response_body['message'] = 'Stories Criminal Created'
+        response_body['message'] = 'Story Criminal Created'
         return response_body, 200
 
 
@@ -458,9 +458,9 @@ def handle_stories_criminals_id(stories_criminals_id):
         stories_criminals = db.session.execute(db.select(StoriesCriminals).where(StoriesCriminals.id == stories_criminals_id)).scalar()
         if stories_criminals:
             response_body['results'] = stories_criminals.serialize()
-            response_body['message'] = 'Storie Found'
+            response_body['message'] = 'Story Found'
             return response_body, 200
-        response_body['message'] = 'Storie not found'
+        response_body['message'] = 'Story Not Found'
         response_body['results'] = {}
         return response_body, 404
     if request.method == 'PUT':
@@ -476,10 +476,10 @@ def handle_stories_criminals_id(stories_criminals_id):
             stories_criminals.creation_date = data['creation_date']
             stories_criminals.modification_date = data['modification_date']
             db.session.commit()
-            response_body['message'] = 'Criminal storie modified'
+            response_body['message'] = 'Criminal Story Modified'
             response_body['results'] = stories_criminals.serialize()
             return response_body, 200
-        response_body['message'] = 'Criminal storie not found'
+        response_body['message'] = 'Criminal Story Not Found'
         response_body['results'] = {}
         return response_body, 404
     if request.method == 'DELETE':
@@ -487,10 +487,10 @@ def handle_stories_criminals_id(stories_criminals_id):
         if stories_criminals:
             db.session.delete(stories_criminals)
             db.session.commit()
-            response_body['message'] = 'Storie Criminal deleted'
+            response_body['message'] = 'Story Criminal Deleted'
             response_body['results'] = {}
             return response_body, 200
-        response_body['message'] = 'Storie Criminal not found'
+        response_body['message'] = 'Story Criminal Not Found'
         response_body['results'] = {}
         return response_body, 404  
 
@@ -502,7 +502,7 @@ def handle_stories_missing_person():
         rows = db.session.execute(db.select(StoriesMissingPersons)).scalars()
         results = [row.serialize() for row in rows]
         response_body['results'] = results
-        response_body['message'] = 'Stories Missing Persons List'
+        response_body['message'] = 'Story Missing Persons List'
         return response_body, 200
     if request.method == 'POST':
         response_body = {}
@@ -525,8 +525,9 @@ def handle_stories_missing_person():
         stories_missing_person.modification_date = modification_date
         db.session.add(stories_missing_person)
         db.session.commit()
-        response_body['message'] = 'Stories Missing Person Created'
+        response_body['message'] = 'Story Missing Person Created'
         return response_body, 200
+
 
 @api.route('/stories-missing-persons/<int:stories_missing_persons_id>', methods=['GET', 'PUT', 'DELETE']) 
 def handle_stories_missing_persons_id(stories_missing_persons_id):
@@ -535,9 +536,9 @@ def handle_stories_missing_persons_id(stories_missing_persons_id):
         stories_missing_persons = db.session.execute(db.select(StoriesMissingPersons).where(StoriesMissingPersons.id == stories_missing_persons_id)).scalar()
         if stories_missing_persons:
             response_body['results'] = stories_missing_persons.serialize()
-            response_body['message'] = 'Storie Found'
+            response_body['message'] = 'Story Found'
             return response_body, 200
-        response_body['message'] = 'Storie not found'
+        response_body['message'] = 'Story Not found'
         response_body['results'] = {}
         return response_body, 404
     if request.method == 'PUT':
@@ -553,10 +554,10 @@ def handle_stories_missing_persons_id(stories_missing_persons_id):
             stories_missing_persons.creation_date = data['creation_date']
             stories_missing_persons.modification_date = data['modification_date']
             db.session.commit()
-            response_body['message'] = 'Criminal storie modified'
+            response_body['message'] = 'Criminal Story Modified'
             response_body['results'] = stories_missing_persons.serialize()
             return response_body, 200
-        response_body['message'] = 'Missing Person storie not found'
+        response_body['message'] = 'Missing Person Story Not Found'
         response_body['results'] = {}
         return response_body, 404
     if request.method == 'DELETE':
@@ -564,9 +565,9 @@ def handle_stories_missing_persons_id(stories_missing_persons_id):
         if stories_missing_persons:
             db.session.delete(stories_missing_persons)
             db.session.commit()
-            response_body['message'] = 'Storie Missing Person deleted'
+            response_body['message'] = 'Story Missing Person deleted'
             response_body['results'] = {}
             return response_body, 200
-        response_body['message'] = 'Storie Missing Person not found'
+        response_body['message'] = 'Story Missing Person Not Found'
         response_body['results'] = {}
         return response_body, 404   
