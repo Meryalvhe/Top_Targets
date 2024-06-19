@@ -2,7 +2,9 @@ const getState = ({getStore, getActions, setStore}) => {
 	return {
 		store: {
 			message: null,
-			demo: [{title: "FIRST", background: "white", initial: "white"}]
+			demo: [{title: "FIRST", background: "white", initial: "white"}],
+			isLogin: false,
+			user: ''
 		},
 		actions: {
 			exampleFunction: () => {getActions().changeColor(0, "green");},  // Use getActions to call a function within a fuction
@@ -24,7 +26,9 @@ const getState = ({getStore, getActions, setStore}) => {
 					const data = await response.json()
 					setStore({ message: data.message })
 					return data;  // Don't forget to return something, that is how the async resolves
-			}
+			},
+			setIsLogin: (login) => {setStore({ isLogin: login})},
+			setCurrentUser: (user) => {setStore({ user: user})}
 		}
 	};
 };
