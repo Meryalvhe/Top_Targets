@@ -163,7 +163,7 @@ def handle_criminals():
         response_body['message'] = 'Criminal Created'
         return response_body, 200
     if request.method == 'GET':
-        rows = db.session.execute(db.select(Criminals)).scalars()
+        rows = db.session.execute(db.select(Criminals)).scalar()
         results = [row.serialize() for row in rows]
         response_body ['results'] = results
         response_body ['message'] = 'List Of Criminals'
@@ -220,10 +220,25 @@ def handle_missing_persons():
             response_body ['message'] = 'List Of Missing Persons'
             return response_body, 200
 
-""" @api.route('/profile', methods=['GET']) 
-def handle_profile():
+@api.route('/profile/<int:user_id>', methods=['GET']) 
+def handle_profile(user_id):
     response_body = {}
-    rows = db.session.execute(db.select(Users)).scalars() """
+    profile = db.session.execute(db.select(Users).where(Users.id == user_id)).scalar()
+    stories_criminals = db.session.execute(db.select(StoriesCriminals).where(StoriesCriminals.user_id == user_id)).scalar()
+    stories_missing_persons = db.session.execute(db.select(StoriesMissingPersons).where(StoriesMissingPersons.user_id == user_id)).scalar()
+    saved_criminals = db.session.execute(db.select(SavedCriminals).where(SavedCriminals.user_id == user_id)).scalar()
+    saved_missing_persons = db.session.execute(db.select(SavedMissingPersons).where(SavedMissingPersons.user_id == user_id)).scalar()
+    if profile:
+        response_body['Message'] = 'User Found'
+        response_body['Profile'] = profile.serialize()
+        response_body['Criminal Stories Created'] = stories_criminals.serialize()
+        response_body['Missing Persons Stories Created'] = stories_missing_persons.serialize()
+        response_body['Saved Criminals'] = saved_criminals.serialize()
+        response_body['Saved Missing Persons'] = saved_missing_persons.serialize()
+        return response_body, 200
+    response_body['message'] = 'User Not Found'
+    response_body['results'] = {}
+    return response_body, 404
 
 @api.route('/comments-criminal', methods=['GET','POST']) 
 def handle_comments_criminals():

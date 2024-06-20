@@ -31,25 +31,25 @@ class Users(db.Model):
 
 class Criminals(db.Model):
     id = db.Column(db.Integer, primary_key=True)
-    title = db.Column(db.String, unique=False, nullable=False)
-    nationality = db.Column(db.String, unique=False, nullable=False)
-    sex = db.Column(db.String, unique=False, nullable=False)
-    description = db.Column(db.String, unique=False, nullable=False)
-    caution = db.Column(db.String, unique=False, nullable=False)
-    race = db.Column(db.String, unique=False, nullable=False)
-    remarks = db.Column(db.String, unique=False, nullable=False)
-    hair_raw = db.Column(db.String, unique=False, nullable=False)
-    possible_countries = db.Column(db.String, unique=False, nullable=False) # Array to string
-    aliases = db.Column(db.String, unique=False, nullable=False) # Array to string
-    place_of_birth = db.Column(db.String, unique=False, nullable=False)
-    dates_of_birth_used = db.Column(db.String, unique=False, nullable=False) # Array to string
-    eyes = db.Column(db.String, unique=False, nullable=False)
-    subjects = db.Column(db.String, unique=False, nullable=False) # Array to string
-    images = db.Column(db.String, unique=False, nullable=False)
-    field_offices = db.Column(db.String, unique=False, nullable=False) # Array to string
-    reward_text = db.Column(db.String, unique=False, nullable=False)
-    weight =db.Column(db.String, unique=False, nullable=False)
-    favourites_amount = db.Column(db.Integer, unique=False, nullable=False)
+    title = db.Column(db.String, unique=False, nullable=True)
+    nationality = db.Column(db.String, unique=False, nullable=True)
+    sex = db.Column(db.String, unique=False, nullable=True)
+    description = db.Column(db.String, unique=False, nullable=True)
+    caution = db.Column(db.String, unique=False, nullable=True)
+    race = db.Column(db.String, unique=False, nullable=True)
+    remarks = db.Column(db.String, unique=False, nullable=True)
+    hair_raw = db.Column(db.String, unique=False, nullable=True)
+    possible_countries = db.Column(db.String, unique=False, nullable=True) # Array to string
+    aliases = db.Column(db.String, unique=False, nullable=True) # Array to string
+    place_of_birth = db.Column(db.String, unique=False, nullable=True)
+    dates_of_birth_used = db.Column(db.String, unique=False, nullable=True) # Array to string
+    eyes = db.Column(db.String, unique=False, nullable=True)
+    subjects = db.Column(db.String, unique=False, nullable=True) # Array to string
+    images = db.Column(db.String, unique=False, nullable=True)
+    field_offices = db.Column(db.String, unique=False, nullable=True) # Array to string
+    reward_text = db.Column(db.String, unique=False, nullable=True)
+    weight =db.Column(db.String, unique=False, nullable=True)
+    favourites_amount = db.Column(db.Integer, unique=False, nullable=True)
 
     def __repr__(self):
         return f'<Criminal: {self.title}>'
@@ -80,23 +80,23 @@ class Criminals(db.Model):
 class MissingPersons(db.Model):
     __tablename__ = "missing_persons"
     id = db.Column(db.Integer, primary_key=True)
-    title = db.Column(db.String, unique=False, nullable=False)
-    nationality = db.Column(db.String, unique=False, nullable=False)
-    sex = db.Column(db.String, unique=False, nullable=False)
-    description = db.Column(db.String, unique=False, nullable=False)
-    race = db.Column(db.String, unique=False, nullable=False)
-    remarks = db.Column(db.String, unique=False, nullable=False)
-    hair_raw = db.Column(db.String, unique=False, nullable=False)
-    possible_countries = db.Column(db.String, unique=False, nullable=False) # Array to string
-    place_of_birth = db.Column(db.String, unique=False, nullable=False)
-    dates_of_birth_used = db.Column(db.String, unique=False, nullable=False) # Array to string
-    eyes = db.Column(db.String, unique=False, nullable=False)
-    subjects = db.Column(db.String, unique=False, nullable=False) # Array to string
-    images = db.Column(db.String, unique=False, nullable=False)
-    field_offices = db.Column(db.String, unique=False, nullable=False) # Array to string
-    reward_text = db.Column(db.String, unique=False, nullable=False)
-    weight =db.Column(db.String, unique=False, nullable=False)
-    favourites_amount = db.Column(db.Integer, unique=False, nullable=False)
+    title = db.Column(db.String, unique=False, nullable=True)
+    nationality = db.Column(db.String, unique=False, nullable=True)
+    sex = db.Column(db.String, unique=False, nullable=True)
+    description = db.Column(db.String, unique=False, nullable=True)
+    race = db.Column(db.String, unique=False, nullable=True)
+    remarks = db.Column(db.String, unique=False, nullable=True)
+    hair_raw = db.Column(db.String, unique=False, nullable=True)
+    possible_countries = db.Column(db.String, unique=False, nullable=True) # Array to string
+    place_of_birth = db.Column(db.String, unique=False, nullable=True)
+    dates_of_birth_used = db.Column(db.String, unique=False, nullable=True) # Array to string
+    eyes = db.Column(db.String, unique=False, nullable=True)
+    subjects = db.Column(db.String, unique=False, nullable=True) # Array to string
+    images = db.Column(db.String, unique=False, nullable=True)
+    field_offices = db.Column(db.String, unique=False, nullable=True) # Array to string
+    reward_text = db.Column(db.String, unique=False, nullable=True)
+    weight =db.Column(db.String, unique=False, nullable=True)
+    favourites_amount = db.Column(db.Integer, unique=False, nullable=True)
 
     def __repr__(self):
         return f'<Missing_Persons: {self.title}>'
@@ -128,12 +128,12 @@ class StoriesCriminals(db.Model):
     title = db.Column(db.String, unique=False, nullable=False)
     body = db.Column(db.String, unique=False, nullable=False)
     prompt = db.Column(db.String, unique=False, nullable=False)
-    description = db.Column(db.String, unique=False, nullable=False)
-    creation_date =db.Column(db.Date, unique=False, nullable=False)
-    modification_date = db.Column(db.Date, unique=False, nullable=False)
-    user_id = db.Column(db.Integer, db.ForeignKey("users.id"))
+    description = db.Column(db.String, unique=False, nullable=True)
+    creation_date =db.Column(db.Date, unique=False, nullable=True)
+    modification_date = db.Column(db.Date, unique=False, nullable=True)
+    user_id = db.Column(db.Integer, db.ForeignKey("users.id"), nullable=False)
     user_to = db.relationship('Users',foreign_keys = [user_id])
-    criminal_id = db.Column(db.Integer, db.ForeignKey("criminals.id"))
+    criminal_id = db.Column(db.Integer, db.ForeignKey("criminals.id"), nullable=False)
     criminal_to = db.relationship('Criminals',foreign_keys = [criminal_id])
 
     def __repr__(self):
@@ -157,12 +157,12 @@ class StoriesMissingPersons(db.Model):
     title = db.Column(db.String, unique=False, nullable=False)
     body = db.Column(db.String, unique=False, nullable=False)
     prompt = db.Column(db.String, unique=False, nullable=False)
-    description = db.Column(db.String, unique=False, nullable=False)
-    creation_date =db.Column(db.Date, unique=False, nullable=False)
-    modification_date = db.Column(db.Date, unique=False, nullable=False)
-    user_id = db.Column(db.Integer, db.ForeignKey("users.id"))
+    description = db.Column(db.String, unique=False, nullable=True)
+    creation_date =db.Column(db.Date, unique=False, nullable=True)
+    modification_date = db.Column(db.Date, unique=False, nullable=True)
+    user_id = db.Column(db.Integer, db.ForeignKey("users.id"), nullable=False)
     user_to = db.relationship('Users',foreign_keys = [user_id])
-    missing_person_id = db.Column(db.Integer, db.ForeignKey("missing_persons.id"))
+    missing_person_id = db.Column(db.Integer, db.ForeignKey("missing_persons.id"), nullable=False)
     missing_person_to = db.relationship('MissingPersons',foreign_keys = [missing_person_id])
 
     def __repr__(self):
@@ -183,9 +183,9 @@ class StoriesMissingPersons(db.Model):
 class SavedCriminals(db.Model):
     __tablename__ = "saved_criminals"
     id = db.Column(db.Integer, primary_key=True)
-    user_id = db.Column(db.Integer, db.ForeignKey("users.id"))
+    user_id = db.Column(db.Integer, db.ForeignKey("users.id"), nullable=False)
     user_to = db.relationship('Users',foreign_keys = [user_id])
-    criminal_id = db.Column(db.Integer, db.ForeignKey("criminals.id"))
+    criminal_id = db.Column(db.Integer, db.ForeignKey("criminals.id"), nullable=False)
     criminal_to = db.relationship('Criminals',foreign_keys = [criminal_id])
 
     def __repr__(self):
@@ -200,9 +200,9 @@ class SavedCriminals(db.Model):
 class SavedMissingPersons(db.Model):
     __tablename__ = "saved_missing_persons"
     id = db.Column(db.Integer, primary_key=True)
-    user_id = db.Column(db.Integer, db.ForeignKey("users.id"))
+    user_id = db.Column(db.Integer, db.ForeignKey("users.id"), nullable=False)
     user_to = db.relationship('Users',foreign_keys = [user_id])
-    missing_person_id = db.Column(db.Integer, db.ForeignKey("missing_persons.id"))
+    missing_person_id = db.Column(db.Integer, db.ForeignKey("missing_persons.id"), nullable=False)
     missing_person_to = db.relationship('MissingPersons',foreign_keys = [missing_person_id])
 
     def __repr__(self):
@@ -217,9 +217,9 @@ class SavedMissingPersons(db.Model):
 class CommentsCriminals(db.Model):
     __tablename__ = "comments_criminals"
     id = db.Column(db.Integer, primary_key=True)
-    user_id = db.Column(db.Integer, db.ForeignKey("users.id"))
+    user_id = db.Column(db.Integer, db.ForeignKey("users.id"), nullable=False)
     user_to = db.relationship('Users',foreign_keys = [user_id])
-    criminal_id = db.Column(db.Integer, db.ForeignKey("criminals.id"))
+    criminal_id = db.Column(db.Integer, db.ForeignKey("criminals.id"), nullable=False)
     criminal_to = db.relationship('Criminals',foreign_keys = [criminal_id])
     comment = db.Column(db.String, unique=False, nullable=False)
     comment_date = db.Column(db.Date, unique=False, nullable=False)
@@ -238,9 +238,9 @@ class CommentsCriminals(db.Model):
 class CommentsMissingPersons(db.Model):
     __tablename__ = "comments_missing_persons"
     id = db.Column(db.Integer, primary_key=True)
-    user_id = db.Column(db.Integer, db.ForeignKey("users.id"))
+    user_id = db.Column(db.Integer, db.ForeignKey("users.id"), nullable=False)
     user_to = db.relationship('Users',foreign_keys = [user_id])
-    missing_person_id = db.Column(db.Integer, db.ForeignKey("missing_persons.id"))
+    missing_person_id = db.Column(db.Integer, db.ForeignKey("missing_persons.id"), nullable=False)
     missing_person_to = db.relationship('MissingPersons',foreign_keys = [missing_person_id])
     comment = db.Column(db.String, unique=False, nullable=False)
     comment_date = db.Column(db.Date, unique=False, nullable=False)
