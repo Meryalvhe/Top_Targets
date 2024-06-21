@@ -43,15 +43,17 @@ def signup():
                                                   'user_is_admin': user.is_admin})
     response_body['message'] = 'User Signed Up'
     response_body['access_token'] = access_token
+    response_body['results']=user.serialize()
     return response_body, 200
 
 
-@api.route('/login', methods=['GET','POST'])
+@api.route('/login', methods=['POST'])
 def login(): 
     response_body = {}
     email = request.json.get("email", None).lower()
     password = request.json.get("password", None)
     user = db.session.execute(db.select(Users).where(Users.email == email, Users.password == password, Users.is_active == True)).scalar()
+    print(user)
     if user: 
         access_token = create_access_token(identity={ 'user_id': user.id,
                                                       'user_is_admin': user.is_admin})

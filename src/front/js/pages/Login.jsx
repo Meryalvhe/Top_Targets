@@ -1,6 +1,7 @@
 import React, { useState, useContext } from "react";
 import { Context } from "../store/appContext.js";
 import { useNavigate } from "react-router-dom";
+//import db, {Users} from "../../../api/models.py"
 
 const Login = () => {
 
@@ -30,7 +31,9 @@ const Login = () => {
         'Content-Type': 'application/json'
       }
     }
+    console.log(url,options)
     const response = await fetch(url, options);
+    console.log(response)
     if (!response.ok) {
       console.log('Error: ', response.status, response.statusText)
       return
@@ -38,9 +41,11 @@ const Login = () => {
     const data = await response.json();
     console.log(data);
     // Aquí comienza nuestra lógica
+    const user = JSON.stringify(data.results)
     localStorage.setItem('token', data.access_token)
+    localStorage.setItem('user', user)
     actions.setIsLogin(true)
-    actions.setCurrentUser(data.results.email)
+    actions.setCurrentUser(user)
     // console.log(data.access_token);
     navigate('/home')
   };
