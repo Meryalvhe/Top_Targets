@@ -31,7 +31,8 @@ const getState = ({getStore, getActions, setStore}) => {
 			},
 			setIsLogin: (login) => {setStore({ isLogin: login})},
 			setLogout:(logout) => {setStore({ isLogin: logout})},
-			setCurrentUser: (user) => {setStore({ user: user})}
+			setCurrentUser: (user) => {setStore({ user: user})},
+			//getCriminals:()=>{handle_criminals}
 
 		}
 	};

@@ -11,6 +11,8 @@ from flask_jwt_extended import get_jwt_identity
 from api.models import db, Users, Criminals, MissingPersons, CommentsCriminals, CommentsMissingPersons, SavedCriminals, SavedMissingPersons, StoriesCriminals, StoriesMissingPersons
 from openai import OpenAI
 import os
+import requests
+import json
 
 api = Blueprint('api', __name__)
 CORS(api)  # Allow CORS requests to this API
@@ -120,6 +122,9 @@ def handle_users_id(user_id):
 @api.route('/criminals', methods=['GET','POST'])  # Debemos modificar según clase del Lunes 17/06, ya que debemos traer la inf de la API del FBI
 def handle_criminals(): 
     response_body = {}
+    response = requests.get("https://api.fbi.gov/wanted/v1/list")
+    criminals = json.loads(response.content)
+    response_body[''] = data
     if request.method == 'POST':
         title = request.json.get("title", None)
         nationality = request.json.get("nationality", None)
@@ -164,12 +169,14 @@ def handle_criminals():
         db.session.commit()
         response_body['message'] = 'Criminal Created'
         return response_body, 200
-    if request.method == 'GET':
+    
+    """if request.method == 'GET':
+    
         rows = db.session.execute(db.select(Criminals)).scalar()
         results = [row.serialize() for row in rows]
         response_body ['results'] = results
         response_body ['message'] = 'List Of Criminals'
-        return response_body, 200
+        return response_body, 200"""
 
 
 @api.route('/missing-persons', methods=['GET','POST'])  # Debemos modificar según clase del Lunes 17/06, ya que debemos traer la inf de la API del FBI
