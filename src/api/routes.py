@@ -13,6 +13,7 @@ from openai import OpenAI
 import os
 import requests
 import json
+import time
 
 api = Blueprint('api', __name__)
 CORS(api)  # Allow CORS requests to this API
@@ -118,13 +119,86 @@ def handle_users_id(user_id):
         response_body['results'] = {}
         return response_body, 404  
         
-
-@api.route('/criminals', methods=['GET','POST'])  # Debemos modificar según clase del Lunes 17/06, ya que debemos traer la inf de la API del FBI
-def handle_criminals(): 
+"""@api.route('/data', methods=['GET'])
+def handle_data():
     response_body = {}
     response = requests.get("https://api.fbi.gov/wanted/v1/list")
-    criminals = json.loads(response.content)
-    response_body[''] = data
+    
+    if response.status_code == 200:
+        data = response.json()
+        for row in data["items"]:
+            if row["poster_classification"] != "missing":
+                criminals = Criminals()
+                criminals.title = row["title"]
+                criminals.nationality = row["nationality"]
+                criminals.sex = row["sex"]
+                criminals.description = row["description"]
+                criminals.caution = row["caution"]
+                criminals.race = row["race"]
+                criminals.remarks = str(row["remarks"])
+                criminals.hair_raw = row["hair_raw"]
+                criminals.possible_countries = str(row["possible_countries"])
+                criminals.aliases = str(row["aliases"])
+                criminals.place_of_birth = row["place_of_birth"]
+                criminals.dates_of_birth_used = str(row["dates_of_birth_used"])
+                criminals.eyes = row["eyes"]
+                criminals.subjects = str(row["subjects"])
+                criminals.images = row["images"][0]["original"]
+                criminals.field_offices = str(row["field_offices"])
+                criminals.reward_text = row["reward_text"]
+                criminals.weight = row["weight"]
+                db.session.add(criminals)
+                db.session.commit()
+            else:
+                pass
+        response_body['results'] = data
+        return response_body, 200 """
+
+@api.route('/data', methods=['GET'])
+def handle_data():
+    response_body = {}
+    all_data = []
+    for page in range(1,1000):
+        response = requests.get("https://api.fbi.gov/wanted/v1/list", params={"page": page})
+        if response.status_code == 200:
+            data = response.json()
+            all_data.extend(data["items"])
+            time.sleep(0.5)
+        else:
+            print(f"Error en la página {page}: {response.status_code} - {response.reason}")
+            break
+    for row in all_data:
+        if row["poster_classification"] != "missing":
+            criminals = Criminals()
+            criminals.title = row["title"]
+            criminals.nationality = row["nationality"]
+            criminals.sex = row["sex"]
+            criminals.description = row["description"]
+            criminals.caution = row["caution"]
+            criminals.race = row["race"]
+            criminals.remarks = str(row["remarks"])
+            criminals.hair_raw = row["hair_raw"]
+            criminals.possible_countries = str(row["possible_countries"])
+            criminals.aliases = str(row["aliases"])
+            criminals.place_of_birth = row["place_of_birth"]
+            criminals.dates_of_birth_used = str(row["dates_of_birth_used"])
+            criminals.eyes = row["eyes"]
+            criminals.subjects = str(row["subjects"])
+            criminals.images = row["images"][0]["original"]
+            criminals.field_offices = str(row["field_offices"])
+            criminals.reward_text = row["reward_text"]
+            criminals.weight = row["weight"]
+            db.session.add(criminals)
+            db.session.commit()
+        else:
+            pass
+    response_body['results'] = all_data
+    return response_body, 200
+
+
+
+@api.route('/criminals', methods=['GET','POST'])  # Debemos modificar según clase del Lunes 17/06, ya que debemos traer la inf de la API del FBI
+def handle_criminals():   
     if request.method == 'POST':
         title = request.json.get("title", None)
         nationality = request.json.get("nationality", None)
@@ -170,13 +244,13 @@ def handle_criminals():
         response_body['message'] = 'Criminal Created'
         return response_body, 200
     
-    """if request.method == 'GET':
+    if request.method == 'GET':
     
         rows = db.session.execute(db.select(Criminals)).scalar()
         results = [row.serialize() for row in rows]
         response_body ['results'] = results
         response_body ['message'] = 'List Of Criminals'
-        return response_body, 200"""
+        return response_body, 200
 
 
 @api.route('/missing-persons', methods=['GET','POST'])  # Debemos modificar según clase del Lunes 17/06, ya que debemos traer la inf de la API del FBI
