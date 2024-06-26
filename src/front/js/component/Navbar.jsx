@@ -2,6 +2,7 @@ import React, { useContext } from "react";
 import { Link } from "react-router-dom";
 import { Context } from "../store/appContext";
 import "../../styles/index.css";
+import "../../styles/navbar.css";
 import logoURL from "../../img/logo.png";
 import kruegerURL from "../../img/freddykrueger.jpg"
 
