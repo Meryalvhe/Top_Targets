@@ -1,11 +1,13 @@
 import React, { useState, useContext } from "react";
 import { Context } from "../store/appContext.js";
 import { useNavigate } from "react-router-dom";
+import "../../styles/index.css";
 
 
 const Signup = () => {
-    const { actions } = useContext(Context)
-    const navigate = useNavigate();
+    
+  const { actions } = useContext(Context)
+  const navigate = useNavigate();
   const [email, setEmail] = useState("");
   const [password, setPassword] = useState("");
 
@@ -49,11 +51,11 @@ const Signup = () => {
         <div className="col-md-6">
           <div className="card">
             <div className="card-body">
-              <h2 className="card-title text-center mb-3 display-5">
+              <h2 className="card-title text-center mb-3 display-5 body">
                 Registro
               </h2>
               <form onSubmit={handleSubmit}>
-                <div className="form-group mt-3 h6">
+                <div className="form-group mt-3 h6 title">
                   <label htmlFor="email" className="mb-1">
                     Correo electrónico:
                   </label>
@@ -66,7 +68,7 @@ const Signup = () => {
                     required
                   />
                 </div>
-                <div className="form-group mt-3 h6">
+                <div className="form-group mt-3 h6 title">
                   <label htmlFor="password" className="mb-1">
                     Contraseña:
                   </label>
