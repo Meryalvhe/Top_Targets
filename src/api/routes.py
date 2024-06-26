@@ -245,8 +245,8 @@ def handle_criminals():
         return response_body, 200
     
     if request.method == 'GET':
-    
-        rows = db.session.execute(db.select(Criminals)).scalar()
+        response_body = {}
+        rows = db.session.execute(db.select(Criminals)).scalars()
         results = [row.serialize() for row in rows]
         response_body ['results'] = results
         response_body ['message'] = 'List Of Criminals'
