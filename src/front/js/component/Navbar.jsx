@@ -20,11 +20,11 @@ export const Navbar = () => {
 		<header className="p-3 border-bottom bg-primary">
 			<div className="container-fluid">
 				<div className="d-flex justify-content-between">
-				<a href="/home" className="nav-link px-2 link-secondary"><img src={logoURL} height="50" /></a>
+				<Link to="/home" className="nav-link px-2 link-secondary"><img src={logoURL} height="50" /></Link>
 					<div className="d-flex align-items-center">
 						<ul className="nav col-12 col-lg-auto me-lg-auto mb-2 mb-md-0 d-flex align-items-center">
 							<div className="d-flex justify-content-center">
-								<li><a href="/about">
+								<li><Link to="/about">
 									<button className="cta">
 										<span id="NavbarButton" className="hover-underline-animation body text-light"> About </span>
 										<path
@@ -34,9 +34,9 @@ export const Navbar = () => {
 											transform="translate(30)"
 										></path>
 									</button>
-								</a>
+								</Link>
 								</li>
-								<li><a href="/criminals">
+								<li><Link to="/criminals">
 									<button className="cta">
 										<span id="NavbarButton" className="hover-underline-animation body text-light"> Criminals </span>
 										<path
@@ -46,9 +46,9 @@ export const Navbar = () => {
 											transform="translate(30)"
 										></path>
 									</button>
-								</a>
+								</Link>
 								</li>
-								<li><a href="/missing-persons">
+								<li><Link to="/missing-persons">
 									<button className="cta">
 										<span id="NavbarButton" className="hover-underline-animation body text-light"> Missing Persons </span>
 										<path
@@ -58,7 +58,7 @@ export const Navbar = () => {
 											transform="translate(30)"
 										></path>
 									</button>
-								</a>
+								</Link>
 								</li>
 							</div>
 						</ul>
@@ -66,7 +66,7 @@ export const Navbar = () => {
 					{/* TERNARIO LOGIN OR NOT */}
 					{/* botones login signup */}
 					<div className="d-flex justify-content-en align-items-center">
-						<a href="/login">
+						<Link to="/login">
 							<button className="cta">
 								<span id="NavbarButton" className="hover-underline-animation body text-light"> Login </span>
 								<path
@@ -76,9 +76,9 @@ export const Navbar = () => {
 									transform="translate(30)"
 								></path>
 							</button>
-						</a>
+						</Link>
 
-						<a href="/signup">
+						<Link to="/signup">
 							<button className="cta">
 								<span id="NavbarButton" className="hover-underline-animation body text-light"> Signup </span>
 								<path
@@ -88,19 +88,19 @@ export const Navbar = () => {
 									transform="translate(30)"
 								></path>
 							</button>
-						</a>
+						</Link>
 
 						{/* botones user dropdown */}
 						<div className="dropdown text-end">
-							<a href="#" className="d-block link-body-emphasis text-decoration-none dropdown-toggle" data-bs-toggle="dropdown" aria-expanded="false">
+							<Link to="#" className="d-block link-body-emphasis text-decoration-none dropdown-toggle" data-bs-toggle="dropdown" aria-expanded="false">
 								<img src={kruegerURL} alt="mdo" width="32" height="32" className="rounded-circle  object-fit-cover" />
-							</a>
+							</Link>
 							<ul className="dropdown-menu text-small">
-								<li><a className="dropdown-item" href="#">New project...</a></li>
-								<li><a className="dropdown-item" href="#">Settings</a></li>
-								<li><a className="dropdown-item" href="#">Profile</a></li>
+								<li><Link to="" className="dropdown-item" href="#">New project...</Link></li>
+								<li><Link to="" className="dropdown-item" href="#">Settings</Link></li>
+								<li><Link to="" className="dropdown-item" href="#">Profile</Link></li>
 								<li><hr className="dropdown-divider" /></li>
-								<li><a className="dropdown-item" href="#">Sign out</a></li>
+								<li><Link to="" className="dropdown-item" href="#">Sign out</Link></li>
 							</ul>
 						</div>
 						{/* </div> */}
