@@ -27,7 +27,7 @@ export const About = () => {
                     </p>
                     <h5 className="">Main <strong>features</strong></h5>
                     <ul>
-                        <li >Provide information about the most wanted criminals and missing persons</li>
+                        <li >Provide information to users about the most wanted criminals and missing persons</li>
                         <li >Save the cards of the most wanted criminals and missing persons in the profile</li>
                         <li >Generate stories using IA based on the stories of the most wanted criminals and missing persons</li>
                     </ul>
