@@ -14,8 +14,8 @@ export const Criminals = () => {
             {!store.criminals ? <p> not found </p> :
                 <div className="row row-cols-1 row-cols-md-3 justify-content-center ">
                     {store.criminals.map((item, id) =>
-                        <div className="col cardCss mt-5 mb-5 mx-4 col-lg-2 col-md-6 col-sm-10 mb-1 cardM">
-                            <div key={id} className="card bg-secondary border-light mt-5 cardCss">
+                        <div className="col mt-5 mb-5 mx-4 col-lg-2 col-md-6 col-sm-10 mb-1 cardM">
+                            <div key={id} className="card bg-secondary border-light mt-5">
                                 <img src={item.images} className="ms-1 img" alt="..." />
                                 {/*                                 <span className=" favoriteLocation favoriteSize favBoxSize aling-items-center">  </span> */}
                                 {/* <div class="favBoxSize favoriteLocation"></div> */}
