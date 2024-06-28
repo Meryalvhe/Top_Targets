@@ -71,7 +71,7 @@ class Criminals(db.Model):
                 'eyes': self.eyes,
                 'subjects': self.subjects,
                 'images': self.images,
-                'field_offices': self.images,
+                'field_offices': self.field_offices,
                 'reward_text': self.reward_text,
                 'weight': self.weight,
                 'favourites_amount': self.favourites_amount}
@@ -116,7 +116,7 @@ class MissingPersons(db.Model):
                 'eyes': self.eyes,
                 'subjects': self.subjects,
                 'images': self.images,
-                'field_offices': self.images,
+                'field_offices': self.field_offices,
                 'reward_text': self.reward_text,
                 'weight': self.weight,
                 'favourites_amount': self.favourites_amount}

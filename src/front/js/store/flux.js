@@ -5,7 +5,9 @@ const getState = ({getStore, getActions, setStore}) => {
 			demo: [{title: "FIRST", background: "white", initial: "white"}],
 			isLogin: false,
 			user: '',
-			is_admin:false
+			is_admin:false,
+			criminals:[]
+
 			
 		},
 		actions: {
@@ -32,7 +34,16 @@ const getState = ({getStore, getActions, setStore}) => {
 			setIsLogin: (login) => {setStore({ isLogin: login})},
 			setLogout:(logout) => {setStore({ isLogin: logout})},
 			setCurrentUser: (user) => {setStore({ user: user})},
-			//getCriminals:()=>{handle_criminals}
+			getCriminals: async ()=>{
+				const response = await fetch (process.env.BACKEND_URL + "/api/criminals");
+				if (!response.ok) {
+					console.log('Error');
+					return
+				}
+				const data = await response.json();
+				console.log(data)
+				setStore({criminals: data.results})
+			}
 
 		}
 	};
