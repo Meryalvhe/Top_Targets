@@ -11,6 +11,8 @@ import { Home } from "./pages/Home.jsx";
 import Login from "./pages/Login.jsx"
 import Signup from "./pages/signup.jsx";
 import { Criminals} from "./pages/Criminals.jsx";
+import { MissingPersons } from "./pages/MissingPersons.jsx";
+import { CurrentCriminal } from "./pages/CurrentCriminals.jsx";
 
 //create your first component
 const Layout = () => {
@@ -30,6 +32,8 @@ const Layout = () => {
                         <Route element={<Login />} path="/login" />
                         <Route element={<Home />} path="/home" />
                         <Route element={<Criminals />} path="/criminals" />
+                        <Route element={<MissingPersons />} path="/missing-persons" />
+                        <Route element={<CurrentCriminal />} path="/current-criminal" />
                     </Routes>
                     <Footer />
                 </ScrollToTop>

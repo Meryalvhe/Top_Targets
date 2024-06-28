@@ -35,7 +35,7 @@ const getState = ({getStore, getActions, setStore}) => {
 			setLogout:(logout) => {setStore({ isLogin: logout})},
 			setCurrentUser: (user) => {setStore({ user: user})},
 			getCriminals: async ()=>{
-				const response = await fetch ("https://special-trout-9769jgpgj7gv37jq5-3001.app.github.dev/api/criminals");
+				const response = await fetch (process.env.BACKEND_URL + "/api/criminals");
 				if (!response.ok) {
 					console.log('Error');
 					return

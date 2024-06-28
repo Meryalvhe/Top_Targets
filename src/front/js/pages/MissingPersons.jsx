@@ -1,13 +1,14 @@
 import React, { useContext } from "react";
-import "../../styles/cards.css";
+import "../../styles/cardMissingPersons.css";
 import "../../styles/index.css";
 import { Link, useParams } from "react-router-dom";
 import { Context } from "../store/appContext";
 
-export const Criminals = () => {
+export const MissingPersons = () => {
     const { store, actios } = useContext(Context);
 
 
+    console.log(store.criminals)
 
     return (
         <div className="container-fluid bg-primary">
@@ -16,8 +17,10 @@ export const Criminals = () => {
                     {store.criminals.map((item, id) =>
                         <div className="col cardCss mt-5 mb-5 mx-4 col-lg-2 col-md-6 col-sm-10 mb-1 cardM">
                             <div key={id} className="card bg-secondary border-light mt-5 cardCss">
-                                <img src={item.images} className="card-img-top ms-1" alt="..." />
-                                <span className=" favoriteLocation favoriteSize favBoxSize aling-items-center"> <i class="fa-solid fa-heart-crack fa-xl favoriteLocation favoriteSize"></i> </span>
+                                <img src={item.images} className="card-img-top ms-1" alt="..." />   
+                                <div className="favoriteLocation favoriteSize favBoxSize aling-items-center"> </div>
+                                <i class="fa-solid fa-heart-crack fa-xl favoriteLocation favoriteSize"></i>
+                                {/*  <i class="fa-solid fa-heart-crack fa-xl favoriteLocation favoriteSize"></i>  */}
                                 <div className="card-body">
                                     <div className="row text-center">
                                         <div className="col">
