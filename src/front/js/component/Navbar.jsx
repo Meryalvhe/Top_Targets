@@ -26,7 +26,7 @@ export const Navbar = () => {
 							<div className="d-flex justify-content-center">
 								<li><a href="/about">
 									<button className="cta">
-										<span className="hover-underline-animation body text-light"> About </span>
+										<span id="NavbarButton" className="hover-underline-animation body text-light"> About </span>
 										<path
 											id="Path_10"
 											data-name="Path 10"
@@ -38,7 +38,7 @@ export const Navbar = () => {
 								</li>
 								<li><a href="/criminals">
 									<button className="cta">
-										<span className="hover-underline-animation body text-light"> Criminals </span>
+										<span id="NavbarButton" className="hover-underline-animation body text-light"> Criminals </span>
 										<path
 											id="Path_10"
 											data-name="Path 10"
@@ -50,7 +50,7 @@ export const Navbar = () => {
 								</li>
 								<li><a href="/missing-persons">
 									<button className="cta">
-										<span className="hover-underline-animation body text-light"> Missing Persons </span>
+										<span id="NavbarButton" className="hover-underline-animation body text-light"> Missing Persons </span>
 										<path
 											id="Path_10"
 											data-name="Path 10"
@@ -68,7 +68,7 @@ export const Navbar = () => {
 					<div className="d-flex justify-content-en align-items-center">
 						<a href="/login">
 							<button className="cta">
-								<span className="hover-underline-animation body text-light"> Login </span>
+								<span id="NavbarButton" className="hover-underline-animation body text-light"> Login </span>
 								<path
 									id="Path_10"
 									data-name="Path 10"
@@ -80,7 +80,7 @@ export const Navbar = () => {
 
 						<a href="/signup">
 							<button className="cta">
-								<span className="hover-underline-animation body text-light"> Signup </span>
+								<span id="NavbarButton" className="hover-underline-animation body text-light"> Signup </span>
 								<path
 									id="Path_10"
 									data-name="Path 10"

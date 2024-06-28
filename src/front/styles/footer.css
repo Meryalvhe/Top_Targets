@@ -1,7 +1,10 @@
-/* NAVBAR BUTTON STYLES*/
-header{
-  margin-top: auto;
+footer{
+  position:absolute;
+  bottom:0;
+  width: 100%;
 }
+
+/* FOOTER BUTTON STYLES*/
 
 .cta {
     border: none;
@@ -9,12 +12,10 @@ header{
     cursor: pointer;
   }
   
-  #NavbarButton{
-    font-size: 14px;
-  }
   .cta span {
     padding-bottom: 7px;
     letter-spacing: 4px;
+    font-size: 10px;
     padding-right: 15px;
     text-transform: uppercase;
   }
@@ -56,3 +57,4 @@ header{
     transform-origin: bottom left;
   }
   
+/*   FOOTER ICONS STYLES */
