@@ -1,5 +1,5 @@
 import React, { useContext } from "react";
-import "../../styles/cards.css";
+
 import "../../styles/index.css";
 import { Link, useParams } from "react-router-dom";
 import { Context } from "../store/appContext";
@@ -19,7 +19,7 @@ export const CurrentCriminal = () => {
                     </div>
                     <div className="row g-0">
                         <div className="col-md-4 mb-5 imgCard ">
-                            <img src='...' className="img-fluid rounded " alt="..." />
+                            <img src='https://www.fbi.gov/wanted/topten/ruja-ignatova/@@images/image' className="img-fluid rounded " alt="..." />
                         </div>
                         <div className="col-md-6">
                             <div className="card-body font">

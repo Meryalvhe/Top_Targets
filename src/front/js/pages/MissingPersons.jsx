@@ -1,5 +1,5 @@
 import React, { useContext } from "react";
-import "../../styles/cardMissingPersons.css";
+import "../../styles/cards.css";
 import "../../styles/index.css";
 import { Link, useParams } from "react-router-dom";
 import { Context } from "../store/appContext";
