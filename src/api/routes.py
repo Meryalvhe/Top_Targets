@@ -124,8 +124,10 @@ def handle_users_id(user_id):
 def handle_data():
     response_body = {}
     all_data = []
-    for page in range(1,1000):
-        response = requests.get("https://api.fbi.gov/wanted/v1/list", params={"page": page})
+    index = 1
+    for page in range(50):
+        response = requests.get("https://api.fbi.gov/wanted/v1/list?page={index}")
+        index += 1
         if response.status_code == 200:
             data = response.json()
             all_data.extend(data["items"])
@@ -134,31 +136,29 @@ def handle_data():
             print(f"Error en la página {page}: {response.status_code} - {response.reason}")
             break
     for row in all_data:
-        if row["subjects"] != ["ViCAP Missing Persons"]:
-            """ row["poster_classification"] != "missing" or  """
-            criminals = Criminals()
-            criminals.title = row["title"]
-            criminals.nationality = row["nationality"]
-            criminals.sex = row["sex"]
-            criminals.description = row["description"]
-            criminals.caution = row["caution"]
-            criminals.race = row["race"]
-            criminals.remarks = str(row["remarks"])
-            criminals.hair_raw = row["hair_raw"]
-            criminals.possible_countries = str(row["possible_countries"])
-            criminals.aliases = str(row["aliases"])
-            criminals.place_of_birth = row["place_of_birth"]
-            criminals.dates_of_birth_used = str(row["dates_of_birth_used"])
-            criminals.eyes = row["eyes"]
-            criminals.subjects = str(row["subjects"])
-            criminals.images = row["images"][0]["original"]
-            criminals.field_offices = str(row["field_offices"])
-            criminals.reward_text = row["reward_text"]
-            criminals.weight = row["weight"]
-            criminals.poster_classification = row["poster_classification"]
-            db.session.add(criminals)
-            db.session.commit()
-        else:
+        criminals = Criminals()
+        criminals.title = row["title"]
+        criminals.nationality = row["nationality"]
+        criminals.description = row["description"]
+        criminals.sex = row["sex"]
+        criminals.caution = row["caution"]
+        criminals.race = row["race"]
+        criminals.remarks = str(row["remarks"])
+        criminals.hair_raw = row["hair_raw"]
+        criminals.possible_countries = str(row["possible_countries"])
+        criminals.aliases = str(row["aliases"])
+        criminals.place_of_birth = row["place_of_birth"]
+        criminals.dates_of_birth_used = str(row["dates_of_birth_used"])
+        criminals.eyes = row["eyes"]
+        criminals.subjects = str(row["subjects"])
+        criminals.images = row["images"][0]["original"]
+        criminals.field_offices = str(row["field_offices"])
+        criminals.reward_text = row["reward_text"]
+        criminals.weight = row["weight"]
+        criminals.poster_classification = row["poster_classification"]
+        db.session.add(criminals)
+        db.session.commit()
+        """ else:
             missing_persons = MissingPersons()
             missing_persons.title = row["title"]
             missing_persons.nationality = row["nationality"]
@@ -179,7 +179,7 @@ def handle_data():
             missing_persons.poster_classification = row["poster_classification"]
             db.session.add(missing_persons)
             db.session.commit()
-            return response_body, 200
+            return response_body, 200 """
     response_body['results'] = all_data
     return response_body, 200
 

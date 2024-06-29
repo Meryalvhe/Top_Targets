@@ -6,7 +6,9 @@ const getState = ({getStore, getActions, setStore}) => {
 			isLogin: false,
 			user: '',
 			is_admin:false,
-			criminals:[]
+			criminals:[],
+			toptencriminals: [],
+			missingFromCriminals: []
 			
 
 			
@@ -44,7 +46,42 @@ const getState = ({getStore, getActions, setStore}) => {
 				const data = await response.json();
 				console.log(data)
 				setStore({criminals: data.results})
-			}
+			},
+			getTopTenCriminals: async()=>{
+				const response = await fetch ("https://api.fbi.gov/wanted/v1/list?poster_classification=ten");
+				if (!response.ok) {
+					console.log('Error');
+					return
+				}
+				const data = await response.json();
+				console.log(data)
+				/* const result = data.items
+				console.log(result) */
+
+				setStore({toptencriminals: data.items})
+
+			},
+			getMissingFromDB: async ()=>{
+				const response = await fetch("https://opulent-space-zebra-pjj675j6wjj7frg7j-3001.app.github.dev/api/criminals");
+				if (!response.ok){
+					console.log('Error');
+					return
+				}
+				const data = await response.json()
+
+				const result = data.results
+				console.log(result)
+
+				const items = result.filter(item => {
+					if (item.poster_classification == "missing"){
+						return true
+					}
+				})
+
+				/* setStore({missingFromCriminals: items}) */
+				setStore({missingFromCriminals: result})
+				console.log(items)
+			},
 
 		}
 	};
