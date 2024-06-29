@@ -9,9 +9,9 @@ export const CreateStory = () => {
 
 
 	return (
-		<div className=" p-5 d-flex justify-content-center">
-			<article className="border p-3 w-75 row" >
-                <h2 className="col-12 text-center">Create your story</h2>
+		<div className=" p-5 d-flex justify-content-center bg-dark text-white">
+			<article className="p-3 w-75 row" >
+                <h2 className="col-12 text-center text-white">Create your story</h2>
                 <section className="row my-2">
                     <p className="col-2">Title:</p>
                     <div className="col-10">
