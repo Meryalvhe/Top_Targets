@@ -20,7 +20,7 @@ export const Navbar = () => {
 		<header className="p-3 border-bottom bg-primary">
 			<div className="container-fluid">
 				<div className="d-flex justify-content-between">
-				<Link to="/home" className="nav-link px-2 link-secondary"><img src={logoURL} height="50" /></Link>
+				<Link to="/" className="nav-link px-2 link-secondary"><img src={logoURL} height="50" /></Link>
 					<div className="d-flex align-items-center">
 						<ul className="nav col-12 col-lg-auto me-lg-auto mb-2 mb-md-0 d-flex align-items-center">
 							<div className="d-flex justify-content-center">

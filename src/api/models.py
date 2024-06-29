@@ -50,6 +50,7 @@ class Criminals(db.Model):
     reward_text = db.Column(db.String, unique=False, nullable=True)
     weight =db.Column(db.String, unique=False, nullable=True)
     favourites_amount = db.Column(db.Integer, unique=False, nullable=True)
+    poster_classification = db.Column(db.String, unique=False, nullable=True)
 
     def __repr__(self):
         return f'<Criminal: {self.title}>'
@@ -74,7 +75,8 @@ class Criminals(db.Model):
                 'field_offices': self.field_offices,
                 'reward_text': self.reward_text,
                 'weight': self.weight,
-                'favourites_amount': self.favourites_amount}
+                'favourites_amount': self.favourites_amount,
+                'poster_classification': self.poster_classification}
 
 
 class MissingPersons(db.Model):
@@ -97,6 +99,8 @@ class MissingPersons(db.Model):
     reward_text = db.Column(db.String, unique=False, nullable=True)
     weight =db.Column(db.String, unique=False, nullable=True)
     favourites_amount = db.Column(db.Integer, unique=False, nullable=True)
+    poster_classification = db.Column(db.String, unique=False, nullable=True)
+
 
     def __repr__(self):
         return f'<Missing_Persons: {self.title}>'
@@ -119,7 +123,9 @@ class MissingPersons(db.Model):
                 'field_offices': self.field_offices,
                 'reward_text': self.reward_text,
                 'weight': self.weight,
-                'favourites_amount': self.favourites_amount}
+                'favourites_amount': self.favourites_amount,
+                'poster_classification': self.poster_classification}
+
 
 
 class StoriesCriminals(db.Model):

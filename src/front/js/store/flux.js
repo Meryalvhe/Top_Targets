@@ -7,6 +7,7 @@ const getState = ({getStore, getActions, setStore}) => {
 			user: '',
 			is_admin:false,
 			criminals:[]
+			
 
 			
 		},
@@ -35,7 +36,7 @@ const getState = ({getStore, getActions, setStore}) => {
 			setLogout:(logout) => {setStore({ isLogin: logout})},
 			setCurrentUser: (user) => {setStore({ user: user})},
 			getCriminals: async ()=>{
-				const response = await fetch (process.env.BACKEND_URL + "/api/criminals");
+				const response = await fetch ("https://opulent-space-zebra-pjj675j6wjj7frg7j-3001.app.github.dev/api/criminals");
 				if (!response.ok) {
 					console.log('Error');
 					return
