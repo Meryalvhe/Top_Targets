@@ -6,9 +6,10 @@ const getState = ({getStore, getActions, setStore}) => {
 			isLogin: false,
 			user: '',
 			is_admin:false,
-			criminals:[]
+			criminals:[],
+			currentCriminal:[{}],
+			favorites:[],
 
-			
 		},
 		actions: {
 			exampleFunction: () => {getActions().changeColor(0, "green");},  // Use getActions to call a function within a fuction
@@ -34,6 +35,7 @@ const getState = ({getStore, getActions, setStore}) => {
 			setIsLogin: (login) => {setStore({ isLogin: login})},
 			setLogout:(logout) => {setStore({ isLogin: logout})},
 			setCurrentUser: (user) => {setStore({ user: user})},
+			setCurrentCriminal: (id) =>{setStore({currentCriminal:id})},
 			getCriminals: async ()=>{
 				const response = await fetch (process.env.BACKEND_URL + "/api/criminals");
 				if (!response.ok) {
@@ -43,7 +45,18 @@ const getState = ({getStore, getActions, setStore}) => {
 				const data = await response.json();
 				console.log(data)
 				setStore({criminals: data.results})
-			}
+			},
+			addFavorites: (text) =>{
+				if (getStore().favorites.includes(text)){
+					return
+				}
+				setStore({favorites: [...getStore().favorites, text]})	
+				
+			},	
+			removeFavorites: (remove) =>{
+				setStore({favorites: getStore().favorites.filter((item)=> item != remove)})
+				
+			},
 
 		}
 	};

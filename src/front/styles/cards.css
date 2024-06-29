@@ -1,57 +1,56 @@
 .cardM {
-    position: relative;
-    width: 21.875em;
-    height: 34.5em;
-    box-shadow: 0px 1px 13px rgba(0,0,0,0.1);
-    box-sizing: border-box;
-    border: solid #8d8d8d 1px;
-    cursor: pointer;
-    transition: all 120ms;
-    display: flex;
-    align-items: center;
-    justify-content: center;
-    background: #fff;
-    padding: 0.5em;
-    padding-bottom: 3.4em;
-  }
-
+  position: relative;
+  width: 21.875em;
+  height: 34.5em;
+  box-shadow: 0px 1px 13px rgba(0,0,0,0.1);
+  box-sizing: border-box;
+  border: solid #000000 1px;
+  cursor: pointer;
+  transition: all 120ms;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  background: #fff;
+  padding: 0.5em;
+  padding-bottom: 3.4em;
+}
   
-  .card img {
+  .cardM img {
     background: rgb(241, 241, 241);
     width: 320px;
     height: 400px;
-    display: grid;
-    place-items: center;
+/*     margin-top: 10px;
+    margin-left: 100px; */
     box-sizing: border-box;
-    border: solid #8d8d8d 1px;
+    border: solid #000000 1px;
   }
 
-  .img {
-    width: 320px;
-    height: 400px;
+  .border-card{
+    border:solid black 1px;
   }
+
 
   .favoriteLocation{
     position: absolute;
     bottom: 20;
     right: 0;
-    margin-right: 12px;
-    margin-top: 5px;
+    margin-right: 17px;
+    margin-top: 10px;
   }
   
   .favoriteSize {
     font-size: 30px;
-    color: black;
+    color: rgb(255, 0, 0);
     text-align: center;
   }
 
-  .cardM:hover {
+/*    .cardM:hover {
     transform: scale(1.05);
   }
   
   .cardM:active {
     transform: scale(0.95) rotateZ(1.7deg);
-  }
+  }  */
 
   .btn-save {
     display: flex;
@@ -78,6 +77,13 @@
   .current-card{
     border: solid #fffdfd 10px;
     box-shadow: 0px 0px 10px 5px  rgba(0, 0, 0, 0.705);
+    height: 550px;
+    width: 400px;
+    background-color: #fff;
+  }
+
+  .current-card img {
+    width: 500px;
   }
 
   .avatar-comment img{
@@ -91,3 +97,16 @@
   .comment{
     margin-left: 20px;
   }
+
+  .heart {
+    color: red;
+  }
+
+/*   .favoriteSize:hover{
+    color: #000000;
+} */
+.text-Location{
+  justify-content: start;
+  margin-right: 20px;
+  margin-top: 430px;
+}
