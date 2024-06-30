@@ -5,7 +5,7 @@ import { Link, useParams } from "react-router-dom";
 import { Context } from "../store/appContext";
 
 export const CurrentCriminal = () => {
-    const { store, actios } = useContext(Context);
+    const { store, actions } = useContext(Context);
 
 
     return (
@@ -18,7 +18,7 @@ export const CurrentCriminal = () => {
                         </Link>
                     </div>
                     <div className="row g-0 p-5">
-                        <div className="col-3 mb-5 imgCard current-card border-none">
+                        <div className="col-3 mb-5 current-card border-none">
                             <img src="https://www.fbi.gov/wanted/topten/ruja-ignatova/@@images/image" className="img-fluid" alt="..." />
                             <h4 className="mt-3 text-center title"> aliases: </h4>
                         </div>
@@ -34,7 +34,10 @@ export const CurrentCriminal = () => {
                             </div>
                         </div>
                         <div className="d-flex justify-content-end">
-                            <button type="button" className="btn btn-outline-light"> <i className="fa-solid fa-heart-crack fa-xl favoriteSize heart"></i></button>
+{/*                             <button className="btn-save favoriteLocation bg-primary">
+                                {store.favorites.includes(item.title) ? <i className="fa-solid fa-heart-crack fa-xl favoriteSize" onClick={() => actions.removeFavorites(item.title)}></i> :
+                                    <i className="fa-solid fa-heart fa-xl text-light favoriteSize" onClick={() => actions.addFavorites(item.title)}></i>}
+                            </button> */}
                             <button type="button" className="btn btn-outline-light ms-3 body">Create your Storie</button>
                         </div>
                         <h1 className="title text-light"> Comments </h1>

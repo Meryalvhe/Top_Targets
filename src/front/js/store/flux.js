@@ -7,8 +7,12 @@ const getState = ({getStore, getActions, setStore}) => {
 			user: '',
 			is_admin:false,
 			criminals:[],
+			missing:[],
 			currentCriminal:[{}],
-			favorites:[],
+			currentCriminal: [{}],
+			favoritesCriminals:[],
+			favoritesMissingPersonas:[],
+
 
 		},
 		actions: {
@@ -36,6 +40,7 @@ const getState = ({getStore, getActions, setStore}) => {
 			setLogout:(logout) => {setStore({ isLogin: logout})},
 			setCurrentUser: (user) => {setStore({ user: user})},
 			setCurrentCriminal: (id) =>{setStore({currentCriminal:id})},
+			setCurrentMissingPerson: (id) =>{setStore({currentCriminal:id})},
 			getCriminals: async ()=>{
 				const response = await fetch (process.env.BACKEND_URL + "/api/criminals");
 				if (!response.ok) {
@@ -46,16 +51,26 @@ const getState = ({getStore, getActions, setStore}) => {
 				console.log(data)
 				setStore({criminals: data.results})
 			},
-			addFavorites: (text) =>{
-				if (getStore().favorites.includes(text)){
+			addFavoritesCrimianls: (text) =>{
+				if (getStore().favoritesCriminals.includes(text)){
 					return
 				}
-				setStore({favorites: [...getStore().favorites, text]})	
+				setStore({favoritesCriminals: [...getStore().favorites, text]})	
 				
 			},	
-			removeFavorites: (remove) =>{
-				setStore({favorites: getStore().favorites.filter((item)=> item != remove)})
+			removeFavoritesCrimianls: (remove) =>{
+				setStore({favoritesCriminals: getStore().favoritesCriminals.filter((item)=> item != remove)})
 				
+			},
+			getMissing: async ()=>{
+				const response = await fetch (process.env.BACKEND_URL + "/api/missing-persons");
+				if (!response.ok) {
+					console.log('Error');
+					return
+				}
+				const data = await response.json();
+				console.log(data)
+				setStore({missing: data.results})
 			},
 
 		}

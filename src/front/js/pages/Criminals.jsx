@@ -22,8 +22,8 @@ export const Criminals = () => {
                             <div key={id} className="card border-primary border-none mt-5">
                                <Link to="/current-criminal" onClick={()=>handleCriminal(item.id)} className="bg-primary"><img src={item.images} className="ms-1" alt="..." /></Link> 
                                 <button className="btn-save favoriteLocation bg-primary">
-                                {store.favorites.includes(item.title) ? <i className="fa-solid fa-heart-crack fa-xl favoriteSize" onClick={() => actions.removeFavorites(item.title)}></i> :
-                                 <i className="fa-solid fa-heart fa-xl text-light favoriteSize" onClick={() => actions.addFavorites(item.title)}></i> }
+                                {store.favoritesCriminals.includes(item.title) ? <i className="fa-solid fa-heart-crack fa-xl favoriteSize" onClick={() => actions.removeFavoritesCriminals(item.title)}></i> :
+                                 <i className="fa-solid fa-heart fa-xl text-light favoriteSize" onClick={() => actions.addFavoritesCriminals(item.title)}></i> }
                                 </button>
 
                                 <div className="card-body bg-primary border-primary">

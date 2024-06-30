@@ -118,18 +118,23 @@ def handle_users_id(user_id):
         response_body['message'] = 'User Not Found'
         response_body['results'] = {}
         return response_body, 404  
-        
-"""@api.route('/data', methods=['GET'])
-def handle_data():
-    response_body = {}
-    response = requests.get("https://api.fbi.gov/wanted/v1/list")
-    
-    if response.status_code == 200:
+
+def fetch_data_from_api():
+    url = 'https://api.fbi.gov/wanted/v1/list'
+    page = 1
+    rate_limit = 2  # Tiempo en segundos entre las solicitudes
+
+    while True:
+        response = requests.get(f'{url}?page={page}')
+        if response.status_code != 200:
+            break
         data = response.json()
-        for row in data["items"]:
-            if row["poster_classification"] != "missing":
+        if 'items' not in data or not data['items']:
+            break
+        for row in data['items']:
+            if row['poster_classification'] != 'missing':
                 criminals = Criminals()
-                criminals.title = row["title"]
+                criminals.title = row.get('title','')
                 criminals.nationality = row["nationality"]
                 criminals.sex = row["sex"]
                 criminals.description = row["description"]
@@ -147,58 +152,100 @@ def handle_data():
                 criminals.field_offices = str(row["field_offices"])
                 criminals.reward_text = row["reward_text"]
                 criminals.weight = row["weight"]
+                criminals.poster_classification = row['poster_classification']
                 db.session.add(criminals)
-                db.session.commit()
-            else:
-                pass
-        response_body['results'] = data
-        return response_body, 200 """
+        db.session.commit()
+        page += 1
+        time.sleep(rate_limit) 
 
-@api.route('/data', methods=['GET'])
-def handle_data():
-    response_body = {}
-    all_data = []
-    for page in range(1,1000):
-        response = requests.get("https://api.fbi.gov/wanted/v1/list", params={"page": page})
-        if response.status_code == 200:
-            data = response.json()
-            all_data.extend(data["items"])
-            time.sleep(0.5)
-        else:
-            print(f"Error en la página {page}: {response.status_code} - {response.reason}")
+def fetch_data_api():
+    url = 'https://api.fbi.gov/wanted/v1/list'
+    page = 1
+    rate_limit = 2  # Tiempo en segundos entre las solicitudes
+
+    while True:
+        response = requests.get(f'{url}?page={page}')
+        if response.status_code != 200:
             break
+        data = response.json()
+        if 'items' not in data or not data['items']:
+            break
+        for row in data['items']:
+            if row['poster_classification'] == 'missing':
+                missing_persons = MissingPersons()
+                missing_persons.title = row['title']
+                missing_persons.nationality = row['nationality']
+                missing_persons.sex = row['sex']
+                missing_persons.description = row['description']
+                missing_persons.race = row['race']
+                missing_persons.remarks = row['remarks']
+                missing_persons.hair_raw = row['hair_raw']
+                missing_persons.possible_countries = row['possible_countries']
+                missing_persons.place_of_birth = row['place_of_birth']
+                missing_persons.dates_of_birth_used = json.dumps(row['dates_of_birth_used'])
+                missing_persons.eyes = row['eyes']
+                missing_persons.subjects = json.dumps(row['subjects'])
+                missing_persons.details = row['details']
+                missing_persons.images = row["images"][0]["original"]
+                missing_persons.field_offices = json.dumps(row['field_offices'])
+                missing_persons.reward_text = row['reward_text']
+                missing_persons.weight = row['weight']
+                missing_persons.poster_classification = row['poster_classification']
+                db.session.add(missing_persons)
+        db.session.commit()
+        page += 1
+        time.sleep(rate_limit) 
+        
+@api.route('/data-criminals', methods=['GET'])
+def handle_data_Criminals():
+     fetch_data_from_api()
+     return 'data update'
+"""     response_body = {}
+    all_data = []
+    response = requests.get("https://api.fbi.gov/wanted/v1/list")
+    if response.status_code == 200:
+        data = response.json()
+        all_data.extend(data["items"])
+        time.sleep(0.5)
+    else:
+       print(f"Error en la página {page}: {response.status_code} - {response.reason}")
     for row in all_data:
-        if row["poster_classification"] != "missing":
-            criminals = Criminals()
-            criminals.title = row["title"]
-            criminals.nationality = row["nationality"]
-            criminals.sex = row["sex"]
-            criminals.description = row["description"]
-            criminals.caution = row["caution"]
-            criminals.race = row["race"]
-            criminals.remarks = str(row["remarks"])
-            criminals.hair_raw = row["hair_raw"]
-            criminals.possible_countries = str(row["possible_countries"])
-            criminals.aliases = str(row["aliases"])
-            criminals.place_of_birth = row["place_of_birth"]
-            criminals.dates_of_birth_used = str(row["dates_of_birth_used"])
-            criminals.eyes = row["eyes"]
-            criminals.subjects = str(row["subjects"])
-            criminals.images = row["images"][0]["original"]
-            criminals.field_offices = str(row["field_offices"])
-            criminals.reward_text = row["reward_text"]
-            criminals.weight = row["weight"]
-            db.session.add(criminals)
-            db.session.commit()
-        else:
-            pass
+        criminals = Criminals()
+        criminals.title = row["title"]
+        criminals.nationality = row["nationality"]
+        criminals.sex = row["sex"]
+        criminals.description = row["description"]
+        criminals.caution = row["caution"]
+        criminals.race = row["race"]
+        criminals.remarks = str(row["remarks"])
+        criminals.hair_raw = row["hair_raw"]
+        criminals.possible_countries = str(row["possible_countries"])
+        criminals.aliases = str(row["aliases"])
+        criminals.place_of_birth = row["place_of_birth"]
+        criminals.dates_of_birth_used = str(row["dates_of_birth_used"])
+        criminals.eyes = row["eyes"]
+        criminals.subjects = str(row["subjects"])
+        criminals.images = row["images"][0]["original"]
+        criminals.field_offices = str(row["field_offices"])
+        criminals.reward_text = row["reward_text"]
+        criminals.weight = row["weight"]
+        criminals.poster_classification = row['poster_classification']
+        db.session.add(criminals)
+        db.session.commit()
     response_body['results'] = all_data
-    return response_body, 200
+    return response_body, 200 """
+
+
+
+@api.route('/data-missing', methods=['GET'])
+def handle_data_Missing():
+    fetch_data_api()
+    return 'Data update'
 
 
 
 @api.route('/criminals', methods=['GET','POST'])  # Debemos modificar según clase del Lunes 17/06, ya que debemos traer la inf de la API del FBI
-def handle_criminals():   
+def handle_criminals():     
     if request.method == 'POST':
         title = request.json.get("title", None)
         nationality = request.json.get("nationality", None)
@@ -302,6 +349,7 @@ def handle_missing_persons():
             response_body ['results'] = results
             response_body ['message'] = 'List Of Missing Persons'
             return response_body, 200
+
 
 @api.route('/profile/<int:user_id>', methods=['GET']) 
 def handle_profile(user_id):
