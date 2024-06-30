@@ -5,8 +5,8 @@ import { useNavigate } from "react-router-dom";
 
 const Login = () => {
 
-    const {store, actions} = useContext(Context);
-    const navigate = useNavigate();
+  const { store, actions } = useContext(Context);
+  const navigate = useNavigate();
   const [email, setEmail] = useState("");
   const [password, setPassword] = useState("");
 
@@ -21,7 +21,7 @@ const Login = () => {
   const handleSubmit = async (e) => {
     e.preventDefault();
     const dataToSend = { email, password };
-    console.log(dataToSend);
+    console.log("los datos que se mandan:", dataToSend);
 
     const url = `${process.env.BACKEND_URL}/api/login`;
     const options = {
@@ -31,11 +31,11 @@ const Login = () => {
         'Content-Type': 'application/json'
       }
     }
-    console.log(url,options)
+    console.log("la url y la options:",url, options)
     const response = await fetch(url, options);
     console.log(response)
     if (!response.ok) {
-      console.log('Error: ', response.status, response.statusText)
+      console.log('Error fatalisima: ', response.status, response.statusText)
       return
     }
     const data = await response.json();
@@ -47,7 +47,7 @@ const Login = () => {
     actions.setIsLogin(true)
     actions.setCurrentUser(user)
     // console.log(data.access_token);
-    navigate('/home')
+    navigate('/')
   };
 
   return (

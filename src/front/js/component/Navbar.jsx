@@ -9,6 +9,8 @@ import kruegerURL from "../../img/freddykrueger.jpg"
 
 export const Navbar = () => {
 	const { store, actions } = useContext(Context);
+	const isLogged = localStorage.getItem('isLogging') === 'true';
+	
 	const logOut = () => {
 		console.log(localStorage)
 		localStorage.clear();
@@ -17,96 +19,70 @@ export const Navbar = () => {
 	}
 
 	return (
-		<header className="p-3 border-bottom bg-primary">
+		<nav className="navbar navbar-expand-lg navbar-light bg-primary" >
 			<div className="container-fluid">
-				<div className="d-flex justify-content-between">
-				<Link to="/" className="nav-link px-2 link-secondary"><img src={logoURL} height="50" /></Link>
-					<div className="d-flex align-items-center">
-						<ul className="nav col-12 col-lg-auto me-lg-auto mb-2 mb-md-0 d-flex align-items-center">
-							<div className="d-flex justify-content-center">
-								<li><Link to="/about">
-									<button className="cta">
-										<span id="NavbarButton" className="hover-underline-animation body text-light"> About </span>
-										<path
-											id="Path_10"
-											data-name="Path 10"
-											d="M8,0,6.545,1.455l5.506,5.506H-30V9.039H12.052L6.545,14.545,8,16l8-8Z"
-											transform="translate(30)"
-										></path>
-									</button>
-								</Link>
-								</li>
-								<li><Link to="/criminals">
-									<button className="cta">
-										<span id="NavbarButton" className="hover-underline-animation body text-light"> Criminals </span>
-										<path
-											id="Path_10"
-											data-name="Path 10"
-											d="M8,0,6.545,1.455l5.506,5.506H-30V9.039H12.052L6.545,14.545,8,16l8-8Z"
-											transform="translate(30)"
-										></path>
-									</button>
-								</Link>
-								</li>
-								<li><Link to="/missing-persons">
-									<button className="cta">
-										<span id="NavbarButton" className="hover-underline-animation body text-light"> Missing Persons </span>
-										<path
-											id="Path_10"
-											data-name="Path 10"
-											d="M8,0,6.545,1.455l5.506,5.506H-30V9.039H12.052L6.545,14.545,8,16l8-8Z"
-											transform="translate(30)"
-										></path>
-									</button>
-								</Link>
-								</li>
-							</div>
-						</ul>
-					</div>
-					{/* TERNARIO LOGIN OR NOT */}
-					{/* botones login signup */}
-					<div className="d-flex justify-content-en align-items-center">
-						<Link to="/login">
-							<button className="cta">
-								<span id="NavbarButton" className="hover-underline-animation body text-light"> Login </span>
-								<path
-									id="Path_10"
-									data-name="Path 10"
-									d="M8,0,6.545,1.455l5.506,5.506H-30V9.039H12.052L6.545,14.545,8,16l8-8Z"
-									transform="translate(30)"
-								></path>
-							</button>
-						</Link>
-
-						<Link to="/signup">
-							<button className="cta">
-								<span id="NavbarButton" className="hover-underline-animation body text-light"> Signup </span>
-								<path
-									id="Path_10"
-									data-name="Path 10"
-									d="M8,0,6.545,1.455l5.506,5.506H-30V9.039H12.052L6.545,14.545,8,16l8-8Z"
-									transform="translate(30)"
-								></path>
-							</button>
-						</Link>
-
-						{/* botones user dropdown */}
-						<div className="dropdown text-end">
-							<Link to="#" className="d-block link-body-emphasis text-decoration-none dropdown-toggle" data-bs-toggle="dropdown" aria-expanded="false">
-								<img src={kruegerURL} alt="mdo" width="32" height="32" className="rounded-circle  object-fit-cover" />
+				<Link to="/" className="navbar-brand">
+					<img src={logoURL} height="50" alt="Logo" />
+				</Link>
+				<button className="navbar-toggler" style={{ borderColor: "white", backgroundColor: "white" }} type="button" data-bs-toggle="collapse" data-bs-target="#navbarNav" aria-controls="navbarNav" aria-expanded="false" aria-label="Toggle navigation">
+					<span className="navbar-toggler-icon"></span>
+				</button>
+				<div className="collapse navbar-collapse" id="navbarNav">
+					<ul className="navbar-nav me-auto mb-2 mb-lg-0">
+						<li className="nav-item">
+							<Link to="/about" className="nav-link text-light">
+								<button className="cta">
+									<span id="NavbarButton" className="hover-underline-animation body text-light"> About </span>
+								</button>
 							</Link>
-							<ul className="dropdown-menu text-small">
-								<li><Link to="" className="dropdown-item" href="#">New project...</Link></li>
-								<li><Link to="" className="dropdown-item" href="#">Settings</Link></li>
-								<li><Link to="" className="dropdown-item" href="#">Profile</Link></li>
+						</li>
+						<li className="nav-item">
+							<Link to="/criminals" className="nav-link text-light">
+								<button className="cta">
+									<span id="NavbarButton" className="hover-underline-animation body text-light"> Criminals </span>
+								</button>
+							</Link>
+						</li>
+						<li className="nav-item">
+							<Link to="/missing-persons" className="nav-link text-light">
+								<button className="cta">
+									<span id="NavbarButton" className="hover-underline-animation body text-light"> Missing Persons </span>
+								</button>
+							</Link>
+						</li>
+					</ul>
+
+
+					{isLogged ?
+						<div className="dropdown">
+							<Link to="#" className="d-block text-decoration-none dropdown-toggle custom-dropdown" data-bs-toggle="dropdown" aria-expanded="false">
+								<img src={kruegerURL} alt="mdo" width="32" height="32" className="rounded-circle object-fit-cover" />
+							</Link>
+							<ul className="dropdown-menu dropdown-menu-end">
+								<li><Link to="" className="dropdown-item title">Profile</Link></li>
+								<li><Link to="" className="dropdown-item title">Your stories</Link></li>
 								<li><hr className="dropdown-divider" /></li>
-								<li><Link to="" className="dropdown-item" href="#">Sign out</Link></li>
+								<li><Link to="" className="dropdown-item title" onClick={logOut}>Log out</Link></li>
 							</ul>
 						</div>
-						{/* </div> */}
-					</div>
+						:
+						<div className="d-flex">
+							<Link to="/login" className="btn me-2">
+								<button className="cta">
+									<span id="NavbarButton" className="hover-underline-animation body text-light"> Login </span>
+								</button>
+							</Link>
+							<Link to="/signup" className="btn me-2">
+								<button className="cta">
+									<span id="NavbarButton" className="hover-underline-animation body text-light"> Signup </span>
+								</button>
+							</Link>
+						</div>
+					}
+
+
 				</div>
 			</div>
-		</header>
+		</nav>
 	);
 };
