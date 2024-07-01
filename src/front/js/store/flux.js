@@ -5,7 +5,7 @@ const getState = ({getStore, getActions, setStore}) => {
 			demo: [{title: "FIRST", background: "white", initial: "white"}],
 			isLogin: false,
 			user: '',
-			userId:2,
+			userId:1,
 			is_admin:false,
 			stories: []
 			
@@ -45,8 +45,31 @@ const getState = ({getStore, getActions, setStore}) => {
 				const data = await response.json();
 				
 				if(data.user_id==getStore.userId){
+					console.log("Stories in flux")
 					console.log(data)
 					setStore({stories: data.results})
+				} 
+				
+			},
+			addFavoritesCrimianls: (text) =>{
+				if (getStore().favoritesCriminals.includes(text)){
+					return
+				}
+				setStore({favoritesCriminals: [...getStore().favorites, text]})	
+				
+			},
+			getUser: async ()=>{
+				const response = await fetch (process.env.BACKEND_URL + "/api/users/1"); //<int:user_id>
+				if (!response.ok) {
+					console.log('Error');
+					return
+				}
+				const data = await response.json();
+				
+				if(data.user_id==getStore.userId){
+					console.log("User in flux")
+					console.log(data)
+					setStore({user: data.results})
 				} 
 				
 			}

@@ -20,7 +20,7 @@ export const Stories = () => {
                         <p className="card-text text-white">Description: {item.description} </p>
                         <p className="card-text text-white">Story: {item.body}</p>
                         <p className="card-text text-white">Prompt: {item.prompt}</p>
-                        <a href="#" className="btn btn-primary">Edit</a>
+                        <a href="#" className="btn btn-primary bg-black">Edit</a>
                         <p className="card-text text-white">Last Modification Date:{item.modification_date} </p>
                         
                     </div>

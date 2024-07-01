@@ -1,12 +1,34 @@
-import React from "react"; 
+import React, {useContext, useState} from "react"; 
 import "../../styles/home.css";
-import fide from "../../img/Fide.jpeg"
-import mar from "../../img/Mar.jpeg"
-import mery from "../../img/Mery.jpeg"
-import logo from "../../img/logo.png"
+import { Context } from "../store/appContext";
 
 export const CreateStory = () => {
-
+    const { store, actions } = useContext(Context);
+    const [story, setStory] = useState({"user_id":store.user.id, "criminal_id":store.criminal_id});
+    const handleTitle = event =>{
+        const temp = story
+        temp["title"] = event.target.value
+        setStory(temp);
+        console.log(story)
+    }
+    const handleDescription = event =>{
+        const temp = story
+        temp["description"] = event.target.value
+        setStory(temp);
+        console.log(story)
+    }
+    const handlePrompt = event =>{
+        const temp = story
+        temp["prompt"] = event.target.value
+        setStory(temp);
+        console.log(story)
+    }
+    const handleBody = event =>{
+        const temp = story
+        temp["body"] = event.target.value
+        setStory(temp);
+        console.log(story)
+    }
 
 	return (
 		<div className=" p-5 d-flex justify-content-center bg-dark text-white">
@@ -15,7 +37,7 @@ export const CreateStory = () => {
                 <section className="row my-2">
                     <p className="col-2">Title:</p>
                     <div className="col-10">
-                        <input type="text" class="form-control" placeholder="Title" aria-label="title" /> 
+                        <input type="text" class="form-control" placeholder="Title"  onChange={handleTitle} aria-label="title" /> 
                     </div>
                 </section>
                 <section className="row my-2">
@@ -30,16 +52,16 @@ export const CreateStory = () => {
                 </section>
                 <section className="row my-2">
                     <p className="col-2"> Description:</p>
-                    <textarea className="col-10" name="description" id="description"></textarea>
+                    <textarea className="col-10" name="description" onChange={handleDescription} id="description"></textarea>
                 </section>
                 <section className="row my-2">
                     <p className="col-2">Prompt:</p>
-                    <textarea className="col-10" name="prompt" id="prompt"></textarea>
+                    <textarea className="col-10" name="prompt" onChange={handlePrompt} id="prompt"></textarea>
                 </section>
-                <button className="btn btn-primary my-2" type="submit">Button</button>
+                <button className="btn btn-primary my-2" onClick={() => actions.addFavoritesCriminals(item.title)} type="submit">Button</button>
                 <section className="row my-2">
                     <p>Body:</p>
-                    <textarea name="body" id="body"></textarea>  
+                    <textarea name="body" onChange={handleBody} id="body"></textarea>  
                 </section>
             </article>
 		</div>
