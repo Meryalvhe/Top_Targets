@@ -80,6 +80,6 @@ export const Navbar = () => {
 					}
 				</div>
 			</div>
-		</header>
+		</nav>
 	);
 };
