@@ -34,10 +34,6 @@ export const CurrentCriminal = () => {
                             </div>
                         </div>
                         <div className="d-flex justify-content-end">
-{/*                             <button className="btn-save favoriteLocation bg-primary">
-                                {store.favorites.includes(item.title) ? <i className="fa-solid fa-heart-crack fa-xl favoriteSize" onClick={() => actions.removeFavorites(item.title)}></i> :
-                                    <i className="fa-solid fa-heart fa-xl text-light favoriteSize" onClick={() => actions.addFavorites(item.title)}></i>}
-                            </button> */}
                             <button type="button" className="btn btn-outline-light ms-3 body">Create your Storie</button>
                         </div>
                         <h1 className="title text-light"> Comments </h1>

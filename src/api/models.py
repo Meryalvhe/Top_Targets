@@ -201,6 +201,10 @@ class SavedCriminals(db.Model):
         return {'id': self.id,
                 'user_id': self.user_id,
                 'criminal_id': self.criminal_id}
+    
+    def public_serialize (self):
+        return {'id_save_criminal': self.id,
+                'criminal_id': self.criminal_id}
 
 
 class SavedMissingPersons(db.Model):

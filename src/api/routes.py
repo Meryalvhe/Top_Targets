@@ -63,6 +63,10 @@ def login():
         response_body['message'] = 'User logged in'
         response_body['access_token'] = access_token
         response_body['results'] = user.serialize()
+        # Nos hace falta devolver los favoritos del usuario. Incluyendo el ID del favorito y el ID del criminal.
+        rows = db.session.execute(db.select(SavedCriminals).where(SavedCriminals.user_id == user.id)).scalars()
+        results = [row.public_serialize() for row in rows]
+        response_body['saved_criminals'] = results
         return response_body, 200
     response_body['message'] = 'Wrong Username Or Password'
     return response_body, 401
@@ -488,6 +492,7 @@ def handle_saved_criminals():
         db.session.add(saved_criminals)
         db.session.commit()
         response_body['message'] = 'Saved criminal'
+        response_body['results'] = saved_criminals.serialize()
         return response_body, 200
 
 

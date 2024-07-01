@@ -11,8 +11,6 @@ export const Criminals = () => {
         actions.setCurrentCriminal(id)
     }
 
-
-
     return (
         <div className="container-fluid bg-dark">
             {!store.criminals ? <p> not found </p> :
@@ -22,8 +20,8 @@ export const Criminals = () => {
                             <div key={id} className="card border-primary border-none mt-5">
                                <Link to="/current-criminal" onClick={()=>handleCriminal(item.id)} className="bg-primary"><img src={item.images} className="ms-1" alt="..." /></Link> 
                                 <button className="btn-save favoriteLocation bg-primary">
-                                {store.favoritesCriminals.includes(item.title) ? <i className="fa-solid fa-heart-crack fa-xl favoriteSize" onClick={() => actions.removeFavoritesCriminals(item.title)}></i> :
-                                 <i className="fa-solid fa-heart fa-xl text-light favoriteSize" onClick={() => actions.addFavoritesCriminals(item.title)}></i> }
+                                {store.favoritesCriminals.includes(item.id) ? <i className="fa-solid fa-heart-crack fa-xl favoriteSize" onClick={() => actions.removeFavoritesCriminals(item.id)}></i> :
+                                 <i className="fa-solid fa-heart fa-xl text-light favoriteSize" onClick={() => actions.addFavoritesCriminals(item.id)}></i> }
                                 </button>
 
                                 <div className="card-body bg-primary border-primary">
@@ -33,7 +31,7 @@ export const Criminals = () => {
                                         </div>
                                     </div>
                                     <div className="text-center">
-                                        <p className="card-text body text-light">{item.subjects}</p>
+                                        <p className="card-text body text-light">{item.subjects.replace(/['"\[\]]/g, '')}</p>
                                     </div>
                                 </div>
                             </div>
