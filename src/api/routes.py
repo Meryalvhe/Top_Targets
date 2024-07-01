@@ -198,7 +198,7 @@ def fetch_data_api():
         page += 1
         time.sleep(rate_limit) 
 
-        
+
 @api.route('/data-criminals', methods=['GET'])
 def handle_data_Criminals():
      fetch_data_from_api()
@@ -238,15 +238,6 @@ def handle_data_Criminals():
     response_body['results'] = all_data
     return response_body, 200 """
 
-@api.route('/data-missing', methods=['GET'])
-def handle_data_Missing():
-    fetch_data_api()
-    return 'Data update'
-
-@api.route('/data-criminals', methods=['GET'])
-def handle_data_Criminals():
-     fetch_data_from_api()
-     return 'data update'
 
 @api.route('/data-missing', methods=['GET'])
 def handle_data_Missing():
@@ -379,6 +370,7 @@ def handle_profile(user_id):
     response_body['results'] = {}
     return response_body, 404
 
+
 @api.route('/comments-criminal', methods=['GET','POST']) 
 def handle_comments_criminals():
     response_body = {}
@@ -403,6 +395,7 @@ def handle_comments_criminals():
         db.session.commit()
         response_body['message'] = 'Created Comment'
         return response_body, 200
+
 
 @api.route('/comments-criminal/<int:comments_criminal_id>', methods=['GET', 'DELETE']) 
 def handle_comments_criminals_id(comments_criminal_id):
@@ -450,7 +443,7 @@ def handle_comments_missing_persons():
         db.session.commit()
         response_body['message'] = 'Created comment'
         return response_body, 200
-        
+
 @api.route('/comments-missing-persons/<int:comments_missing_person_id>', methods=['GET', 'DELETE']) 
 def handle_comments_missing_persons_id(comments_missing_person_id):
     response_body = {}
@@ -743,4 +736,4 @@ def handle_criminals_id(criminals_id):
         response_body['message'] = 'Criminal Not Found'
         response_body['results'] = {}
         return response_body, 404
-        
+

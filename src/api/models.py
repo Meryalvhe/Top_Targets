@@ -51,6 +51,7 @@ class Criminals(db.Model):
     weight =db.Column(db.String, unique=False, nullable=True)
     poster_classification = db.Column(db.String, unique=False, nullable=True)
     favourites_amount = db.Column(db.Integer, unique=False, nullable=True)
+    poster_classification = db.Column(db.String, unique=False, nullable=True)
 
     def __repr__(self):
         return f'<Criminal: {self.title}>'
@@ -101,6 +102,8 @@ class MissingPersons(db.Model):
     weight =db.Column(db.String, unique=False, nullable=True)
     poster_classification = db.Column(db.String, unique=False, nullable=True)
     favourites_amount = db.Column(db.Integer, unique=False, nullable=True)
+    poster_classification = db.Column(db.String, unique=False, nullable=True)
+
 
     def __repr__(self):
         return f'<Missing_Persons: {self.title}>'

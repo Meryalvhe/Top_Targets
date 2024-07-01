@@ -1,5 +1,5 @@
 /* NAVBAR BUTTON STYLES*/
-header{
+.navbar{
   margin-top: auto;
 }
 
@@ -46,7 +46,7 @@ header{
     height: 2px;
     bottom: 0;
     left: 0;
-    background-color: white;
+    background-color: rgb(5, 240, 103);
     transform-origin: bottom right;
     transition: transform 0.25s ease-out;
   }
@@ -56,3 +56,7 @@ header{
     transform-origin: bottom left;
   }
   
+  .custom-dropdown::after {
+    border-top-color: white; /* Change the arrow color to white */
+    border-bottom-color: white; /* Optional: If your arrow style uses both borders */
+  }

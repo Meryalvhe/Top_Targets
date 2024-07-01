@@ -10,15 +10,14 @@ const getState = ({getStore, getActions, setStore}) => {
 			criminals:[],
 			missing:[],
 			currentCriminal:[{}],
-
 			currentMissingPerson: [{}],
 			favoritesCriminals:[],
 			favoritesMissingPersonas:[],
+			userId:2,
 			stories: [],
 			toptencriminals: [],
 			mostwantedterrorists: [],
-			missingFromCriminals: []
-
+			missingFromCriminals: [],
 		},
 		actions: {
 			exampleFunction: () => {getActions().changeColor(0, "green");},  // Use getActions to call a function within a fuction
@@ -61,10 +60,7 @@ const getState = ({getStore, getActions, setStore}) => {
 					return
 				}
 				setStore({favoritesCriminals: [...getStore().favorites, text]})	
-				
-
-			},	
-
+			},
 			removeFavoritesCrimianls: (remove) =>{
 				setStore({favoritesCriminals: getStore().favoritesCriminals.filter((item)=> item != remove)})
 				

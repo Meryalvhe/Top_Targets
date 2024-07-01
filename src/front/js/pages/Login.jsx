@@ -1,12 +1,11 @@
 import React, { useState, useContext } from "react";
-import { Context } from "../store/appContext.js";
 import { useNavigate } from "react-router-dom";
 //import db, {Users} from "../../../api/models.py"
-
+import { Context } from "../store/appContext.js";
 const Login = () => {
 
-    const {store, actions} = useContext(Context);
-    const navigate = useNavigate();
+  const { store, actions } = useContext(Context);
+  const navigate = useNavigate();
   const [email, setEmail] = useState("");
   const [password, setPassword] = useState("");
 
@@ -21,7 +20,7 @@ const Login = () => {
   const handleSubmit = async (e) => {
     e.preventDefault();
     const dataToSend = { email, password };
-    console.log(dataToSend);
+    console.log("los datos que se mandan:", dataToSend);
 
     const url = `${process.env.BACKEND_URL}/api/login`;
     const options = {
@@ -31,11 +30,11 @@ const Login = () => {
         'Content-Type': 'application/json'
       }
     }
-    console.log(url,options)
+    console.log("la url y la options:",url, options)
     const response = await fetch(url, options);
     console.log(response)
     if (!response.ok) {
-      console.log('Error: ', response.status, response.statusText)
+      console.log('Error fatalisima: ', response.status, response.statusText)
       return
     }
     const data = await response.json();
@@ -47,22 +46,20 @@ const Login = () => {
     actions.setIsLogin(true)
     actions.setCurrentUser(user)
     // console.log(data.access_token);
-    navigate('/home')
+    navigate('/')
   };
 
   return (
-    <div className="container mt-5">
+    <div className=" vh-100 bg-primary">
       <div className="row justify-content-center">
         <div className="col-md-6">
+          <h1 className="title text-light text-center pb-3">Log into your account</h1>
           <div className="card">
             <div className="card-body">
-              <h2 className="card-title text-center mb-3 display-5">
-                Iniciar sesión
-              </h2>
               <form onSubmit={handleSubmit}>
                 <div className="form-group mt-3 h6">
-                  <label htmlFor="email" className="mb-1">
-                    Correo electrónico:
+                  <label htmlFor="email" className="mb-1 body">
+                    Your email:
                   </label>
                   <input
                     type="email"
@@ -74,8 +71,8 @@ const Login = () => {
                   />
                 </div>
                 <div className="form-group mt-3 h6">
-                  <label htmlFor="password" className="mb-1">
-                    Contraseña:
+                  <label htmlFor="password" className="mb-1 body">
+                    Your password:
                   </label>
                   <input
                     type="password"
@@ -87,8 +84,8 @@ const Login = () => {
                   />
                 </div>
                 <div className="text-center">
-                  <button type="submit" className="btn btn-primary mt-5">
-                    Iniciar sesión
+                  <button type="submit" className="btn btn-primary mt-3 title">
+                    LOG IN
                   </button>
                 </div>
               </form>
