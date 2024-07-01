@@ -10,11 +10,15 @@ const getState = ({getStore, getActions, setStore}) => {
 			criminals:[],
 			missing:[],
 			currentCriminal:[{}],
-			currentCriminal: [{}],
+
+			currentMissingPerson: [{}],
 			favoritesCriminals:[],
 			favoritesMissingPersonas:[],
-			userId:2,
-			stories: []
+			stories: [],
+			toptencriminals: [],
+			mostwantedterrorists: [],
+			missingFromCriminals: []
+
 		},
 		actions: {
 			exampleFunction: () => {getActions().changeColor(0, "green");},  // Use getActions to call a function within a fuction
@@ -58,7 +62,9 @@ const getState = ({getStore, getActions, setStore}) => {
 				}
 				setStore({favoritesCriminals: [...getStore().favorites, text]})	
 				
+
 			},	
+
 			removeFavoritesCrimianls: (remove) =>{
 				setStore({favoritesCriminals: getStore().favoritesCriminals.filter((item)=> item != remove)})
 				
@@ -73,6 +79,71 @@ const getState = ({getStore, getActions, setStore}) => {
 				console.log(data)
 				setStore({missing: data.results})
 			},
+
+			getStories: async ()=>{
+				const response = await fetch (process.env.BACKEND_URL + "/api/stories-criminals");
+				if (!response.ok) {
+					console.log('Error');
+					return
+				}
+				const data = await response.json();
+				
+				if(data.user_id==getStore.userId){
+					console.log(data)
+					setStore({stories: data.results})
+				} 
+				
+			},
+			getTopTenCriminals: async()=>{
+				const response = await fetch ("https://api.fbi.gov/wanted/v1/list?poster_classification=ten");
+				if (!response.ok) {
+					console.log('Error');
+					return
+				}
+				const data = await response.json();
+				console.log(data)
+				/* const result = data.items
+				console.log(result) */
+
+				setStore({toptencriminals: data.items})
+
+			},
+			getMostWantedTerrorists: async()=>{
+				const response = await fetch ("https://api.fbi.gov/wanted/v1/list?poster_classification=terrorist");
+				if (!response.ok) {
+					console.log('Error');
+					return
+				}
+				const data = await response.json();
+				console.log(data)
+				/* const result = data.items
+				console.log(result) */
+
+				setStore({mostwantedterrorists: data.items})
+
+			},
+			getMissingFromDB: async ()=>{
+				const response = await fetch("https://opulent-space-zebra-pjj675j6wjj7frg7j-3001.app.github.dev/api/criminals");
+				if (!response.ok){
+					console.log('Error');
+					return
+				}
+				const data = await response.json()
+
+				const result = data.results
+				console.log(result)
+
+				const items = result.filter(item => {
+					if (item.poster_classification == "missing"){
+						return true
+					}
+				})
+
+				/* setStore({missingFromCriminals: items}) */
+				setStore({missingFromCriminals: result})
+				console.log(items)
+			},
+
 
 			getStories: async ()=>{
 				const response = await fetch (process.env.BACKEND_URL + "/api/stories-criminals");

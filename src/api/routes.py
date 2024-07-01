@@ -119,6 +119,7 @@ def handle_users_id(user_id):
         response_body['results'] = {}
         return response_body, 404  
 
+
 def fetch_data_from_api():
     url = 'https://api.fbi.gov/wanted/v1/list'
     page = 1
@@ -158,6 +159,7 @@ def fetch_data_from_api():
         page += 1
         time.sleep(rate_limit) 
 
+
 def fetch_data_api():
     url = 'https://api.fbi.gov/wanted/v1/list'
     page = 1
@@ -195,6 +197,7 @@ def fetch_data_api():
         db.session.commit()
         page += 1
         time.sleep(rate_limit) 
+
         
 @api.route('/data-criminals', methods=['GET'])
 def handle_data_Criminals():
@@ -235,14 +238,20 @@ def handle_data_Criminals():
     response_body['results'] = all_data
     return response_body, 200 """
 
-
-
 @api.route('/data-missing', methods=['GET'])
 def handle_data_Missing():
     fetch_data_api()
     return 'Data update'
 
+@api.route('/data-criminals', methods=['GET'])
+def handle_data_Criminals():
+     fetch_data_from_api()
+     return 'data update'
 
+@api.route('/data-missing', methods=['GET'])
+def handle_data_Missing():
+    fetch_data_api()
+    return 'Data update'
 
 @api.route('/criminals', methods=['GET','POST'])  # Debemos modificar según clase del Lunes 17/06, ya que debemos traer la inf de la API del FBI
 def handle_criminals():     
@@ -298,7 +307,6 @@ def handle_criminals():
         response_body ['results'] = results
         response_body ['message'] = 'List Of Criminals'
         return response_body, 200
-
 
 @api.route('/missing-persons', methods=['GET','POST'])  # Debemos modificar según clase del Lunes 17/06, ya que debemos traer la inf de la API del FBI
 def handle_missing_persons(): 
@@ -418,7 +426,6 @@ def handle_comments_criminals_id(comments_criminal_id):
         response_body['results'] = {}
         return response_body, 200
 
-
 @api.route('/comments-missing-persons', methods=['GET','POST']) 
 def handle_comments_missing_persons():
     response_body = {}
@@ -444,7 +451,6 @@ def handle_comments_missing_persons():
         response_body['message'] = 'Created comment'
         return response_body, 200
         
-
 @api.route('/comments-missing-persons/<int:comments_missing_person_id>', methods=['GET', 'DELETE']) 
 def handle_comments_missing_persons_id(comments_missing_person_id):
     response_body = {}
@@ -468,7 +474,6 @@ def handle_comments_missing_persons_id(comments_missing_person_id):
         response_body['results'] = {}
         return response_body, 404
 
-
 @api.route('/saved-criminals', methods=['GET','POST']) 
 def handle_saved_criminals():
     response_body = {}
@@ -489,7 +494,6 @@ def handle_saved_criminals():
         db.session.commit()
         response_body['message'] = 'Saved criminal'
         return response_body, 200
-
 
 @api.route('/saved-criminals/<int:saved_criminals_id>', methods=['GET', 'DELETE']) 
 def handle_saved_criminals_id(saved_criminals_id):
@@ -515,7 +519,6 @@ def handle_saved_criminals_id(saved_criminals_id):
         response_body['results'] = {}
         return response_body, 404
 
-
 @api.route('/saved-missing-persons', methods=['GET','POST']) 
 def handle_saved_missing_persons():
     response_body = {}
@@ -536,7 +539,6 @@ def handle_saved_missing_persons():
         db.session.commit()
         response_body['message'] = 'Saved Missing Person'
         return response_body, 200
-
 
 @api.route('/saved-missing-persons/<int:saved_missing_person_id>', methods=['GET', 'DELETE']) 
 def handle_saved_missing_persons_id(saved_missing_person_id):
@@ -561,7 +563,6 @@ def handle_saved_missing_persons_id(saved_missing_person_id):
         response_body['message'] = 'Saved Missin Person Not Found'
         response_body['results'] = {}
         return response_body, 404
-
 
 @api.route('/stories-criminals', methods=['GET', 'POST']) 
 def handle_stories_criminals():
@@ -595,7 +596,6 @@ def handle_stories_criminals():
         db.session.commit()
         response_body['message'] = 'Story Criminal Created'
         return response_body, 200
-
 
 @api.route('/stories-criminals/<int:stories_criminals_id>', methods=['GET', 'PUT', 'DELETE'])
 def handle_stories_criminals_id(stories_criminals_id):
@@ -640,7 +640,6 @@ def handle_stories_criminals_id(stories_criminals_id):
         response_body['results'] = {}
         return response_body, 404  
 
-
 @api.route('/stories-missing-persons', methods=['GET', 'POST']) 
 def handle_stories_missing_person():
     response_body = {}
@@ -673,7 +672,6 @@ def handle_stories_missing_person():
         db.session.commit()
         response_body['message'] = 'Story Missing Person Created'
         return response_body, 200
-
 
 @api.route('/stories-missing-persons/<int:stories_missing_persons_id>', methods=['GET', 'PUT', 'DELETE']) 
 def handle_stories_missing_persons_id(stories_missing_persons_id):
@@ -717,3 +715,32 @@ def handle_stories_missing_persons_id(stories_missing_persons_id):
         response_body['message'] = 'Story Missing Person Not Found'
         response_body['results'] = {}
         return response_body, 404   
+
+
+@api.route('/missing-persons/<int:missing_person_id>', methods=['GET']) 
+def handle_missing_persons_id(missing_person_id):
+    response_body = {}
+    if request.method == 'GET':
+        missing_person = db.session.execute(db.select(MissingPersons).where(MissingPersons.id == missing_person_id)).scalar()
+        if missing_person:
+            response_body['results'] = missing_person.serialize()
+            response_body['message'] = 'Missing Person Found'
+            return response_body, 200
+        response_body['message'] = 'Missing Person Not Found'
+        response_body['results'] = {}
+        return response_body, 404
+
+
+@api.route('/criminals/<int:criminals_id>', methods=['GET']) 
+def handle_criminals_id(criminals_id):
+    response_body = {}
+    if request.method == 'GET':
+        criminals = db.session.execute(db.select(Criminals).where(Criminals.id == criminals_id)).scalar()
+        if criminals:
+            response_body['results'] = criminals.serialize()
+            response_body['message'] = 'Criminal Found'
+            return response_body, 200
+        response_body['message'] = 'Criminal Not Found'
+        response_body['results'] = {}
+        return response_body, 404
+        
