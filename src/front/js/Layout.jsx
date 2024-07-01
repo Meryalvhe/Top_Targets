@@ -11,6 +11,8 @@ import { Home } from "./pages/Home.jsx";
 import Login from "./pages/Login.jsx"
 import Signup from "./pages/signup.jsx";
 import { Criminals} from "./pages/Criminals.jsx";
+import { MissingPersons } from "./pages/MissingPersons.jsx";
+import { CurrentCriminal } from "./pages/CurrentCriminals.jsx";
 import { Contact } from "./pages/Contact.jsx";
 import {About} from "./pages/About.jsx";
 import { CreateStory } from "./pages/CreateStory.jsx";
@@ -35,6 +37,8 @@ const Layout = () => {
                         <Route element={<Signup />} path = "/signup" />
                         <Route element={<Login />} path="/login" />
                         <Route element={<Criminals />} path="/criminals" />
+                        <Route element={<MissingPersons />} path="/missing-persons" />
+                        <Route element={<CurrentCriminal />} path="/current-criminal" />
                         <Route element={<Contact />} path="/contact" />
                         <Route element={<About />} path="/about" />
                         <Route element={<CreateStory />} path="/create-story" />
