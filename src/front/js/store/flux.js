@@ -7,8 +7,14 @@ const getState = ({getStore, getActions, setStore}) => {
 			user: '',
 			userId:1,
 			is_admin:false,
+			criminals:[],
+			missing:[],
+			currentCriminal:[{}],
+			currentCriminal: [{}],
+			favoritesCriminals:[],
+			favoritesMissingPersonas:[],
+			userId:2,
 			stories: []
-			
 		},
 		actions: {
 			exampleFunction: () => {getActions().changeColor(0, "green");},  // Use getActions to call a function within a fuction
@@ -34,7 +40,39 @@ const getState = ({getStore, getActions, setStore}) => {
 			setIsLogin: (login) => {setStore({ isLogin: login})},
 			setLogout:(logout) => {setStore({ isLogin: logout})},
 			setCurrentUser: (user) => {setStore({ user: user})},
-			//getCriminals:()=>{handle_criminals}
+			setCurrentCriminal: (id) =>{setStore({currentCriminal:id})},
+			setCurrentMissingPerson: (id) =>{setStore({currentCriminal:id})},
+			getCriminals: async ()=>{
+				const response = await fetch (process.env.BACKEND_URL + "/api/criminals");
+				if (!response.ok) {
+					console.log('Error');
+					return
+				}
+				const data = await response.json();
+				console.log(data)
+				setStore({criminals: data.results})
+			},
+			addFavoritesCrimianls: (text) =>{
+				if (getStore().favoritesCriminals.includes(text)){
+					return
+				}
+				setStore({favoritesCriminals: [...getStore().favorites, text]})	
+				
+			},	
+			removeFavoritesCrimianls: (remove) =>{
+				setStore({favoritesCriminals: getStore().favoritesCriminals.filter((item)=> item != remove)})
+				
+			},
+			getMissing: async ()=>{
+				const response = await fetch (process.env.BACKEND_URL + "/api/missing-persons");
+				if (!response.ok) {
+					console.log('Error');
+					return
+				}
+				const data = await response.json();
+				console.log(data)
+				setStore({missing: data.results})
+			},
 
 			getStories: async ()=>{
 				const response = await fetch (process.env.BACKEND_URL + "/api/stories-criminals");
