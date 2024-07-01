@@ -12,8 +12,8 @@ const getState = ({getStore, getActions, setStore}) => {
 			currentCriminal: [{}],
 			favoritesCriminals:[],
 			favoritesMissingPersonas:[],
-
-
+			userId:2,
+			stories: []
 		},
 		actions: {
 			exampleFunction: () => {getActions().changeColor(0, "green");},  // Use getActions to call a function within a fuction
@@ -73,6 +73,20 @@ const getState = ({getStore, getActions, setStore}) => {
 				setStore({missing: data.results})
 			},
 
+			getStories: async ()=>{
+				const response = await fetch (process.env.BACKEND_URL + "/api/stories-criminals");
+				if (!response.ok) {
+					console.log('Error');
+					return
+				}
+				const data = await response.json();
+				
+				if(data.user_id==getStore.userId){
+					console.log(data)
+					setStore({stories: data.results})
+				} 
+				
+			}
 		}
 	};
 };
