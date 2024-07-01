@@ -10,7 +10,6 @@ import kruegerURL from "../../img/freddykrueger.jpg"
 export const Navbar = () => {
 	const { store, actions } = useContext(Context);
 	const isLogged = store.isLogin;
-	
 	const logOut = () => {
 		console.log(localStorage)
 		localStorage.clear();
@@ -79,10 +78,8 @@ export const Navbar = () => {
 							</Link>
 						</div>
 					}
-
-
 				</div>
 			</div>
-		</nav>
+		</header>
 	);
 };
