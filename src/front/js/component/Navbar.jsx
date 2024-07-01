@@ -9,7 +9,7 @@ import kruegerURL from "../../img/freddykrueger.jpg"
 
 export const Navbar = () => {
 	const { store, actions } = useContext(Context);
-	const isLogged = localStorage.getItem('isLogging') === 'true';
+	const isLogged = store.isLogin;
 	
 	const logOut = () => {
 		console.log(localStorage)

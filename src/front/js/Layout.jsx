@@ -10,6 +10,7 @@ import { Footer } from "./component/Footer.jsx";
 import { Home } from "./pages/Home.jsx";
 import Login from "./pages/Login.jsx"
 import Signup from "./pages/signup.jsx";
+import Cookies from "./pages/Cookies.jsx";
 import { Criminals} from "./pages/Criminals.jsx";
 import { MissingPersons } from "./pages/MissingPersons.jsx";
 import { CurrentCriminal } from "./pages/CurrentCriminals.jsx";
@@ -19,7 +20,6 @@ const Layout = () => {
     //the basename is used when your project is published in a subdirectory and not in the root of the domain
     // you can set the basename on the .env file located at the root of this project, E.g: BASENAME=/react-hello-webapp/
     const basename = process.env.BASENAME || "";
-    useEffect(() => {localStorage.setItem('isLogging', 'false')}, []);
     if(!process.env.BACKEND_URL || process.env.BACKEND_URL == "") return <BackendURL/ >;
 
     return (
@@ -34,6 +34,7 @@ const Layout = () => {
                         <Route element={<Criminals />} path="/criminals" />
                         <Route element={<MissingPersons />} path="/missing-persons" />
                         <Route element={<CurrentCriminal />} path="/current-criminal" />
+                        <Route element={<Cookies />} path="/cookies" />
                     </Routes>
                     <Footer />
                 </ScrollToTop>

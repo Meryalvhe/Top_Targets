@@ -2,9 +2,14 @@ import React, { useContext } from "react";
 import { Context } from "../store/appContext.js";
 import jumbotronUrl from "../../img/jumbo.jpg"
 import "../../styles/home.css"
+import { Link, useParams } from "react-router-dom";
 
 export const Home = () => {
     const { store, actios } = useContext(Context);
+
+    const handleCriminal =(id) =>{
+        actions.setCurrentCriminal(id)
+    }
 
     return (
         <span>
@@ -26,6 +31,7 @@ export const Home = () => {
                                 {store.toptencriminals.map((item, id) =>
                                     <div className="col m-1 col-lg-2 col-md-6 col-sm-10 cardHome rounded-3">
                                         <div key={id} className="bg-secondary border-light mt-5 cardCss">
+                                        <Link to={"/current-criminal/" + id} onClick={()=>handleCriminal(item.id)} className="bg-primary">
                                             <button className="btn-save top-0 end-0 position-absolute m-3">
                                                 <i className="fa-solid fa-heart-crack fa-xl favoriteSize"></i>
                                             </button>
@@ -42,6 +48,7 @@ export const Home = () => {
                                                     </div>
                                                 </div>
                                             </div>
+                                        </Link> 
                                         </div>
                                     </div>
                                 )}
@@ -59,6 +66,7 @@ export const Home = () => {
                                 {store.mostwantedterrorists.map((item, id) =>
                                     <div className="col m-1 col-lg-2 col-md-6 col-sm-10 cardHome rounded-3">
                                         <div key={id} className="bg-secondary border-light mt-5 cardCss">
+                                        <Link to={"/current-missing-person/" + id} onClick={()=>handleCriminal(item.id)} className="bg-primary">
                                             <button className="btn-save top-0 end-0 position-absolute m-3">
                                                 <i className="fa-solid fa-heart-crack fa-xl favoriteSize"></i>
                                             </button>
@@ -75,6 +83,7 @@ export const Home = () => {
                                                     </div>
                                                 </div>
                                             </div>
+                                        </Link>
                                         </div>
                                     </div>
                                 )}
