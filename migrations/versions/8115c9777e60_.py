@@ -1,8 +1,8 @@
 """empty message
 
-Revision ID: fa10169bf490
+Revision ID: 8115c9777e60
 Revises: 
-Create Date: 2024-06-30 15:44:17.564185
+Create Date: 2024-07-01 21:22:09.436009
 
 """
 from alembic import op
@@ -10,7 +10,7 @@ import sqlalchemy as sa
 
 
 # revision identifiers, used by Alembic.
-revision = 'fa10169bf490'
+revision = '8115c9777e60'
 down_revision = None
 branch_labels = None
 depends_on = None
@@ -38,8 +38,8 @@ def upgrade():
     sa.Column('field_offices', sa.Text(), nullable=True),
     sa.Column('reward_text', sa.String(), nullable=True),
     sa.Column('weight', sa.String(), nullable=True),
-    sa.Column('poster_classification', sa.String(), nullable=True),
     sa.Column('favourites_amount', sa.Integer(), nullable=True),
+    sa.Column('poster_classification', sa.String(), nullable=True),
     sa.PrimaryKeyConstraint('id')
     )
     op.create_table('missing_persons',
@@ -61,8 +61,8 @@ def upgrade():
     sa.Column('field_offices', sa.Text(), nullable=True),
     sa.Column('reward_text', sa.String(), nullable=True),
     sa.Column('weight', sa.String(), nullable=True),
-    sa.Column('poster_classification', sa.String(), nullable=True),
     sa.Column('favourites_amount', sa.Integer(), nullable=True),
+    sa.Column('poster_classification', sa.String(), nullable=True),
     sa.PrimaryKeyConstraint('id')
     )
     op.create_table('users',
