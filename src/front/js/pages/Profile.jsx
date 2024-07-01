@@ -51,9 +51,9 @@ export const Profile = () => {
 
         
     }
-	return (
-		<div className="p-3 d-flex justify-content-center bg-dark">
-			<div className=" w-75  p-3 mb-5" >
+    return (
+        <div className="p-3 d-flex justify-content-center bg-dark">
+            <div className=" w-75  p-3 mb-5" >
                 <h3 className=" text-center title text-white"> Edit Profile</h3>
                 <article className=" card   bg-dark my-1" >
                     <div className=" card-body row ">
@@ -137,6 +137,6 @@ export const Profile = () => {
                     </div>
                 </article>    
             </div>
-		</div>
-	);
+        </div>
+    );
 };

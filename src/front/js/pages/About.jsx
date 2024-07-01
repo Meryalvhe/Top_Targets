@@ -5,13 +5,11 @@ import mar  from "../../img/Mar.jpeg"
 import mery from "../../img/Mery.jpeg"
 import logo from "../../img/logo.png"
 
-
 export const About = () => {
 
-
-	return (
-		<div className=" bg-dark p-5">
-			<section className="row bg-dark text-white " >
+    return (
+        <div className=" bg-dark p-5">
+            <section className="row bg-dark text-white " >
                 <h1 className="text-center text-white title">About</h1>
                 <article className=" col-12 pt-3 pb-3">
                     <h3 className="text-white title">What is <strong>Top Target</strong>?</h3>
@@ -53,7 +51,7 @@ export const About = () => {
                 </article>
             </section>
 
-			<section className="row  ">
+            <section className="row  ">
                 <h3 className="mt-3 mb-3 title text-white">Developers</h3>
 
                 <div className=" bg-dark col-4 px-1" >
@@ -192,7 +190,7 @@ export const About = () => {
                     </aside>
                 </div>
             </section>
-			
-		</div>
-	);
+            
+        </div>
+    );
 };

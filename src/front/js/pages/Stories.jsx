@@ -6,9 +6,9 @@ export const Stories = () => {
     const { store, actios } = useContext(Context);
     console.log(store.stories)
 
-	return (
-		<div className="p-3 d-flex justify-content-center bg-dark">
-			<section className=" w-75 row p-3" >
+    return (
+        <div className="p-3 d-flex justify-content-center bg-dark">
+            <section className=" w-75 row p-3" >
                 <h3 className="col-12 text-center title text-white">My Stories</h3>
                 {store.stories.map((item)=>
                 <div className="card col-12 my-1 bg-primary" >
@@ -27,6 +27,6 @@ export const Stories = () => {
                 </div>
                 )}
             </section>
-		</div>
-	);
+        </div>
+    );
 };

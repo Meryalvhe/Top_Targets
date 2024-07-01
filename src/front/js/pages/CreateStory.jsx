@@ -30,9 +30,9 @@ export const CreateStory = () => {
         console.log(story)
     }
 
-	return (
-		<div className=" p-5 d-flex justify-content-center bg-dark text-white">
-			<article className="p-3 w-75 row" >
+    return (
+        <div className=" p-5 d-flex justify-content-center bg-dark text-white">
+            <article className="p-3 w-75 row" >
                 <h2 className="col-12 text-center text-white">Create your story</h2>
                 <section className="row my-2">
                     <p className="col-2">Title:</p>
@@ -64,6 +64,6 @@ export const CreateStory = () => {
                     <textarea name="body" onChange={handleBody} id="body"></textarea>  
                 </section>
             </article>
-		</div>
-	);
+        </div>
+    );
 };
