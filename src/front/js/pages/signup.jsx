@@ -46,18 +46,16 @@ const Signup = () => {
   };
 
   return (
-    <div className="container mt-5">
+    <div className="vh-100 bg-primary">
       <div className="row justify-content-center">
         <div className="col-md-6">
+        <h1 className="title text-light text-center pb-3">Create account</h1>
           <div className="card">
             <div className="card-body">
-              <h2 className="card-title text-center mb-3 display-5 body">
-                Registro
-              </h2>
               <form onSubmit={handleSubmit}>
-                <div className="form-group mt-3 h6 title">
+                <div className="form-group mt-3 h6 body">
                   <label htmlFor="email" className="mb-1">
-                    Correo electrónico:
+                  Your email:
                   </label>
                   <input
                     type="email"
@@ -68,9 +66,9 @@ const Signup = () => {
                     required
                   />
                 </div>
-                <div className="form-group mt-3 h6 title">
+                <div className="form-group mt-3 h6 body">
                   <label htmlFor="password" className="mb-1">
-                    Contraseña:
+                  Your password:
                   </label>
                   <input
                     type="password"
@@ -82,8 +80,8 @@ const Signup = () => {
                   />
                 </div>
                 <div className="text-center">
-                  <button type="submit" className="btn btn-primary mt-5">
-                    Registrarse
+                  <button type="submit" className="btn btn-primary mt-3 title">
+                    SIGN UP
                   </button>
                 </div>
               </form>

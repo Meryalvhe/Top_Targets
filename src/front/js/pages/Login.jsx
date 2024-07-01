@@ -51,18 +51,16 @@ const Login = () => {
   };
 
   return (
-    <div className="container mt-5">
+    <div className=" vh-100 bg-primary">
       <div className="row justify-content-center">
         <div className="col-md-6">
+          <h1 className="title text-light text-center pb-3">Log into your account</h1>
           <div className="card">
             <div className="card-body">
-              <h2 className="card-title text-center mb-3 display-5">
-                Iniciar sesión
-              </h2>
               <form onSubmit={handleSubmit}>
                 <div className="form-group mt-3 h6">
-                  <label htmlFor="email" className="mb-1">
-                    Correo electrónico:
+                  <label htmlFor="email" className="mb-1 body">
+                    Your email:
                   </label>
                   <input
                     type="email"
@@ -74,8 +72,8 @@ const Login = () => {
                   />
                 </div>
                 <div className="form-group mt-3 h6">
-                  <label htmlFor="password" className="mb-1">
-                    Contraseña:
+                  <label htmlFor="password" className="mb-1 body">
+                    Your password:
                   </label>
                   <input
                     type="password"
@@ -87,8 +85,8 @@ const Login = () => {
                   />
                 </div>
                 <div className="text-center">
-                  <button type="submit" className="btn btn-primary mt-5">
-                    Iniciar sesión
+                  <button type="submit" className="btn btn-primary mt-3 title">
+                    LOG IN
                   </button>
                 </div>
               </form>
