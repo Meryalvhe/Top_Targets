@@ -58,8 +58,8 @@ export const Navbar = () => {
 								<img src={kruegerURL} alt="mdo" width="32" height="32" className="rounded-circle object-fit-cover" />
 							</Link>
 							<ul className="dropdown-menu dropdown-menu-end">
-								<li><Link to="" className="dropdown-item title">Profile</Link></li>
-								<li><Link to="" className="dropdown-item title">Your stories</Link></li>
+								<li><Link to="/profile" className="dropdown-item title">Profile</Link></li>
+								<li><Link to="/stories" className="dropdown-item title">Your stories</Link></li>
 								<li><hr className="dropdown-divider" /></li>
 								<li><Link to="" className="dropdown-item title" onClick={logOut}>Log out</Link></li>
 							</ul>

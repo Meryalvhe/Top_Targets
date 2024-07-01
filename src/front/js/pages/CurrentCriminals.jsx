@@ -34,7 +34,7 @@ export const CurrentCriminal = () => {
                             </div>
                         </div>
                         <div className="d-flex justify-content-end">
-                            <button type="button" className="btn btn-outline-light ms-3 body">Create your Storie</button>
+                            <a href="/create-story" className="btn btn-outline-light ms-3 body">Create your Storie</a>
                         </div>
                         <h1 className="title text-light"> Comments </h1>
                         <div className="card">
