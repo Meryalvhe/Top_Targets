@@ -5,18 +5,20 @@ const getState = ({getStore, getActions, setStore}) => {
 			demo: [{title: "FIRST", background: "white", initial: "white"}],
 			isLogin: false,
 			user: '',
+			userId:1,
 			is_admin:false,
 			criminals:[],
 			missing:[],
 			currentCriminal:[{}],
+
 			currentMissingPerson: [{}],
 			favoritesCriminals:[],
 			favoritesMissingPersonas:[],
-			userId:2,
 			stories: [],
 			toptencriminals: [],
 			mostwantedterrorists: [],
-			missingFromCriminals: [],
+			missingFromCriminals: []
+
 		},
 		actions: {
 			exampleFunction: () => {getActions().changeColor(0, "green");},  // Use getActions to call a function within a fuction
@@ -60,7 +62,9 @@ const getState = ({getStore, getActions, setStore}) => {
 				}
 				setStore({favoritesCriminals: [...getStore().favorites, text]})	
 				
-			},
+
+			},	
+
 			removeFavoritesCrimianls: (remove) =>{
 				setStore({favoritesCriminals: getStore().favoritesCriminals.filter((item)=> item != remove)})
 				
@@ -75,6 +79,7 @@ const getState = ({getStore, getActions, setStore}) => {
 				console.log(data)
 				setStore({missing: data.results})
 			},
+
 			getStories: async ()=>{
 				const response = await fetch (process.env.BACKEND_URL + "/api/stories-criminals");
 				if (!response.ok) {
@@ -139,6 +144,44 @@ const getState = ({getStore, getActions, setStore}) => {
 				console.log(items)
 			},
 
+
+			getStories: async ()=>{
+				const response = await fetch (process.env.BACKEND_URL + "/api/stories-criminals");
+				if (!response.ok) {
+					console.log('Error');
+					return
+				}
+				const data = await response.json();
+				
+				if(data.user_id==getStore.userId){
+					console.log("Stories in flux")
+					console.log(data)
+					setStore({stories: data.results})
+				} 
+				
+			},
+			addFavoritesCrimianls: (text) =>{
+				if (getStore().favoritesCriminals.includes(text)){
+					return
+				}
+				setStore({favoritesCriminals: [...getStore().favorites, text]})	
+				
+			},
+			getUser: async ()=>{
+				const response = await fetch (process.env.BACKEND_URL + "/api/users/1"); //<int:user_id>
+				if (!response.ok) {
+					console.log('Error');
+					return
+				}
+				const data = await response.json();
+				
+				if(data.user_id==getStore.userId){
+					console.log("User in flux")
+					console.log(data)
+					setStore({user: data.results})
+				} 
+				
+			}
 		}
 	};
 };

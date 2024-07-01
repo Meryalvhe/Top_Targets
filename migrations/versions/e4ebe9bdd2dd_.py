@@ -1,8 +1,8 @@
 """empty message
 
-Revision ID: f1d2ce996578
+Revision ID: e4ebe9bdd2dd
 Revises: 
-Create Date: 2024-06-26 17:01:38.691430
+Create Date: 2024-07-01 17:49:20.043807
 
 """
 from alembic import op
@@ -10,7 +10,7 @@ import sqlalchemy as sa
 
 
 # revision identifiers, used by Alembic.
-revision = 'f1d2ce996578'
+revision = 'e4ebe9bdd2dd'
 down_revision = None
 branch_labels = None
 depends_on = None
@@ -26,18 +26,19 @@ def upgrade():
     sa.Column('description', sa.String(), nullable=True),
     sa.Column('caution', sa.String(), nullable=True),
     sa.Column('race', sa.String(), nullable=True),
-    sa.Column('remarks', sa.String(), nullable=True),
+    sa.Column('remarks', sa.Text(), nullable=True),
     sa.Column('hair_raw', sa.String(), nullable=True),
-    sa.Column('possible_countries', sa.String(), nullable=True),
-    sa.Column('aliases', sa.String(), nullable=True),
-    sa.Column('place_of_birth', sa.String(), nullable=True),
+    sa.Column('possible_countries', sa.Text(), nullable=True),
+    sa.Column('aliases', sa.Text(), nullable=True),
+    sa.Column('place_of_birth', sa.Text(), nullable=True),
     sa.Column('dates_of_birth_used', sa.String(), nullable=True),
     sa.Column('eyes', sa.String(), nullable=True),
-    sa.Column('subjects', sa.String(), nullable=True),
-    sa.Column('images', sa.String(), nullable=True),
-    sa.Column('field_offices', sa.String(), nullable=True),
+    sa.Column('subjects', sa.Text(), nullable=True),
+    sa.Column('images', sa.Text(), nullable=True),
+    sa.Column('field_offices', sa.Text(), nullable=True),
     sa.Column('reward_text', sa.String(), nullable=True),
     sa.Column('weight', sa.String(), nullable=True),
+    sa.Column('poster_classification', sa.String(), nullable=True),
     sa.Column('favourites_amount', sa.Integer(), nullable=True),
     sa.PrimaryKeyConstraint('id')
     )
@@ -50,15 +51,17 @@ def upgrade():
     sa.Column('race', sa.String(), nullable=True),
     sa.Column('remarks', sa.String(), nullable=True),
     sa.Column('hair_raw', sa.String(), nullable=True),
-    sa.Column('possible_countries', sa.String(), nullable=True),
-    sa.Column('place_of_birth', sa.String(), nullable=True),
+    sa.Column('possible_countries', sa.Text(), nullable=True),
+    sa.Column('place_of_birth', sa.Text(), nullable=True),
     sa.Column('dates_of_birth_used', sa.String(), nullable=True),
     sa.Column('eyes', sa.String(), nullable=True),
-    sa.Column('subjects', sa.String(), nullable=True),
-    sa.Column('images', sa.String(), nullable=True),
-    sa.Column('field_offices', sa.String(), nullable=True),
+    sa.Column('subjects', sa.Text(), nullable=True),
+    sa.Column('details', sa.String(), nullable=True),
+    sa.Column('images', sa.Text(), nullable=True),
+    sa.Column('field_offices', sa.Text(), nullable=True),
     sa.Column('reward_text', sa.String(), nullable=True),
     sa.Column('weight', sa.String(), nullable=True),
+    sa.Column('poster_classification', sa.String(), nullable=True),
     sa.Column('favourites_amount', sa.Integer(), nullable=True),
     sa.PrimaryKeyConstraint('id')
     )
