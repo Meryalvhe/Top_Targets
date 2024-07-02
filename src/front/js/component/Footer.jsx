@@ -4,7 +4,7 @@ import "../../styles/index.css";
 import "../../styles/footer.css";
 
 export const Footer = () => (
-	<footer className="footer mt-auto bg-primary">
+	<footer className="footer bg-primary">
 		<div className="container-fluid">
 			<div className="d-flex justify-content-between">
 				<div className="d-flex">
