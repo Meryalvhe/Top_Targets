@@ -37,19 +37,21 @@ class Criminals(db.Model):
     description = db.Column(db.String, unique=False, nullable=True)
     caution = db.Column(db.String, unique=False, nullable=True)
     race = db.Column(db.String, unique=False, nullable=True)
-    remarks = db.Column(db.String, unique=False, nullable=True)
+    remarks = db.Column(db.Text, unique=False, nullable=True)
     hair_raw = db.Column(db.String, unique=False, nullable=True)
-    possible_countries = db.Column(db.String, unique=False, nullable=True) # Array to string
-    aliases = db.Column(db.String, unique=False, nullable=True) # Array to string
-    place_of_birth = db.Column(db.String, unique=False, nullable=True)
+    possible_countries = db.Column(db.Text, unique=False, nullable=True) # Array to string
+    aliases = db.Column(db.Text, unique=False, nullable=True) # Array to string
+    place_of_birth = db.Column(db.Text, unique=False, nullable=True)
     dates_of_birth_used = db.Column(db.String, unique=False, nullable=True) # Array to string
     eyes = db.Column(db.String, unique=False, nullable=True)
-    subjects = db.Column(db.String, unique=False, nullable=True) # Array to string
-    images = db.Column(db.String, unique=False, nullable=True)
-    field_offices = db.Column(db.String, unique=False, nullable=True) # Array to string
+    subjects = db.Column(db.Text, unique=False, nullable=True) # Array to string
+    images = db.Column(db.Text, unique=False, nullable=True)
+    field_offices = db.Column(db.Text, unique=False, nullable=True) # Array to string
     reward_text = db.Column(db.String, unique=False, nullable=True)
     weight =db.Column(db.String, unique=False, nullable=True)
+    poster_classification = db.Column(db.String, unique=False, nullable=True)
     favourites_amount = db.Column(db.Integer, unique=False, nullable=True)
+    poster_classification = db.Column(db.String, unique=False, nullable=True)
 
     def __repr__(self):
         return f'<Criminal: {self.title}>'
@@ -74,7 +76,8 @@ class Criminals(db.Model):
                 'field_offices': self.field_offices,
                 'reward_text': self.reward_text,
                 'weight': self.weight,
-                'favourites_amount': self.favourites_amount}
+                'favourites_amount': self.favourites_amount,
+                'poster_classification': self.poster_classification}
 
 
 class MissingPersons(db.Model):
@@ -87,16 +90,20 @@ class MissingPersons(db.Model):
     race = db.Column(db.String, unique=False, nullable=True)
     remarks = db.Column(db.String, unique=False, nullable=True)
     hair_raw = db.Column(db.String, unique=False, nullable=True)
-    possible_countries = db.Column(db.String, unique=False, nullable=True) # Array to string
-    place_of_birth = db.Column(db.String, unique=False, nullable=True)
+    possible_countries = db.Column(db.Text, unique=False, nullable=True) # Array to string
+    place_of_birth = db.Column(db.Text, unique=False, nullable=True)
     dates_of_birth_used = db.Column(db.String, unique=False, nullable=True) # Array to string
     eyes = db.Column(db.String, unique=False, nullable=True)
-    subjects = db.Column(db.String, unique=False, nullable=True) # Array to string
-    images = db.Column(db.String, unique=False, nullable=True)
-    field_offices = db.Column(db.String, unique=False, nullable=True) # Array to string
+    subjects = db.Column(db.Text, unique=False, nullable=True) # Array to string
+    details = db.Column(db.String, unique=False, nullable=True)
+    images = db.Column(db.Text, unique=False, nullable=True)
+    field_offices = db.Column(db.Text, unique=False, nullable=True) # Array to string
     reward_text = db.Column(db.String, unique=False, nullable=True)
     weight =db.Column(db.String, unique=False, nullable=True)
+    poster_classification = db.Column(db.String, unique=False, nullable=True)
     favourites_amount = db.Column(db.Integer, unique=False, nullable=True)
+    poster_classification = db.Column(db.String, unique=False, nullable=True)
+
 
     def __repr__(self):
         return f'<Missing_Persons: {self.title}>'
@@ -115,11 +122,13 @@ class MissingPersons(db.Model):
                 'dates_of_birth_used': self.dates_of_birth_used,
                 'eyes': self.eyes,
                 'subjects': self.subjects,
+                'details' : self.details,
                 'images': self.images,
                 'field_offices': self.field_offices,
                 'reward_text': self.reward_text,
                 'weight': self.weight,
-                'favourites_amount': self.favourites_amount}
+                'favourites_amount': self.favourites_amount,
+                'poster_classification': self.poster_classification}
 
 
 class StoriesCriminals(db.Model):
@@ -194,6 +203,10 @@ class SavedCriminals(db.Model):
     def serialize(self):
         return {'id': self.id,
                 'user_id': self.user_id,
+                'criminal_id': self.criminal_id}
+    
+    def public_serialize (self):
+        return {'id_save_criminal': self.id,
                 'criminal_id': self.criminal_id}
 
 

@@ -4,9 +4,20 @@ const getState = ({getStore, getActions, setStore}) => {
 			message: null,
 			demo: [{title: "FIRST", background: "white", initial: "white"}],
 			isLogin: false,
-			user: '',
-			is_admin:false
-			
+			user: 1, // user: '',
+			userId:1,
+			is_admin:false,
+			criminals:[],
+			missing:[],
+			currentCriminal:[{}],
+			currentMissingPerson: [{}],
+			favoritesCriminals:[{idSavedCriminal: 30,
+                criminalId: 2}],
+			favoritesMissingPersons:[],
+			stories: [],
+			toptencriminals: [],
+			mostwantedterrorists: [],
+			missingFromCriminals: [],
 		},
 		actions: {
 			exampleFunction: () => {getActions().changeColor(0, "green");},  // Use getActions to call a function within a fuction
@@ -32,8 +43,194 @@ const getState = ({getStore, getActions, setStore}) => {
 			setIsLogin: (login) => {setStore({ isLogin: login})},
 			setLogout:(logout) => {setStore({ isLogin: logout})},
 			setCurrentUser: (user) => {setStore({ user: user})},
-			//getCriminals:()=>{handle_criminals}
+			setCurrentCriminal: (id) =>{setStore({currentCriminal:id})},
+			setCurrentMissingPerson: (id) =>{setStore({currentCriminal:id})},
+			getCriminals: async ()=>{
+				const response = await fetch (process.env.BACKEND_URL + "/api/criminals");
+				if (!response.ok) {
+					console.log('Error');
+					return
+				}
+				const data = await response.json();
+				const result = data.results
+				const criminals = result.filter(items =>{
+					if (items.subjects != "['ViCAP Missing Persons']" && items.subjects != "['ViCAP Unidentified Persons']"){
+						return true
+					}
+				})
 
+				setStore({criminals: criminals})
+			},
+			addFavoritesCriminals: (text) =>{
+				if (getStore().favoritesCriminals.includes(text)){
+					return
+				}
+				setStore({favoritesCriminals: [...getStore().favoritesCriminals, text]})	
+				getActions().addFavoriteCriminalDB(text)
+			},	
+			removeFavoritesCriminals: (remove) =>{
+				setStore({favoritesCriminals: getStore().favoritesCriminals.filter((item)=> item != remove)})
+				getActions().removeFavoriteCriminalDB(remove)
+			},
+			addFavoritesMissingPersons: (text) =>{
+				if (getStore().favoritesMissingPersons.includes(text)){
+					return
+				}
+				setStore({favoritesMissingPersons: [...getStore().favoritesMissingPersons, text]})	
+				
+				
+			},	
+			removeFavoritesMissingPersons: (remove) =>{
+				setStore({favoritesMissingPersons: getStore().favoritesMissingPersons.filter((item)=> item != remove)})
+				
+			},
+			addFavoriteCriminalDB: async (id) =>{
+				const uri =(process.env.BACKEND_URL + "/api/saved-criminals")
+				const dataToSend ={
+					user_id: getStore().user,
+					criminal_id: id
+				}
+				const options = {
+					method: 'POST',
+					headers: {
+						'Content-Type': 'application/json'
+					  },
+					body: JSON.stringify(dataToSend)
+				  };
+				  const response = await fetch(uri, options);
+				  if (!response.ok) {
+					console.log('Error: ', response.status, response.statusText);
+					if (response.status == 400) {
+					  return;
+					}
+				  }
+				  const data = await response.json();
+				  console.log (data)
+			},
+			removeFavoriteCriminalDB: async (id) =>{
+				const uri = (process.env.BACKEND_URL + `/api/saved-criminals/${id}`)
+				const options = {
+					method: 'DELETE'
+				  };
+				  const response = await fetch(uri, options);
+				  if (!response.ok) {
+					console.log('Error: ', response.status, response.statusText);
+					return
+				  };
+			},
+			getMissing: async ()=>{
+				const response = await fetch (process.env.BACKEND_URL + "/api/missing-persons");
+				if (!response.ok) {
+					console.log('Error');
+					return
+				}
+				const data = await response.json();
+				console.log(data)
+				setStore({missing: data.results})
+			},
+
+			getStories: async ()=>{
+				const response = await fetch (process.env.BACKEND_URL + "/api/stories-criminals");
+				if (!response.ok) {
+					console.log('Error');
+					return
+				}
+				const data = await response.json();
+				
+				if(data.user_id==getStore.userId){
+					console.log(data)
+					setStore({stories: data.results})
+				} 
+				
+			},
+			getTopTenCriminals: async()=>{
+				const response = await fetch ("https://api.fbi.gov/wanted/v1/list?poster_classification=ten");
+				if (!response.ok) {
+					console.log('Error');
+					return
+				}
+				const data = await response.json();
+				console.log(data)
+				/* const result = data.items
+				console.log(result) */
+
+				setStore({toptencriminals: data.items})
+
+			},
+			getMostWantedTerrorists: async()=>{
+				const response = await fetch ("https://api.fbi.gov/wanted/v1/list?poster_classification=terrorist");
+				if (!response.ok) {
+					console.log('Error');
+					return
+				}
+				const data = await response.json();
+				console.log(data)
+				/* const result = data.items
+				console.log(result) */
+
+				setStore({mostwantedterrorists: data.items})
+
+			},
+			getMissingFromDB: async ()=>{
+				const response = await fetch("https://opulent-space-zebra-pjj675j6wjj7frg7j-3001.app.github.dev/api/criminals");
+				if (!response.ok){
+					console.log('Error');
+					return
+				}
+				const data = await response.json()
+
+				const result = data.results
+				console.log(result)
+
+				const items = result.filter(item => {
+					if (item.poster_classification == "missing"){
+						return true
+					}
+				})
+
+				/* setStore({missingFromCriminals: items}) */
+				setStore({missingFromCriminals: result})
+				console.log(items)
+			},
+
+
+			getStories: async ()=>{
+				const response = await fetch (process.env.BACKEND_URL + "/api/stories-criminals");
+				if (!response.ok) {
+					console.log('Error');
+					return
+				}
+				const data = await response.json();
+				
+				if(data.user_id==getStore.userId){
+					console.log("Stories in flux")
+					console.log(data)
+					setStore({stories: data.results})
+				} 
+				
+			},
+			addFavoritesCrimianls: (text) =>{
+				if (getStore().favoritesCriminals.includes(text)){
+					return
+				}
+				setStore({favoritesCriminals: [...getStore().favorites, text]})	
+				
+			},
+			getUser: async ()=>{
+				const response = await fetch (process.env.BACKEND_URL + "/api/users/1"); //<int:user_id>
+				if (!response.ok) {
+					console.log('Error');
+					return
+				}
+				const data = await response.json();
+				
+				if(data.user_id==getStore.userId){
+					console.log("User in flux")
+					console.log(data)
+					setStore({user: data.results})
+				} 
+				
+			}
 		}
 	};
 };
