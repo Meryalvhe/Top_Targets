@@ -517,6 +517,17 @@ def handle_saved_criminals_id(saved_criminals_id):
         response_body['results'] = {}
         return response_body, 404
 
+@api.route('/users/<int:user_id>/saved-criminals', methods=['GET'])
+def handle_users_saved_criminals(user_id):
+    response_body = {}
+    saved_criminals = db.session.execute(db.select(SavedCriminals).where(SavedCriminals.user_id == user_id)).scalars()
+    results = [row.serialize() for row in saved_criminals]
+    response_body['results'] = results
+    response_body['message'] = 'Saved Criminals'
+    return response_body, 200
+
+
+
 @api.route('/saved-missing-persons', methods=['GET','POST']) 
 def handle_saved_missing_persons():
     response_body = {}

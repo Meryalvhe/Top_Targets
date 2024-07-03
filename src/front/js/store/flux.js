@@ -11,8 +11,7 @@ const getState = ({getStore, getActions, setStore}) => {
 			missing:[],
 			currentCriminal:[{}],
 			currentMissingPerson: [{}],
-			favoritesCriminals:[{idSavedCriminal: 30,
-                criminalId: 2}],
+			favoritesCriminals:[{}],
 			favoritesMissingPersons:[],
 			stories: [],
 			toptencriminals: [],
@@ -61,13 +60,7 @@ const getState = ({getStore, getActions, setStore}) => {
 
 				setStore({criminals: criminals})
 			},
-			addFavoritesCriminals: (text) =>{
-				if (getStore().favoritesCriminals.includes(text)){
-					return
-				}
-				setStore({favoritesCriminals: [...getStore().favoritesCriminals, text]})	
-				getActions().addFavoriteCriminalDB(text)
-			},	
+	
 			removeFavoritesCriminals: (remove) =>{
 				setStore({favoritesCriminals: getStore().favoritesCriminals.filter((item)=> item != remove)})
 				getActions().removeFavoriteCriminalDB(remove)
@@ -85,11 +78,17 @@ const getState = ({getStore, getActions, setStore}) => {
 				
 			},
 			addFavoriteCriminalDB: async (id) =>{
-				const uri =(process.env.BACKEND_URL + "/api/saved-criminals")
+
+				if (getStore().favoritesCriminals.includes(id)){
+					return
+				}
+
+				const uri =(process.env.BACKEND_URL + "api/saved-criminals")
 				const dataToSend ={
-					user_id: getStore().user,
+					user_id: getStore().user.id,
 					criminal_id: id
 				}
+				console.log(dataToSend)
 				const options = {
 					method: 'POST',
 					headers: {
@@ -106,6 +105,9 @@ const getState = ({getStore, getActions, setStore}) => {
 				  }
 				  const data = await response.json();
 				  console.log (data)
+				  
+				  // Agregar set Store para poder eliminar el criminal de favorite.
+				  setStore({favoritesCriminals: [...getStore().favoritesCriminals, data]})	
 			},
 			removeFavoriteCriminalDB: async (id) =>{
 				const uri = (process.env.BACKEND_URL + `/api/saved-criminals/${id}`)
@@ -194,7 +196,7 @@ const getState = ({getStore, getActions, setStore}) => {
 				if (getStore().favoritesCriminals.includes(text)){
 					return
 				}
-				setStore({favoritesCriminals: [...getStore().favorites, text]})	
+				setStore({favoritesCriminals: [...getStore().favoritesCriminals, text]})	
 				
 			},
 			getUser: async ()=>{
@@ -211,7 +213,8 @@ const getState = ({getStore, getActions, setStore}) => {
 					setStore({user: data.results})
 				} 
 				
-			}
+			}, 
+
 		}
 	};
 };
