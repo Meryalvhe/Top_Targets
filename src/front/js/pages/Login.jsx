@@ -42,11 +42,11 @@ const Login = () => {
     const data = await response.json();
     console.log(data);
     // Aquí comienza nuestra lógica
-    const user = JSON.stringify(data.results)
     localStorage.setItem('token', data.access_token)
-    localStorage.setItem('user', user)
+    localStorage.setItem('user', JSON.stringify(data.results))
     actions.setIsLogin(true)
-    actions.setCurrentUser(user)
+    actions.setCurrentUser(data.results)
+    
     // console.log(data.access_token);
     navigate('/')
   };
