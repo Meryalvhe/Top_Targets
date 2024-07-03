@@ -5,6 +5,7 @@ import { Context } from "../store/appContext";
 export const CreateStory = () => {
     const { store, actions } = useContext(Context);
     const [story, setStory] = useState({"user_id":store.user.id, "criminal_id":store.criminal_id});
+    console.log(store.currentCriminal)
     const handleTitle = event =>{
         const temp = story
         temp["title"] = event.target.value
@@ -29,7 +30,7 @@ export const CreateStory = () => {
         setStory(temp);
         console.log(story)
     }
-
+    
     return (
         <div className=" p-5 d-flex justify-content-center bg-dark text-white">
             <article className="p-3 w-75 row" >
@@ -46,7 +47,7 @@ export const CreateStory = () => {
                         <input class="form-control " type="text" placeholder="Criminal" aria-label="Disabled input example" disabled />
                     </div>
                     <div className="col-4 bt-3">
-                        <input class="form-control " type="text" placeholder="Subject name" aria-label="Disabled input example" disabled />
+                        <input class="form-control " type="text" placeholder={store.currentCriminal.id} aria-label="Disabled input example" disabled />
                     </div>
                     <p className="col-4">This subject information will be loaded automatically as reference</p>
                 </section>
