@@ -33,8 +33,11 @@ export const CreateStory = () => {
     
     return (
         <div className=" p-5 d-flex justify-content-center bg-dark text-white">
-            <article className="p-3 w-75 row" >
-                <h2 className="col-12 text-center text-white">Create your story</h2>
+            <article className="card shadow bg-dark w-75 row" >
+                <div className="card-header bg-primary">
+                    <h3 className="text-center  title text-white">Create your story</h3>
+                </div>
+                
                 <section className="row my-2">
                     <p className="col-2">Title:</p>
                     <div className="col-10">
