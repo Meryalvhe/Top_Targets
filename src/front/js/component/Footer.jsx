@@ -4,7 +4,7 @@ import "../../styles/index.css";
 import "../../styles/footer.css";
 
 export const Footer = () => (
-	<footer className="footer bg-primary">
+	<footer className="footer bg-primary mt-auto">
 		<div className="container-fluid">
 			<div className="d-flex justify-content-between">
 				<div className="d-flex">
@@ -13,36 +13,21 @@ export const Footer = () => (
 							<li><a href="/contact">
 								<button className="cta">
 									<span className="hover-underline-animation body text-light"> Contact </span>
-									<path
-										id="Path_10"
-										data-name="Path 10"
-										d="M8,0,6.545,1.455l5.506,5.506H-30V9.039H12.052L6.545,14.545,8,16l8-8Z"
-										transform="translate(30)"
-									></path>
+									
 								</button>
 							</a>
 							</li>
 							<li><a href="/cookies">
 								<button className="cta">
 									<span className="hover-underline-animation body text-light"> Cookies </span>
-									<path
-										id="Path_10"
-										data-name="Path 10"
-										d="M8,0,6.545,1.455l5.506,5.506H-30V9.039H12.052L6.545,14.545,8,16l8-8Z"
-										transform="translate(30)"
-									></path>
+									
 								</button>
 							</a>
 							</li>
 							<li><a href="/privacy-policy">
 								<button className="cta">
 									<span className="hover-underline-animation body text-light"> Privacy Policy </span>
-									<path
-										id="Path_10"
-										data-name="Path 10"
-										d="M8,0,6.545,1.455l5.506,5.506H-30V9.039H12.052L6.545,14.545,8,16l8-8Z"
-										transform="translate(30)"
-									></path>
+									
 								</button>
 							</a>
 							</li>

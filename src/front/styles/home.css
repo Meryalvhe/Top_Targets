@@ -42,7 +42,7 @@
     border: solid #8d8d8d 1px;
     cursor: pointer;
     transition: all 120ms;
-    display: flex;
+   /*  display: flex; */
     align-items: center;
     justify-content: center;
     background: #ffffff;

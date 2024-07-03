@@ -17,6 +17,10 @@ const getState = ({getStore, getActions, setStore}) => {
 			stories: [],
 			toptencriminals: [],
 			mostwantedterrorists: [],
+			currentTopTenCriminals:[{}],
+			currentTopTenCriminalsComments:[{}],
+			currentMostWantedTerroristsComments: [{}],
+			currentMostWantedTerrorists: [{}],
 			missingFromCriminals: [],
 		},
 		actions: {
@@ -128,7 +132,6 @@ const getState = ({getStore, getActions, setStore}) => {
 				console.log(data)
 				setStore({missing: data.results})
 			},
-
 			getStories: async ()=>{
 				const response = await fetch (process.env.BACKEND_URL + "/api/stories-criminals");
 				if (!response.ok) {
@@ -144,31 +147,39 @@ const getState = ({getStore, getActions, setStore}) => {
 				
 			},
 			getTopTenCriminals: async()=>{
-				const response = await fetch ("https://api.fbi.gov/wanted/v1/list?poster_classification=ten");
+				const response = await fetch (process.env.BACKEND_URL + "/api/criminals");
 				if (!response.ok) {
 					console.log('Error');
 					return
 				}
 				const data = await response.json();
-				console.log(data)
-				/* const result = data.items
-				console.log(result) */
+				const result = data.results
+				const toptencriminals = result.filter(items =>{
+					if (items.poster_classification == "ten"){
+						return true
+					}
+				})
+				console.log (toptencriminals)
 
-				setStore({toptencriminals: data.items})
+				setStore({toptencriminals: toptencriminals})
 
 			},
 			getMostWantedTerrorists: async()=>{
-				const response = await fetch ("https://api.fbi.gov/wanted/v1/list?poster_classification=terrorist");
+				const response = await fetch (process.env.BACKEND_URL + "/api/criminals");
 				if (!response.ok) {
 					console.log('Error');
 					return
 				}
 				const data = await response.json();
-				console.log(data)
-				/* const result = data.items
-				console.log(result) */
+				const result = data.results
+				const mostwanted = result.filter(items =>{
+					if (items.poster_classification == "terrorist"){
+						return true
+					}
+				})
+				console.log (mostwanted)
 
-				setStore({mostwantedterrorists: data.items})
+				setStore({mostwantedterrorists: mostwanted})
 
 			},
 			getMissingFromDB: async ()=>{
@@ -192,8 +203,6 @@ const getState = ({getStore, getActions, setStore}) => {
 				setStore({missingFromCriminals: result})
 				console.log(items)
 			},
-
-
 			getStories: async ()=>{
 				const response = await fetch (process.env.BACKEND_URL + "/api/stories-criminals");
 				if (!response.ok) {
@@ -230,7 +239,9 @@ const getState = ({getStore, getActions, setStore}) => {
 					setStore({user: data.results})
 				} 
 				
-			}
+			},
+			setCurrentTopTenCriminal: (id) =>{setStore({currentTopTenCriminals:id})},
+			setCurrentMissingPerson: (id) =>{setStore({currentCriminal:id})},
 		}
 	};
 };
