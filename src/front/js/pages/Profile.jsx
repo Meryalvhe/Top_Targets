@@ -81,8 +81,10 @@ export const Profile = () => {
     return (
         <div className="p-3 d-flex justify-content-center bg-dark">
             <div className=" w-75  p-3 mb-5" >
-                <h3 className=" text-center title text-white"> Edit Profile</h3>
-                <article className=" card   bg-dark my-1" >
+                <article className=" card  shadow bg-dark my-1" >
+                    <div className="card-header bg-primary">
+                        <h3 className="text-center  title text-white"> Profile</h3>
+                    </div>
                     <div className=" card-body row ">
                         <section className="col-lg-4 col-md-12  ">
 

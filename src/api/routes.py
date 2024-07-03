@@ -718,9 +718,18 @@ def handle_stories_missing_persons_id(stories_missing_persons_id):
 def handle_stories_criminals_user_id(user_id):
     response_body = {}
     if request.method == 'GET':
-        stories_criminals = db.session.execute(db.select(StoriesCriminals).where(StoriesCriminals.user_id == user_id)).scalars()
+
+        """delivery_note = db.session.query(DeliveryNotes, DeliveryNoteLines).join(DeliveryNoteLines, DeliveryNotes.id==DeliveryNoteLines.delivery_note_id, isouter=True).all()
+        delivery_note = DeliveryNotes.query.get(delivery_note_id)
+        if delivery_note:
+            delivery_note_data = delivery_note.serialize()
+            delivery_note_data['delivery_note_lines'] = [line.serialize() for line in delivery_note.delivery_note_lines]
+            return jsonify(delivery_note_data), 200"""
+
+        stories_criminals = db.session.execute(db.select(StoriesCriminals, Criminals).join(StoriesCriminals,Criminals.id == StoriesCriminals.criminal_id).where(StoriesCriminals.user_id == user_id)).scalars()
         if stories_criminals:
             stories_criminals = [story.serialize() for story in stories_criminals]
+            print(stories_criminals)
             response_body['results'] = stories_criminals
             response_body['message'] = 'Stories Found'
             return response_body, 201
