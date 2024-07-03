@@ -1,8 +1,13 @@
 .avatar-circle {
-    height:170px;
-    width:170px;
+    height:150px;
+    width: 150px;
     } 
 .profile-avatar{
-    height:350px;
-    width:350px;
+    height:300px;
+    width: 300px;
 }
+.btn-avatar{
+    height:170px;
+    width: 170px;
+}
+
