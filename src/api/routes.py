@@ -735,12 +735,19 @@ def handle_stories_criminals_user_id(user_id):
         if delivery_note:
             delivery_note_data = delivery_note.serialize()
             delivery_note_data['delivery_note_lines'] = [line.serialize() for line in delivery_note.delivery_note_lines]
-            return jsonify(delivery_note_data), 200"""
+            return jsonify(delivery_note_data), 200
+        query = session.query(Table1, Table2).join(Table2, Table1.id == Table2.table1_id, full=True)"""
 
-        stories_criminals = db.session.execute(db.select(StoriesCriminals, Criminals).join(StoriesCriminals,Criminals.id == StoriesCriminals.criminal_id).where(StoriesCriminals.user_id == user_id)).scalars()
+        #stories_criminals = db.session.execute(db.select(StoriesCriminals, Criminals).join(Criminals, StoriesCriminals.criminal_id == Criminals.id, full=True).where(StoriesCriminals.user_id == user_id)).scalars()
+        #stories_criminals= db.session.query(StoriesCriminals).join(Users, StoriesCriminals.user_id == Users.id).all()
+        print("THIS IS IT:")
+        stories_criminals=StoriesCriminals.query.join(Users).all()
+        #stories_criminals = db.session.execute(db.select(StoriesCriminals).join(Users).all())
+
         if stories_criminals:
-            stories_criminals = [story.serialize() for story in stories_criminals]
             print(stories_criminals)
+            
+            stories_criminals = [story.serialize() for story in stories_criminals]   
             response_body['results'] = stories_criminals
             response_body['message'] = 'Stories Found'
             return response_body, 201
