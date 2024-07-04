@@ -79,6 +79,32 @@ class Criminals(db.Model):
                 'favourites_amount': self.favourites_amount,
                 'poster_classification': self.poster_classification}
 
+    def public_serialize(self):
+        return{
+                'id_crime': self.id,
+                'title_criminal': self.title,
+                'nationality': self.nationality,
+                'sex': self.sex,
+                'description_criminal': self.description,
+                'caution': self.caution,
+                'race': self.race,
+                'remarks': self.remarks,
+                'hair_raw': self.hair_raw,
+                'possible_countries': self.possible_countries,
+                'aliases': self.aliases,
+                'place_of_birth': self.place_of_birth,
+                'dates_of_birth_used': self.dates_of_birth_used,
+                'eyes': self.eyes,
+                'subjects': self.subjects,
+                'images': self.images,
+                'field_offices': self.field_offices,
+                'reward_text': self.reward_text,
+                'weight': self.weight,
+                'favourites_amount': self.favourites_amount,
+                'poster_classification': self.poster_classification
+
+        }
+
 
 class MissingPersons(db.Model):
     __tablename__ = "missing_persons"
@@ -158,6 +184,18 @@ class StoriesCriminals(db.Model):
                 'modification_date': self.modification_date,
                 'user_id': self.user_id,
                 'criminal_id': self.criminal_id}
+    def public_serialize(self):
+        return{
+                'story_id': self.id,
+                'title_story': self.title,
+                'body_story': self.body,
+                'prompt_story': self.prompt,
+                'description': self.description,
+                'creation_date': self.creation_date,
+                'modification_date': self.modification_date,
+                'user_id': self.user_id,
+                'criminal_id': self.criminal_id
+        }
 
 
 class StoriesMissingPersons(db.Model):

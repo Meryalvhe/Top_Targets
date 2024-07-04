@@ -19,6 +19,7 @@ import {About} from "./pages/About.jsx";
 import { CreateStory } from "./pages/CreateStory.jsx";
 import { Stories } from "./pages/Stories.jsx";
 import { Profile } from "./pages/Profile.jsx";
+import {EditStory} from "./pages/EditStory.jsx"
 
 
 
@@ -47,6 +48,7 @@ const Layout = () => {
                         <Route element={<CreateStory />} path="/create-story" />
                         <Route element={<Stories />} path="/stories" />
                         <Route element={<Profile />} path="/profile" />
+                        <Route element={<EditStory />} path="/edit-story" />
                     </Routes>
                     <Footer />
                 </ScrollToTop>

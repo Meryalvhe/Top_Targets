@@ -732,6 +732,66 @@ def handle_stories_missing_persons_id(stories_missing_persons_id):
         response_body['results'] = {}
         return response_body, 404   
 
+@api.route('/stories-criminals/user/<int:user_id>', methods=['GET', 'PUT', 'DELETE']) 
+def handle_stories_criminals_user_id(user_id):
+    response_body = {}
+    if request.method == 'GET':
+
+        """delivery_note = db.session.query(DeliveryNotes, DeliveryNoteLines).join(DeliveryNoteLines, DeliveryNotes.id==DeliveryNoteLines.delivery_note_id, isouter=True).all()
+        delivery_note = DeliveryNotes.query.get(delivery_note_id)
+        if delivery_note:
+            delivery_note_data = delivery_note.serialize()
+            delivery_note_data['delivery_note_lines'] = [line.serialize() for line in delivery_note.delivery_note_lines]
+            return jsonify(delivery_note_data), 200
+        query = session.query(Table1, Table2).join(Table2, Table1.id == Table2.table1_id, full=True)"""
+
+        #stories_criminals = db.session.execute(db.select(StoriesCriminals, Criminals).join(Criminals, StoriesCriminals.criminal_id == Criminals.id, full=True).where(StoriesCriminals.user_id == user_id)).scalars()
+        #stories_criminals= db.session.query(StoriesCriminals).join(Users, StoriesCriminals.user_id == Users.id).all()
+        print("THIS IS IT:")
+        stories_criminals=StoriesCriminals.query.join(Users).all()
+        #stories_criminals = db.session.execute(db.select(StoriesCriminals).join(Users).all())
+
+        if stories_criminals:
+            print(stories_criminals)
+            
+            stories_criminals = [story.serialize() for story in stories_criminals]   
+            response_body['results'] = stories_criminals
+            response_body['message'] = 'Stories Found'
+            return response_body, 201
+        response_body['message'] = 'Story Not found'
+        response_body['results'] = {}
+        return response_body, 404
+    """if request.method == 'PUT':
+        data = request.json
+        stories_missing_persons = db.session.execute(db.select(StoriesCriminals).where(StoriesCriminals.user_id == user_id)).scalars()
+        if stories_missing_persons:
+            stories_missing_persons.user_id = data['user_id']
+            stories_missing_persons.missing_person_id = data['missing_person_id']
+            stories_missing_persons.title = data['title']
+            stories_missing_persons.body = data['body']
+            stories_missing_persons.prompt = data['prompt']
+            stories_missing_persons.description = data['description']
+            stories_missing_persons.creation_date = data['creation_date']
+            stories_missing_persons.modification_date = data['modification_date']
+            db.session.commit()
+            response_body['message'] = 'Criminal Story Modified'
+            response_body['results'] = stories_missing_persons.serialize()
+            return response_body, 200
+        response_body['message'] = 'Missing Person Story Not Found'
+        response_body['results'] = {}
+        return response_body, 404
+       if request.method == 'DELETE':
+        stories_missing_persons = db.session.execute(db.select(StoriesMissingPersons).where(StoriesMissingPersons.id == user_id)).scalar()
+        if stories_missing_persons:
+            db.session.delete(stories_missing_persons)
+            db.session.commit()
+            response_body['message'] = 'Story Missing Person deleted'
+            response_body['results'] = {}
+            return response_body, 200
+        response_body['message'] = 'Story Missing Person Not Found'
+        response_body['results'] = {}
+        return response_body, 404 """
+
 
 @api.route('/missing-persons/<int:missing_person_id>', methods=['GET']) 
 def handle_missing_persons_id(missing_person_id):
