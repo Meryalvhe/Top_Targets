@@ -2,7 +2,7 @@ import React, {useContext, useState} from "react";
 import "../../styles/home.css";
 import { Context } from "../store/appContext";
 
-export const CreateStory = () => {
+export const EditStory = () => {
     const { store, actions } = useContext(Context);
     const [story, setStory] = useState({"user_id":store.user.id, "criminal_id":store.criminal_id});
     console.log(store.currentCriminal)
