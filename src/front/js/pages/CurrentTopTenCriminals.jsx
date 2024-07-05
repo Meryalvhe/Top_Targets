@@ -1,4 +1,4 @@
-import React, { useContext } from "react";
+import React, { useContext, useEffect, useState } from "react";
 import "../../styles/index.css";
 import "../../styles/cards.css";
 import { Link, useParams } from "react-router-dom";
@@ -6,24 +6,34 @@ import { Context } from "../store/appContext";
 
 export const CurrentTopTenCriminals = () => {
     const { store, actions } = useContext(Context);
-    const currentTopCriminal = JSON.parse(localStorage.getItem("current_top_ten_criminanl"));
-    const cleanCurrentTopCriminal = {};
-    for (const key in currentTopCriminal) {
-        if (currentTopCriminal.hasOwnProperty(key)) {
-            if (typeof currentTopCriminal[key] === 'string') {
-                // Reemplaza los caracteres [ ], <p>, y </p>
-                cleanCurrentTopCriminal[key] = currentTopCriminal[key].replace(/\[|\]|<p>|<\/p>/g, '');
-            } else {
-                cleanCurrentTopCriminal[key] = currentTopCriminal[key];
-            }
-        }
+    const [comment, setComment] = useState();
+
+    console.log(comment)
+    console.log(store.user.id, store.currentCriminal.id)
+
+    useEffect(() => {
+        actions.getCurrentCriminal()
+        actions.getCurrentCriminalComments()
+        actions.addCommentCriminal()
+    }, [])
+
+    const handleSubmit = () => {
+        
+        if(comment.trim !== ''){
+            const dataToSend = {
+                user_id: store.user.id,
+                criminal_id: store.currentCriminalId,
+                comment: comment, 
+                comment_date: new Date()
+            } 
+            actions.addCommentCriminal(dataToSend)
+            setComment('')
+        } 
     }
 
-    console.log(cleanCurrentTopCriminal)
-
     return (
-        <div className="container-fluid p-5 justify-content-center bg-dark">
-            {!localStorage.getItem("current_top_ten_criminanl") ? <p>Not found</p> :
+        <div className="p-5 justify-content-center bg-dark">
+            {!store.currentCriminal ? <p>Not found</p> :
                 <div className="card mb-3 bg-primary">
                     <div className="text-end mt-2">
                         <Link to="/">
@@ -31,103 +41,102 @@ export const CurrentTopTenCriminals = () => {
                         </Link>
                     </div>
                     <div className="row g-0 p-5">
-                        <div className="col-12 col-md-6 col-lg-3 mb-5 border-none bg-white">
-                            <img src={cleanCurrentTopCriminal.images} className="img-fluid p-2" alt="..." />
-                            <h4 className="mt-3 text-center title p-2">aliases:</h4>
-                            <p className="p-2 text-center">{cleanCurrentTopCriminal.aliases}</p>
+                        <div className="col-3 mb-5 current-card border-none">
+                            <img src={store.currentCriminal.images} className="img-fluid" alt="..." />
+                            <h4 className="mt-3 text-center title"> aliases: </h4>
+                            <p calssName= " body">{store.currentCriminal.aliases ? store.currentCriminal.aliases.replace(/['"\[\]]/g, '') : ''}</p>
                         </div>
-                        <div className="col-12 col-md-6 ms-md-3">
+                        <div className="col-md-6 ms-5">
                             <div className="card-body text-light">
-                                <div className='mb-5'>
-                                    <h1 className="card-title title"> {cleanCurrentTopCriminal.title} </h1>
-                                    <p>{cleanCurrentTopCriminal.subjects}</p>
+                                <div className ='mb-5'>
+                                <h1 className="card-title title"> {store.currentCriminal.title} </h1>
+                                <p>{store.currentCriminal.subjects}</p>
                                 </div>
                                 <div>
-                                    {cleanCurrentTopCriminal.dates_of_birth_used == null || cleanCurrentTopCriminal.dates_of_birth_used == 'None' ? ''
-                                        :
-                                        <p className="card-text body"> Date of birth used: {cleanCurrentTopCriminal.dates_of_birth_used}  </p>}
+                                {store.currentCriminal.dates_of_birth_used == null || store.currentCriminal.dates_of_birth_used == 'None' ? '' 
+                                :
+                                 <p className="card-text body"> Date of birth used: {store.currentCriminal.dates_of_birth_used.replace(/['"\[\]]/g, '')}  </p> }
                                 </div>
                                 <div>
-                                    {cleanCurrentTopCriminal.nationality == null || cleanCurrentTopCriminal.nationality == 'None' ? ''
-                                        :
-                                        <p className="card-text body"> Nationality: {cleanCurrentTopCriminal.nationality} </p>
-                                    }
+                                {store.currentCriminal.nationality == null || store.currentCriminal.nationality == 'None' ? '' 
+                                :
+                                <p className="card-text body"> Nationality: {store.currentCriminal.nationality} </p>
+                                }
                                 </div>
                                 <div>
-                                    {cleanCurrentTopCriminal.place_of_birth == null || cleanCurrentTopCriminal.place_of_birth == 'None' ? ''
-                                        :
-                                        <p className="card-text body"> Place of birth: {cleanCurrentTopCriminal.place_of_birth} </p>
-                                    }
+                                {store.currentCriminal.place_of_birth == null || store.currentCriminal.place_of_birth == 'None' ? '' 
+                                :
+                                <p className="card-text body"> Place of birth: {store.currentCriminal.place_of_birth} </p>
+                                }
                                 </div>
                                 <div>
-                                    {cleanCurrentTopCriminal.sex == null || cleanCurrentTopCriminal.sex == 'None' ? ''
-                                        :
-                                        <p className="card-text body"> Sex: {cleanCurrentTopCriminal.sex}</p>
-                                    }
+                                {store.currentCriminal.sex == null || store.currentCriminal.sex == 'None' ? '' 
+                                :
+                                <p className="card-text body"> Sex: {store.currentCriminal.sex}</p>
+                                }
                                 </div>
                                 <div>
-                                    {cleanCurrentTopCriminal.hair_raw == null || cleanCurrentTopCriminal.hair_raw == 'None' ? ''
-                                        :
-                                        <p className="card-text body"> Hair: {cleanCurrentTopCriminal.hair_raw} </p>
-                                    }
+                                {store.currentCriminal.hair_raw == null || store.currentCriminal.hair_raw == 'None' ? '' 
+                                :
+                                <p className="card-text body"> Hair: {store.currentCriminal.hair_raw} </p>
+                                }
                                 </div>
                                 <div>
-                                    {cleanCurrentTopCriminal.remarks == null || cleanCurrentTopCriminal.remarks == 'None' ? ''
-                                        :
-                                        <p className="card-text body"> Remarks: {cleanCurrentTopCriminal.remarks} </p>
-                                    }
+                                {store.currentCriminal.remarks == null || store.currentCriminal.remarks == 'None' ? '' 
+                                :
+                                <p className="card-text body"> Remarks: {store.currentCriminal.remarks.replace(/\[|\]|<p>|<\/p>/g, '')} </p>
+                                }
                                 </div>
                                 <div>
-                                    {cleanCurrentTopCriminal.field_offices == null || cleanCurrentTopCriminal.field_offices == 'None' ? ''
-                                        :
-                                        <p className="card-text mt-1 body"> Field offices: {cleanCurrentTopCriminal.field_offices}  </p>
-                                    }
+                                {store.currentCriminal.field_offices == null || store.currentCriminal.field_offices == 'None' ? '' 
+                                :
+                                <p className="card-text mt-1 body"> Field offices: {store.currentCriminal.field_offices.replace(/['"\[\]]/g, '')}  </p>
+                                }
                                 </div>
                                 <div>
-                                    {cleanCurrentTopCriminal.caution == null || cleanCurrentTopCriminal.caution == 'None' ? ''
-                                        :
-                                        <p className="card-text body"> Caution: {cleanCurrentTopCriminal.caution}  </p>
-                                    }
+                                {store.currentCriminal.caution == null || store.currentCriminal.caution == 'None' ? '' 
+                                :
+                                <p className="card-text body"> Caution: {store.currentCriminal.caution.replace(/\[|\]|<p>|<\/p>/g, '')}  </p>
+                                }
                                 </div>
                             </div>
                         </div>
                         <div className="d-flex justify-content-end mb-5">
-                            <a href="/create-story" className="btn btn-outline-light ms-3 body">Create your Story</a>
+                            <a href="/create-story" className="btn btn-outline-light ms-3 body">Create your Storie</a>
                         </div>
                         <div className='mb-2'>
-                            {store.currentTopTenCriminalsComments == '' ? '' : <h1 className="title text-light"> Comments </h1>}
+                        {store.currentCriminalComments == '' ? '' : <h1 className="title text-light"> Comments </h1> }
                         </div>
-                        {store.currentTopTenCriminalsComments.map((item, id) =>
-                            <div className="card mb-3" key={item.id}>
+                        {store.currentCriminalComments.map((item, id) =>
+                            <div className="card">
                                 <div className="d-flex justify-content-end p-2 me-2">
                                     <i className="fa-regular fa-trash-can"></i>
                                 </div>
-                                <div className="row g-0">
-                                    <div className="col-2 col-md-1 avatar-comment ms-3 d-flex justify-content-end">
-                                        <img src="https://github.com/mdo.png" alt="mdo" className="rounded-circle img-fluid" />
+                                <div key={item.id} className="row">
+                                    <div className=" col-1 avatar-comment ms-3 d-flex justify-content-end ">
+                                        <img src="https://github.com/mdo.png" alt="mdo" className="rounded-circle" />
                                     </div>
-                                    <div className="col-9 card-body p-none align-text-start user-comment mt-1 mb-3 title me-5">
-                                        <p className="text-dark ms-2">
-                                            {store.user.email}
-                                        </p>
-                                        <p className="body">{item.comment}</p>
+                                    <div className="col-9 card-body p-none aling-text-start user-comment mt-1 mb-3 title me-5">
+                                        User Name. <p className="body">
+                                            {item.comment} </p>
                                     </div>
                                 </div>
                             </div>
                         )}
-                        {!store.user ?
-                            <div className="container">
-                                <div className="mb-3 mt-3">
-                                    <label htmlFor="exampleFormControlTextarea1" className="form-label text-light">Write your comment here</label>
-                                    <textarea className="form-control" id="exampleFormControlTextarea1" rows="3"></textarea>
-                                </div>
-                                <button type="button" className="btn btn-outline-light mt-3 body">Comment</button>
-                            </div>
-                            : ''
-                        }
+                            {store.isLogin ? 
+                        <div>
+
+                        <div className="mb-3 mt-3 justify-content-end">
+                            <label htmlFor="exampleFormControlTextarea1" className="form-label text-light"> Write your comment here</label>
+                            <textarea className="form-control" id="exampleFormControlTextarea1" rows="3" value={comment} onChange={(event) => setComment(event.target.value)}></textarea>
+                        </div>
+                        <button type="submit" className="btn btn-outline-light mt-3 body" onClick={()=> handleSubmit()}>Comment</button>
+                        </div>
+                                : ''
+                    }
                     </div>
                 </div>
             }
-        </div>
+        </div >
     );
 };

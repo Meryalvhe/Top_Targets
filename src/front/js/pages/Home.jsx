@@ -7,7 +7,7 @@ import { Link, useParams } from "react-router-dom";
 export const Home = () => {
     const { store, actions } = useContext(Context);
 
-    const handleCriminal =(id) =>{
+    const handleCriminal = (id) => {
         actions.setCurrentCriminal(id)
     }
 
@@ -31,14 +31,14 @@ export const Home = () => {
                         <div className="row row-cols-1 row-cols-md-3 justify-content-center">
                             {store.toptencriminals.map((item, id) =>
                                 <div key={id} className="bg-primary col m-1 col-lg-2 col-md-6 col-sm-10 cardHome rounded-3">
-                                    <div  className="cardCss ">
-                                        <Link to={"/current-criminal"} onClick={() => handleCriminal(item.id)} className="bg-primary">
-                                            <div  className="container">
+                                    <div className="cardCss ">
+                                        <Link to={"/current-top-ten-criminal"} onClick={() => handleCriminal(item.id)} className="bg-primary">
+                                            <div className="container">
                                                 <div className="d-flex align-items-start row justify-content-start">
                                                     <div className="d-flex col-4 jalign-items-start">
                                                         <img id="imgCardHome" src={item.images} className="mt-4" alt="..." />
                                                     </div>
-                                                    <div  className="col-8 mt-4 text-end">
+                                                    <div className="col-8 mt-4 text-end">
                                                         <div>
                                                             <h5 className="card-title title text-light">{item.title}</h5>
                                                         </div>
@@ -66,7 +66,7 @@ export const Home = () => {
                             {store.mostwantedterrorists.map((item, id) =>
                                 <div className="bg-primary col m-1 col-lg-2 col-md-6 col-sm-10 cardHome rounded-3">
                                     <div key={id} className="cardCss ">
-                                        <Link to={"/current-criminal"} onClick={() => handleCriminal(item.id)} className="bg-primary">
+                                        <Link to={"/current-most-wanted-criminal"} onClick={() => handleCriminal(item.id)} className="bg-primary">
                                             <div className="container">
                                                 <div className="d-flex align-items-start row justify-content-start">
                                                     <div className="d-flex col-4 jalign-items-start">
