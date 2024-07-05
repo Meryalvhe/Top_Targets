@@ -21,7 +21,7 @@ export const Criminals = () => {
                                <Link to="/current-criminal" onClick={()=>handleCriminal(item.id)} className="bg-primary"><img src={item.images} className="ms-1" alt="..." /></Link> 
                                 {!store.isLogin ? '' : <button className="btn-save favoriteLocation bg-primary">
                                     
-                                {store.favoritesCriminals.filter((element)=> item.id == element.criminal_id).length > 0 ? <i className="fa-solid fa-heart-crack fa-xl favoriteSize" onClick={() => actions.removeFavoritesCriminals(item.id)}></i> :
+                                {store.favoritesCriminals.filter((element)=> item.id == element.criminal_id).length > 0 ? <i className="fa-solid fa-heart-crack fa-xl favoriteSize" onClick={() => actions.removeFavoriteCriminalDB(item.id)}></i> :
                                  <i className="fa-solid fa-heart fa-xl text-light favoriteSize" onClick={() => actions.addFavoriteCriminalDB(item.id)}></i> }
                                 </button>}
 

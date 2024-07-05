@@ -34,7 +34,6 @@ const injectContext = PassedComponent => {
 			state.actions.getMessage();  // Calling this function from the flux.js actions
 			state.actions.getCriminals(); 
 			state.actions.getMissing();
-			state.actions.addFavoriteCriminalDB();  
 			state.actions.getStories();
 			state.actions.getUser();
       		state.actions.getMissingFromDB();

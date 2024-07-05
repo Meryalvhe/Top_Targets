@@ -21,8 +21,8 @@ export const MissingPersons = () => {
                                <Link to="/current-missing-persons" onClick={()=>handleMissingPersons(item.id)} className="bg-primary"><img src={item.images} className="ms-1" alt="..." /></Link> 
                                {!store.isLogin ? '' : <button className="btn-save favoriteLocation bg-primary">
                                     
-                                    {store.favoritesMissingPersons.filter((element)=> item.id == element.criminal_id).length > 0 ? <i className="fa-solid fa-heart-crack fa-xl favoriteSize" onClick={() => actions.removefavoritesMissingPersons(item.id)}></i> :
-                                     <i className="fa-solid fa-heart fa-xl text-light favoriteSize" onClick={() => actions.addfavoritesMissingPersons(item.id)}></i> }
+                                    {store.favoritesMissingPersons.filter((element)=> item.id == element.missing_person_id).length > 0 ? <i className="fa-solid fa-heart-crack fa-xl favoriteSize" onClick={() => actions.removeFavoritesMissingPersons(item.id)}></i> :
+                                     <i className="fa-solid fa-heart fa-xl text-light favoriteSize" onClick={() => actions.addFavoritesMissingPersons(item.id)}></i> }
                                     </button>}
 
                                 <div className="card-body bg-primary border-primary">
