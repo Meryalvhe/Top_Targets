@@ -7,15 +7,10 @@ import { Link, useParams } from "react-router-dom";
 export const Home = () => {
     const { store, actions } = useContext(Context);
 
-    const handleTopTenCriminal = (item) => {
-        actions.setCurrentTopTenCriminal(item)
-        localStorage.setItem('current_top_ten_criminanl', JSON.stringify(item))
+    const handleCriminal =(id) =>{
+        actions.setCurrentCriminal(id)
     }
 
-    const handleMostWantedTerrorist = (item) => {
-        actions.setCurrentMostWantedTerrorist(item)
-        localStorage.setItem('current_most_wanted_terrorist', JSON.stringify(item))
-    }
 
     return (
         <span>
@@ -37,7 +32,7 @@ export const Home = () => {
                             {store.toptencriminals.map((item, id) =>
                                 <div key={id} className="bg-primary col m-1 col-lg-2 col-md-6 col-sm-10 cardHome rounded-3">
                                     <div  className="cardCss ">
-                                        <Link to={"/current-top-ten-criminal"} onClick={() => handleTopTenCriminal(item)} className="bg-primary">
+                                        <Link to={"/current-criminal"} onClick={() => handleCriminal(item.id)} className="bg-primary">
                                             <div  className="container">
                                                 <div className="d-flex align-items-start row justify-content-start">
                                                     <div className="d-flex col-4 jalign-items-start">
@@ -71,7 +66,7 @@ export const Home = () => {
                             {store.mostwantedterrorists.map((item, id) =>
                                 <div className="bg-primary col m-1 col-lg-2 col-md-6 col-sm-10 cardHome rounded-3">
                                     <div key={id} className="cardCss ">
-                                        <Link to={"/current-most-wanted-criminal/"} onClick={() => handleMostWantedTerrorist(item)} className="bg-primary">
+                                        <Link to={"/current-criminal"} onClick={() => handleCriminal(item.id)} className="bg-primary">
                                             <div className="container">
                                                 <div className="d-flex align-items-start row justify-content-start">
                                                     <div className="d-flex col-4 jalign-items-start">
