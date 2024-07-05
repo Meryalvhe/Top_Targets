@@ -16,11 +16,12 @@ export const Criminals = () => {
             {!store.criminals ? <p> not found </p> :
                 <div className="row row-cols-1 row-cols-md-3 justify-content-center ">
                     {store.criminals.map((item, id) =>
-                        <div className="col mt-5 mb-5 mx-4 col-lg-2 col-md-6 col-sm-10 mb-1 cardM bg-primary">
-                            <div key={id} className="card border-primary border-none mt-5">
+                        <div key={id} className="col mt-5 mb-5 mx-4 col-lg-2 col-md-6 col-sm-10 mb-1 cardM bg-primary">
+                            <div  className="card border-primary border-none mt-5">
                                <Link to="/current-criminal" onClick={()=>handleCriminal(item.id)} className="bg-primary"><img src={item.images} className="ms-1" alt="..." /></Link> 
                                 {!store.isLogin ? '' : <button className="btn-save favoriteLocation bg-primary">
-                                {store.favoritesCriminals.incluide(item.id) ? <i className="fa-solid fa-heart-crack fa-xl favoriteSize" onClick={() => actions.removeFavoritesCriminals(item.id)}></i> :
+                                    
+                                {store.favoritesCriminals.filter((element)=> item.id == element.criminal_id).length > 0 ? <i className="fa-solid fa-heart-crack fa-xl favoriteSize" onClick={() => actions.removeFavoritesCriminals(item.id)}></i> :
                                  <i className="fa-solid fa-heart fa-xl text-light favoriteSize" onClick={() => actions.addFavoriteCriminalDB(item.id)}></i> }
                                 </button>}
 

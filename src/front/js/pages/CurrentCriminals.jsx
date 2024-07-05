@@ -1,4 +1,4 @@
-import React, { useContext, useEffect } from "react";
+import React, { useContext, useEffect, useState } from "react";
 import "../../styles/index.css";
 import "../../styles/cards.css";
 import { Link, useParams } from "react-router-dom";
@@ -6,11 +6,30 @@ import { Context } from "../store/appContext";
 
 export const CurrentCriminal = () => {
     const { store, actions } = useContext(Context);
+    const [comment, setComment] = useState();
+
+    console.log(comment)
+    console.log(store.user.id, store.currentCriminal.id)
 
     useEffect(() => {
         actions.getCurrentCriminal()
         actions.getCurrentCriminalComments()
+        actions.addCommentCriminal()
     }, [])
+
+    const handleSubmit = () => {
+        
+        if(comment.trim !== ''){
+            const dataToSend = {
+                user_id: store.user.id,
+                criminal_id: store.currentCriminalId,
+                comment: comment, 
+                comment_date: new Date()
+            } 
+            actions.addCommentCriminal(dataToSend)
+            setComment('')
+        } 
+    }
 
     return (
         <div className="p-5 justify-content-center bg-dark">
@@ -25,7 +44,7 @@ export const CurrentCriminal = () => {
                         <div className="col-3 mb-5 current-card border-none">
                             <img src={store.currentCriminal.images} className="img-fluid" alt="..." />
                             <h4 className="mt-3 text-center title"> aliases: </h4>
-                            <p>{store.currentCriminal.aliases}</p>
+                            <p calssName= " body">{store.currentCriminal.aliases ? store.currentCriminal.aliases.replace(/['"\[\]]/g, '') : ''}</p>
                         </div>
                         <div className="col-md-6 ms-5">
                             <div className="card-body text-light">
@@ -36,7 +55,7 @@ export const CurrentCriminal = () => {
                                 <div>
                                 {store.currentCriminal.dates_of_birth_used == null || store.currentCriminal.dates_of_birth_used == 'None' ? '' 
                                 :
-                                 <p className="card-text body"> Date of birth used: {store.currentCriminal.dates_of_birth_used}  </p> }
+                                 <p className="card-text body"> Date of birth used: {store.currentCriminal.dates_of_birth_used.replace(/['"\[\]]/g, '')}  </p> }
                                 </div>
                                 <div>
                                 {store.currentCriminal.nationality == null || store.currentCriminal.nationality == 'None' ? '' 
@@ -65,19 +84,19 @@ export const CurrentCriminal = () => {
                                 <div>
                                 {store.currentCriminal.remarks == null || store.currentCriminal.remarks == 'None' ? '' 
                                 :
-                                <p className="card-text body"> Remarks: {store.currentCriminal.remarks} </p>
+                                <p className="card-text body"> Remarks: {store.currentCriminal.remarks.replace(/\[|\]|<p>|<\/p>/g, '')} </p>
                                 }
                                 </div>
                                 <div>
                                 {store.currentCriminal.field_offices == null || store.currentCriminal.field_offices == 'None' ? '' 
                                 :
-                                <p className="card-text mt-1 body"> Field offices: {store.currentCriminal.field_offices}  </p>
+                                <p className="card-text mt-1 body"> Field offices: {store.currentCriminal.field_offices.replace(/['"\[\]]/g, '')}  </p>
                                 }
                                 </div>
                                 <div>
                                 {store.currentCriminal.caution == null || store.currentCriminal.caution == 'None' ? '' 
                                 :
-                                <p className="card-text body"> Caution: {store.currentCriminal.caution}  </p>
+                                <p className="card-text body"> Caution: {store.currentCriminal.caution.replace(/\[|\]|<p>|<\/p>/g, '')}  </p>
                                 }
                                 </div>
                             </div>
@@ -104,14 +123,14 @@ export const CurrentCriminal = () => {
                                 </div>
                             </div>
                         )}
-                            {!store.user ? 
+                            {store.isLogin ? 
                         <div>
 
                         <div className="mb-3 mt-3 justify-content-end">
                             <label htmlFor="exampleFormControlTextarea1" className="form-label text-light"> Write your comment here</label>
-                            <textarea className="form-control" id="exampleFormControlTextarea1" rows="3"></textarea>
+                            <textarea className="form-control" id="exampleFormControlTextarea1" rows="3" value={comment} onChange={(event) => setComment(event.target.value)}></textarea>
                         </div>
-                        <button type="button" className="btn btn-outline-light mt-3 body">Comment</button>
+                        <button type="submit" className="btn btn-outline-light mt-3 body" onClick={()=> handleSubmit()}>Comment</button>
                         </div>
                                 : ''
                     }
