@@ -20,6 +20,9 @@ import { CreateStory } from "./pages/CreateStory.jsx";
 import { Stories } from "./pages/Stories.jsx";
 import { Profile } from "./pages/Profile.jsx";
 import { CurrentTopTenCriminals } from "./pages/CurrentTopTenCriminals.jsx";
+import { CurrentMostWantedTerrorist } from "./pages/CurrentMostWantedTerrorist.jsx";
+import  PrivacyPolicy from "./pages/PrivacyPolicy.jsx";
+
 
 
 
@@ -49,6 +52,8 @@ const Layout = () => {
                         <Route element={<Stories />} path="/stories" />
                         <Route element={<Profile />} path="/profile" />
                         <Route element={<CurrentTopTenCriminals />} path="/current-top-ten-criminal" />
+                        <Route element={<CurrentMostWantedTerrorist />} path="/current-most-wanted-criminal" />
+                        <Route element={<PrivacyPolicy />} path="/privacy-policy" />
                     </Routes>
                     <Footer />
                 </ScrollToTop>

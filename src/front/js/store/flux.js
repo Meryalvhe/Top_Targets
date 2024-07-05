@@ -183,7 +183,7 @@ const getState = ({getStore, getActions, setStore}) => {
 
 			},
 			getMissingFromDB: async ()=>{
-				const response = await fetch("https://opulent-space-zebra-pjj675j6wjj7frg7j-3001.app.github.dev/api/criminals");
+				const response = await fetch(process.env.BACKEND_URL + "/api/criminals");
 				if (!response.ok){
 					console.log('Error');
 					return
@@ -241,6 +241,7 @@ const getState = ({getStore, getActions, setStore}) => {
 				
 			},
 			setCurrentTopTenCriminal: (id) =>{setStore({currentTopTenCriminals:id})},
+			setCurrentMostWantedTerrorist: (id) =>{setStore({currentMostWantedTerrorists:id})},
 			setCurrentMissingPerson: (id) =>{setStore({currentCriminal:id})},
 		}
 	};
