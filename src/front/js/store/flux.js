@@ -103,26 +103,7 @@ const getState = ({ getStore, getActions, setStore }) => {
 				const data = await response.json();
 				getActions().getCurrentCriminalComments()
 			},
-			removeFavoritesCriminals: (remove) => {
-				setStore({ favoritesCriminals: getStore().favoritesCriminals.filter((item) => item != remove) })
-				getActions().removeFavoriteCriminalDB(remove)
-			},
-			addFavoritesMissingPersons: (text) => {
-				if (getStore().favoritesMissingPersons.includes(text)) {
-					return
-				}
-				setStore({ favoritesMissingPersons: [...getStore().favoritesMissingPersons, text] })
-
-
-			},
-			removeFavoritesMissingPersons: (remove) => {
-				setStore({ favoritesMissingPersons: getStore().favoritesMissingPersons.filter((item) => item != remove) })
-
-			},
 			addFavoriteCriminalDB: async (id) => {
-				if (getStore().favoritesCriminals.includes(id)) {
-					return
-				}
 				const uri = (process.env.BACKEND_URL + "/api/saved-criminals")
 				const dataToSend = {
 					user_id: getStore().user.id,
@@ -146,8 +127,43 @@ const getState = ({ getStore, getActions, setStore }) => {
 				const data = await response.json();
 				console.log(data.results)
 
-				// Agregar set Store para poder eliminar el criminal de favorite.
 				setStore({ favoritesCriminals: [...getStore().favoritesCriminals, data.results] })
+			},
+			removeFavoritesCriminals: (remove) => {
+				setStore({ favoritesCriminals: getStore().favoritesCriminals.filter((item) => item != remove) })
+				getActions().removeFavoriteCriminalDB(remove)
+			},
+			addFavoritesMissingPersons: async (id) => {
+				const uri = (process.env.BACKEND_URL + "/api/saved-missing-persons")
+				const dataToSend = {
+					user_id: getStore().user.id,
+					missing_person_id: id
+				}
+				const options = {
+					method: 'POST',
+					headers: {
+						'Content-Type': 'application/json'
+					},
+					body: JSON.stringify(dataToSend)
+				};
+				const response = await fetch(uri, options);
+				console.log(response)
+				if (!response.ok) {
+					console.log('Error: ', response.status, response.statusText);
+					if (response.status == 400) {
+						return;
+					}
+				}
+				const data = await response.json();
+				console.log(data.results)
+
+				setStore({ favoritesMissingPersons: [...getStore().favoritesMissingPersons, data.results] })
+
+
+			}, // Estoy aquí, que no se me olvide.
+			removeFavoritesMissingPersons: (remove) => {
+				setStore({ favoritesMissingPersons: getStore().favoritesMissingPersons.filter((item) => item != remove) })
+
 			},
 			removeFavoriteCriminalDB: async (id) => {
 				const criminalFavoriteId = getStore().favoritesCriminals.filter((item) => id == item.criminal_id)

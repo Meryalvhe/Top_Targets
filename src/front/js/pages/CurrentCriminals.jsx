@@ -8,9 +8,6 @@ export const CurrentCriminal = () => {
     const { store, actions } = useContext(Context);
     const [comment, setComment] = useState();
 
-    console.log(comment)
-    console.log(store.user.id, store.currentCriminal.id)
-
     useEffect(() => {
         actions.getCurrentCriminal()
         actions.getCurrentCriminalComments()
@@ -50,7 +47,7 @@ export const CurrentCriminal = () => {
                             <div className="card-body text-light">
                                 <div className ='mb-5'>
                                 <h1 className="card-title title"> {store.currentCriminal.title} </h1>
-                                <p>{store.currentCriminal.subjects}</p>
+                                <p>{store.currentCriminal.subjects ? store.currentCriminal.subjects.replace(/['"\[\]]/g, '') : ''}</p>
                                 </div>
                                 <div>
                                 {store.currentCriminal.dates_of_birth_used == null || store.currentCriminal.dates_of_birth_used == 'None' ? '' 
@@ -110,7 +107,8 @@ export const CurrentCriminal = () => {
                         {store.currentCriminalComments.map((item, id) =>
                             <div className="card">
                                 <div className="d-flex justify-content-end p-2 me-2">
-                                    <i className="fa-regular fa-trash-can"></i>
+                                   {/*  <i className="fa-regular fa-trash-can"></i>  */}
+                                    
                                 </div>
                                 <div key={item.id} className="row">
                                     <div className=" col-1 avatar-comment ms-3 d-flex justify-content-end ">

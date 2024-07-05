@@ -554,6 +554,7 @@ def handle_saved_missing_persons():
         db.session.add(saved_missing_person)
         db.session.commit()
         response_body['message'] = 'Saved Missing Person'
+        response_body['results'] =  saved_missing_person.serialize()
         return response_body, 200
 
 @api.route('/saved-missing-persons/<int:saved_missing_person_id>', methods=['GET', 'DELETE']) 
