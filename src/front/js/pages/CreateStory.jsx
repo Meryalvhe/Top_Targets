@@ -5,6 +5,7 @@ import { Context } from "../store/appContext";
 export const CreateStory = () => {
     const { store, actions } = useContext(Context);
     const currentStory = store.currentStory[0]
+    // setStore({ favoritesMissingPersons: [...getStore().favoritesMissingPersons, data.results] })
     const [story, setStory] = useState(currentStory);
     const temp=story
     temp["title"] = currentStory.title
@@ -57,7 +58,7 @@ export const CreateStory = () => {
 		}
 		const data = await response.json()
 		return data;  // Don't forget to return something, that is how the async resolves*/
-        const dataToSend2 = { story: "make a 2 words sentence" };
+        const dataToSend2 = { id: "make a 2 words sentence", };
 
     }
     
@@ -72,7 +73,7 @@ export const CreateStory = () => {
                 <section className="row my-2">
                     <p className="col-2 text-white">Title:</p>
                     <div className="col-10">
-                        <input type="text" class="form-control" placeholder={currentStory.title}  onChange={handleTitle} aria-label="title" /> 
+                        <input type="text" class="form-control" value={currentStory.title}  onChange={handleTitle} aria-label="title" /> 
                     </div>
                 </section>
                 <section className="row my-2">
