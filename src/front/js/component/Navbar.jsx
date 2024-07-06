@@ -32,7 +32,7 @@ export const Navbar = () => {
 
 
 	return (
-		<nav className="navbar navbar-expand-lg navbar-light bg-primary mt-auto">
+		<nav className="navbar navbar-expand-lg navbar-light bg-primary">
 			<div className="container-fluid mt-auto">
 				<Link to="/" className="navbar-brand">
 					<img src={logoURL} height="50" alt="Logo" />

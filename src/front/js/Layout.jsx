@@ -19,7 +19,11 @@ import {About} from "./pages/About.jsx";
 import { CreateStory } from "./pages/CreateStory.jsx";
 import { Stories } from "./pages/Stories.jsx";
 import { Profile } from "./pages/Profile.jsx";
+import { CurrentTopTenCriminals } from "./pages/CurrentTopTenCriminals.jsx";
+import { CurrentMostWantedTerrorist } from "./pages/CurrentMostWantedTerrorist.jsx";
+import  PrivacyPolicy from "./pages/PrivacyPolicy.jsx";
 import {EditStory} from "./pages/EditStory.jsx"
+
 
 
 
@@ -31,7 +35,7 @@ const Layout = () => {
     if(!process.env.BACKEND_URL || process.env.BACKEND_URL == "") return <BackendURL/ >;
 
     return (
-        <div className="d-flex flex-column min-vh-100">   
+        <div className="d-flex flex-column min-vh-100 bg-dark">   
             <BrowserRouter basename={basename}>
                 <ScrollToTop>
                     <Navbar />
@@ -48,7 +52,11 @@ const Layout = () => {
                         <Route element={<CreateStory />} path="/create-story" />
                         <Route element={<Stories />} path="/stories" />
                         <Route element={<Profile />} path="/profile" />
+                        <Route element={<CurrentTopTenCriminals />} path="/current-top-ten-criminal" />
+                        <Route element={<CurrentMostWantedTerrorist />} path="/current-most-wanted-criminal" />
+                        <Route element={<PrivacyPolicy />} path="/privacy-policy" />
                         <Route element={<EditStory />} path="/edit-story" />
+
                     </Routes>
                     <Footer />
                 </ScrollToTop>
