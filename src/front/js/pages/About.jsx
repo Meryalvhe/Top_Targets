@@ -59,7 +59,7 @@ export const About = () => {
                         <img className="card-img-top mt-3" src={mar} alt="Card image cap"/>
                         <div className="card-body">
                             <h5 className="card-title">Mar Aguayo</h5>
-                            <p className="card-text">Some quick example text to build on the card title and make up the bulk of the card's content.</p>
+                            <p className="card-text">Living in survival mode while learning to code. Student at 4Geeks.</p>
                             <aside className="d-flex">
                                 <span className="m-3">
                                     <a href="https://www.google.com">

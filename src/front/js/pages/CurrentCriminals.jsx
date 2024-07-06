@@ -6,7 +6,6 @@ import { Context } from "../store/appContext";
 
 export const CurrentCriminal = () => {
     const { store, actions } = useContext(Context);
-
     useEffect(() => {
         actions.getCurrentCriminal()
         actions.getCurrentCriminalComments()

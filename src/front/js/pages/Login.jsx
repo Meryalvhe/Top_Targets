@@ -34,7 +34,7 @@ const Login = () => {
     }
     console.log("la url y la options:",url, options)
     const response = await fetch(url, options);
-    console.log(response)
+    
     if (!response.ok) {
       console.log('Error fatalisima: ', response.status, response.statusText)
       return
