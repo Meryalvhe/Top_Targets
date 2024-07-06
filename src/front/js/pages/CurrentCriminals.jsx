@@ -20,17 +20,17 @@ export const CurrentCriminal = () => {
     }, [])
 
     const handleSubmit = () => {
-        
-        if(comment.trim !== ''){
+
+        if (comment.trim !== '') {
             const dataToSend = {
                 user_id: store.user.id,
                 criminal_id: store.currentCriminalId,
-                comment: comment, 
+                comment: comment,
                 comment_date: new Date()
-            } 
+            }
             actions.addCommentCriminal(dataToSend)
             setComment('')
-        } 
+        }
     }
 
     return (
@@ -46,7 +46,7 @@ export const CurrentCriminal = () => {
                         <div className="col-3 mb-5 current-card border-none">
                             <img src={store.currentCriminal.images} className="img-fluid" alt="..." />
                             <h4 className="mt-3 text-center title"> aliases: </h4>
-                            <p calssName= " body">{store.currentCriminal.aliases ? store.currentCriminal.aliases.replace(/['"\[\]]/g, '') : ''}</p>
+                            <p calssName=" body">{store.currentCriminal.aliases ? store.currentCriminal.aliases.replace(/['"\[\]]/g, '') : ''}</p>
                         </div>
                         <div className="col-md-6 ms-5">
                             <div className="card-body text-light">
@@ -111,7 +111,7 @@ export const CurrentCriminal = () => {
                             
                         </div>
                         <div className='mb-2'>
-                        {store.currentCriminalComments == '' ? '' : <h1 className="title text-light"> Comments </h1> }
+                            {store.currentCriminalComments == '' ? '' : <h1 className="title text-light"> Comments </h1>}
                         </div>
                         {store.currentCriminalComments.map((item, id) =>
                             <div className="card">
@@ -119,17 +119,20 @@ export const CurrentCriminal = () => {
                                    {/*  <i className="fa-regular fa-trash-can"></i>  */}
                                     
                                 </div>
-                                <div key={item.id} className="row">
-                                    <div className=" col-1 avatar-comment ms-3 d-flex justify-content-end ">
-                                        <img src="https://github.com/mdo.png" alt="mdo" className="rounded-circle" />
+                                <div className="row g-0">
+                                    <div className="col-auto d-flex align-items-center">
+                                        <img src="https://github.com/mdo.png" alt="mdo" className="rounded-circle avatar-comment img-fluid" />
                                     </div>
-                                    <div className="col-9 card-body p-none aling-text-start user-comment mt-1 mb-3 title me-5">
-                                        User Name. <p className="body">
-                                            {item.comment} </p>
+                                    <div className="col">
+                                        <div className="card-body">
+                                            <h5 className="card-title">User Name</h5>
+                                            <p className="card-text">{item.comment}</p>
+                                        </div>
                                     </div>
                                 </div>
                             </div>
                         )}
+                    
                             {store.isLogin ? 
                         <div>
 
