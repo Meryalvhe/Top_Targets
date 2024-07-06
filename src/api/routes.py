@@ -23,7 +23,7 @@ client = OpenAI(api_key= os.getenv("OPENAI_API_KEY"))
 def handle_hello():
     response_body = {}
     completion = client.chat.completions.create(model="gpt-3.5-turbo",
-                                                messages=[{"role": "user", "content": "give me a sentence with 3 words"}])
+                                                messages=[{"role": "user", "content": request.json.get("story", None).lower()}]) # 
     print(completion.choices[0].message)
     print(completion.choices[0].message.content)
     response_body["message"] = completion.choices[0].message.content
@@ -732,6 +732,63 @@ def handle_stories_missing_persons_id(stories_missing_persons_id):
         response_body['message'] = 'Story Missing Person Not Found'
         response_body['results'] = {}
         return response_body, 404   
+
+@api.route('/users/<int:user_id>/stories-criminals', methods=['GET', 'PUT', 'DELETE']) 
+def handle_stories_criminals_user_id(user_id):
+    response_body = {}
+    if request.method == 'GET':
+        stories_criminals = db.session.execute(db.select(StoriesCriminals, Criminals)
+                                               .join(Criminals, StoriesCriminals.criminal_id==Criminals.id, isouter=True)
+                                               .where(StoriesCriminals.user_id == user_id))
+        if stories_criminals:
+            print(stories_criminals)
+            # stories_criminals = [story.serialize() for story in stories_criminals]   
+            results = []
+            for row in stories_criminals:
+                
+                criminal, stories = row
+                data = criminal.serialize()
+                data["Criminal"] = stories.serialize()
+                results.append(data)
+
+            response_body['results'] = results
+            response_body['message'] = 'Stories Found'
+            return response_body, 201
+        response_body['message'] = 'Story Not found'
+        response_body['results'] = {}
+        return response_body, 404
+    
+
+    """if request.method == 'PUT':
+        data = request.json
+        stories_missing_persons = db.session.execute(db.select(StoriesCriminals).where(StoriesCriminals.user_id == user_id)).scalars()
+        if stories_missing_persons:
+            stories_missing_persons.user_id = data['user_id']
+            stories_missing_persons.missing_person_id = data['missing_person_id']
+            stories_missing_persons.title = data['title']
+            stories_missing_persons.body = data['body']
+            stories_missing_persons.prompt = data['prompt']
+            stories_missing_persons.description = data['description']
+            stories_missing_persons.creation_date = data['creation_date']
+            stories_missing_persons.modification_date = data['modification_date']
+            db.session.commit()
+            response_body['message'] = 'Criminal Story Modified'
+            response_body['results'] = stories_missing_persons.serialize()
+            return response_body, 200
+        response_body['message'] = 'Missing Person Story Not Found'
+        response_body['results'] = {}
+        return response_body, 404
+       if request.method == 'DELETE':
+        stories_missing_persons = db.session.execute(db.select(StoriesMissingPersons).where(StoriesMissingPersons.id == user_id)).scalar()
+        if stories_missing_persons:
+            db.session.delete(stories_missing_persons)
+            db.session.commit()
+            response_body['message'] = 'Story Missing Person deleted'
+            response_body['results'] = {}
+            return response_body, 200
+        response_body['message'] = 'Story Missing Person Not Found'
+        response_body['results'] = {}
+        return response_body, 404 """
 
 
 @api.route('/missing-persons/<int:missing_person_id>', methods=['GET']) 

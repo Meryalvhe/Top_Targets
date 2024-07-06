@@ -19,10 +19,10 @@ export const Criminals = () => {
                         <div className="col mt-5 mb-5 mx-4 col-lg-2 col-md-6 col-sm-10 mb-1 cardM bg-primary">
                             <div key={id} className="card border-primary border-none mt-5">
                                <Link to="/current-criminal" onClick={()=>handleCriminal(item.id)} className="bg-primary"><img src={item.images} className="ms-1" alt="..." /></Link> 
-                                <button className="btn-save favoriteLocation bg-primary">
-                                {store.favoritesCriminals.includes(item.id) ? <i className="fa-solid fa-heart-crack fa-xl favoriteSize" onClick={() => actions.removeFavoritesCriminals(item.id)}></i> :
-                                 <i className="fa-solid fa-heart fa-xl text-light favoriteSize" onClick={() => actions.addFavoritesCriminals(item.id)}></i> }
-                                </button>
+                                {!store.isLogin ? '' : <button className="btn-save favoriteLocation bg-primary">
+                                {store.favoritesCriminals.incluide(item.id) ? <i className="fa-solid fa-heart-crack fa-xl favoriteSize" onClick={() => actions.removeFavoritesCriminals(item.id)}></i> :
+                                 <i className="fa-solid fa-heart fa-xl text-light favoriteSize" onClick={() => actions.addFavoriteCriminalDB(item.id)}></i> }
+                                </button>}
 
                                 <div className="card-body bg-primary border-primary">
                                     <div className="row text-center text-light">
