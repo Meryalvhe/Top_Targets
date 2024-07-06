@@ -8,14 +8,14 @@ const getState = ({getStore, getActions, setStore}) => {
 			is_admin:false,
 			criminals:[],
 			missing:[],
-			currentCriminalId:[{}],
+			currentCriminalId:[],
 			currentCriminal:[{}],
 			currentCriminalComments:[{}],
 			currentMissingPerson: [{}],
 			favoritesCriminals:[{}],
 			favoritesMissingPersons:[],
-			stories: [],
-			currentStory:[],
+			stories: {},
+			currentStory:[{Criminal:{}}],
 			toptencriminals: [],
 			mostwantedterrorists: [],
 			missingFromCriminals: [],
@@ -148,7 +148,7 @@ const getState = ({getStore, getActions, setStore}) => {
 				setStore({missing: data.results})
 			},
 			getCurrentStory: async ()=>{
-				const response = await fetch (process.env.BACKEND_URL + "/api/");
+				const response = await fetch (process.env.BACKEND_URL + "/api/users/1/stories-criminals");
 				if (!response.ok) {
 					console.log('Error');
 					return
@@ -238,8 +238,7 @@ const getState = ({getStore, getActions, setStore}) => {
 					setStore({user: data.results})
 				} 
 				
-			}, 
-
+			}
 		}
 	};
 };

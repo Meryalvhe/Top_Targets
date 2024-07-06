@@ -23,7 +23,7 @@ client = OpenAI(api_key= os.getenv("OPENAI_API_KEY"))
 def handle_hello():
     response_body = {}
     completion = client.chat.completions.create(model="gpt-3.5-turbo",
-                                                messages=[{"role": "user", "content": "give me a sentence with 3 words"}])
+                                                messages=[{"role": "user", "content": request.json.get("story", None).lower()}]) # 
     print(completion.choices[0].message)
     print(completion.choices[0].message.content)
     response_body["message"] = completion.choices[0].message.content
@@ -732,35 +732,32 @@ def handle_stories_missing_persons_id(stories_missing_persons_id):
         response_body['results'] = {}
         return response_body, 404   
 
-@api.route('/stories-criminals/user/<int:user_id>', methods=['GET', 'PUT', 'DELETE']) 
+@api.route('/users/<int:user_id>/stories-criminals', methods=['GET', 'PUT', 'DELETE']) 
 def handle_stories_criminals_user_id(user_id):
     response_body = {}
     if request.method == 'GET':
-
-        """delivery_note = db.session.query(DeliveryNotes, DeliveryNoteLines).join(DeliveryNoteLines, DeliveryNotes.id==DeliveryNoteLines.delivery_note_id, isouter=True).all()
-        delivery_note = DeliveryNotes.query.get(delivery_note_id)
-        if delivery_note:
-            delivery_note_data = delivery_note.serialize()
-            delivery_note_data['delivery_note_lines'] = [line.serialize() for line in delivery_note.delivery_note_lines]
-            return jsonify(delivery_note_data), 200
-        query = session.query(Table1, Table2).join(Table2, Table1.id == Table2.table1_id, full=True)"""
-
-        #stories_criminals = db.session.execute(db.select(StoriesCriminals, Criminals).join(Criminals, StoriesCriminals.criminal_id == Criminals.id, full=True).where(StoriesCriminals.user_id == user_id)).scalars()
-        #stories_criminals= db.session.query(StoriesCriminals).join(Users, StoriesCriminals.user_id == Users.id).all()
-        print("THIS IS IT:")
-        stories_criminals=StoriesCriminals.query.join(Users).all()
-        #stories_criminals = db.session.execute(db.select(StoriesCriminals).join(Users).all())
-
+        stories_criminals = db.session.execute(db.select(StoriesCriminals, Criminals)
+                                               .join(Criminals, StoriesCriminals.criminal_id==Criminals.id, isouter=True)
+                                               .where(StoriesCriminals.user_id == user_id))
         if stories_criminals:
             print(stories_criminals)
-            
-            stories_criminals = [story.serialize() for story in stories_criminals]   
-            response_body['results'] = stories_criminals
+            # stories_criminals = [story.serialize() for story in stories_criminals]   
+            results = []
+            for row in stories_criminals:
+                
+                criminal, stories = row
+                data = criminal.serialize()
+                data["Criminal"] = stories.serialize()
+                results.append(data)
+
+            response_body['results'] = results
             response_body['message'] = 'Stories Found'
             return response_body, 201
         response_body['message'] = 'Story Not found'
         response_body['results'] = {}
         return response_body, 404
+    
+
     """if request.method == 'PUT':
         data = request.json
         stories_missing_persons = db.session.execute(db.select(StoriesCriminals).where(StoriesCriminals.user_id == user_id)).scalars()
