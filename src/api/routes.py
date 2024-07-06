@@ -435,7 +435,7 @@ def handle_comments_missing_persons():
     if request.method == 'POST':
         response_body = {}
         user_id = request.json.get ("user_id", None)
-        missing_person_id = request.json.get ("criminal_id", None)
+        missing_person_id = request.json.get ("missing_person_id", None) # Cuidado!
         comment = request.json.get ("comment", None)
         comment_date = request.json.get ("comment_date", None)   
         comments_missing_person = CommentsMissingPersons()    

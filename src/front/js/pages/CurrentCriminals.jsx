@@ -8,10 +8,6 @@ export const CurrentCriminal = () => {
     const { store, actions } = useContext(Context);
     const [comment, setComment] = useState();
 
-    const [comment, setComment] = useState();
-
-    console.log(comment)
-    console.log(store.user.id, store.currentCriminal.id)
 
     useEffect(() => {
         actions.getCurrentCriminal()
@@ -114,20 +110,18 @@ export const CurrentCriminal = () => {
                             {store.currentCriminalComments == '' ? '' : <h1 className="title text-light"> Comments </h1>}
                         </div>
                         {store.currentCriminalComments.map((item, id) =>
-                            <div className="card">
+                            <div key={item.id} className="card">
                                 <div className="d-flex justify-content-end p-2 me-2">
                                    {/*  <i className="fa-regular fa-trash-can"></i>  */}
                                     
                                 </div>
-                                <div className="row g-0">
-                                    <div className="col-auto d-flex align-items-center">
-                                        <img src="https://github.com/mdo.png" alt="mdo" className="rounded-circle avatar-comment img-fluid" />
+                                <div  className="row">
+                                    <div className=" col-1 avatar-comment ms-3 d-flex justify-content-end ">
+                                        <img src="https://github.com/mdo.png" alt="mdo" className="rounded-circle" />
                                     </div>
-                                    <div className="col">
-                                        <div className="card-body">
-                                            <h5 className="card-title">User Name</h5>
-                                            <p className="card-text">{item.comment}</p>
-                                        </div>
+                                    <div className="col-9 card-body p-none aling-text-start user-comment mt-1 mb-3 title me-5">
+                                        User Name. <p className="body">
+                                            {item.comment} </p>
                                     </div>
                                 </div>
                             </div>

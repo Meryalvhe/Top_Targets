@@ -12,13 +12,13 @@ const getState = ({ getStore, getActions, setStore }) => {
 			currentCriminalId: [{}],
 			currentCriminal: [{}],
 			currentCriminalComments: [{}],
-			currentMissingPersonId:'',
+			currentMissingPersonId: '',
 			currentMissingPerson: [{}],
 			currentMissingPersonComments: [{}],
 			favoritesCriminals: [{}],
 			favoritesMissingPersons: [],
 			stories: {},
-      currentStory:[{Criminal:{}}],
+			currentStory: [{ Criminal: {} }],
 			toptencriminals: [],
 			mostwantedterrorists: [],
 			missingFromCriminals: [],
@@ -70,22 +70,22 @@ const getState = ({ getStore, getActions, setStore }) => {
 
 				setStore({ criminals: criminals })
 			},
-		  getCurrentCriminal: async () => {
+			getCurrentCriminal: async () => {
 				const response = await fetch(process.env.BACKEND_URL + "/api/criminals/" + getStore().currentCriminalId);
 				if (!response.ok) {
 					console.log('Error');
 					return
 				}
 				const data = await response.json();
-        setStore({ currentCriminal: data.results })
-      },
+				setStore({ currentCriminal: data.results })
+			},
 			getCurrentCriminalComments: async () => {
 				const response = await fetch(process.env.BACKEND_URL + "/api/criminals/" + getStore().currentCriminalId + '/comments');
 				if (!response.ok) {
 					console.log('Error');
 					return
 				}
-        const data = await response.json();
+				const data = await response.json();
 				console.log(data)
 				setStore({ currentCriminalComments: data.results })
 
@@ -136,14 +136,6 @@ const getState = ({ getStore, getActions, setStore }) => {
 
 				setStore({ favoritesCriminals: [...getStore().favoritesCriminals, data.results] })
 			},
-        
-        
-        
-        
-			removeFavoritesCriminals: (remove) => {
-				setStore({ favoritesCriminals: getStore().favoritesCriminals.filter((item) => item != remove) })
-				getActions().removeFavoriteCriminalDB(remove)
-			},
 			addFavoritesMissingPersons: async (id) => {
 				const uri = (process.env.BACKEND_URL + "/api/saved-missing-persons")
 				const dataToSend = {
@@ -155,8 +147,8 @@ const getState = ({ getStore, getActions, setStore }) => {
 					headers: {
 						'Content-Type': 'application/json'
 					},
-          
-          
+
+
 					body: JSON.stringify(dataToSend)
 				};
 				const response = await fetch(uri, options);
@@ -172,8 +164,8 @@ const getState = ({ getStore, getActions, setStore }) => {
 				setStore({ favoritesMissingPersons: [...getStore().favoritesMissingPersons, data.results] })
 
 
-			}, 
-			
+			},
+
 			removeFavoriteCriminalDB: async (id) => {
 				const criminalFavoriteId = getStore().favoritesCriminals.filter((item) => id == item.criminal_id)
 
@@ -247,7 +239,7 @@ const getState = ({ getStore, getActions, setStore }) => {
 					console.log('Error: ', response.status, response.statusText);
 					return
 				};
-				setStore({ favoritesMissingPersons: getStore().favoritesMissingPersons.filter((item) => id != item.missing_person_id)})
+				setStore({ favoritesMissingPersons: getStore().favoritesMissingPersons.filter((item) => id != item.missing_person_id) })
 
 			},
 			getCurrentMissingComments: async () => {
@@ -262,6 +254,7 @@ const getState = ({ getStore, getActions, setStore }) => {
 
 			},
 			addCommentMissingPerson: async (dataToSend) => {
+				console.log(dataToSend)
 				const uri = (process.env.BACKEND_URL + "/api/comments-missing-persons")
 				const options = {
 					method: 'POST',
@@ -281,15 +274,15 @@ const getState = ({ getStore, getActions, setStore }) => {
 				const data = await response.json();
 				getActions().getCurrentMissingComments()
 			},
-      getCurrentStory: async ()=>{
-				const response = await fetch (process.env.BACKEND_URL + "/api/users/1/stories-criminals");
+			getCurrentStory: async () => {
+				const response = await fetch(process.env.BACKEND_URL + "/api/users/1/stories-criminals");
 				if (!response.ok) {
 					console.log('Error');
 					return
 				}
 				const data = await response.json();
-        console.log(data)
-				setStore({currentStory: data.results})
+				console.log(data)
+				setStore({ currentStory: data.results })
 			},
 			getTopTenCriminals: async () => {
 				const response = await fetch("https://api.fbi.gov/wanted/v1/list?poster_classification=ten");
@@ -299,12 +292,12 @@ const getState = ({ getStore, getActions, setStore }) => {
 				}
 				const data = await response.json();
 				const result = data.results
-				const toptencriminals = result.filter(items =>{
-					if (items.poster_classification == "ten"){
+				const toptencriminals = result.filter(items => {
+					if (items.poster_classification == "ten") {
 						return true
 					}
 				})
-				console.log (toptencriminals)
+				console.log(toptencriminals)
 				setStore({ toptencriminals: data.items })
 
 			},
@@ -316,8 +309,8 @@ const getState = ({ getStore, getActions, setStore }) => {
 				}
 				const data = await response.json();
 				const result = data.results
-				const mostwanted = result.filter(items =>{
-					if (items.poster_classification == "terrorist"){
+				const mostwanted = result.filter(items => {
+					if (items.poster_classification == "terrorist") {
 						return true
 					}
 				})
@@ -345,14 +338,14 @@ const getState = ({ getStore, getActions, setStore }) => {
 				setStore({ missingFromCriminals: result })
 				console.log(items)
 			},
-			getStories: async ()=>{
-				const response = await fetch (process.env.BACKEND_URL + "/api/stories-criminals/user/"+JSON.parse(localStorage.getItem('user')).id);
+			getStories: async () => {
+				const response = await fetch(process.env.BACKEND_URL + "/api/stories-criminals/user/" + JSON.parse(localStorage.getItem('user')).id);
 				if (!response.ok) {
 					console.log('Error');
 					return
 				}
 				const data = await response.json();
-				setStore({stories: data.results})	
+				setStore({ stories: data.results })
 			},
 			addFavoritesCrimianls: (text) => {
 				if (getStore().favoritesCriminals.includes(text)) {
@@ -411,11 +404,7 @@ const getState = ({ getStore, getActions, setStore }) => {
 				setStore({ toptencriminals: toptencriminals })
 
 			},
-			getLocalStorage: () => {
-				if (localStorage.length > 0) {
-					setStore({ isLogin: 'true' })
-				}
-			},
+
 		}
 	};
 };

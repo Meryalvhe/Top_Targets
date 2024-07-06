@@ -19,11 +19,12 @@ export const CurrentMissingPersons = () => {
         if (comment.trim !== '') {
             const dataToSend = {
                 user_id: store.user.id,
-                missing_person_id: store.CurrentMissingPerson,
+                missing_person_id: store.currentMissingPersonId,
                 comment: comment,
                 comment_date: new Date()
             }
             actions.addCommentMissingPerson(dataToSend)
+            console.log(dataToSend)
             setComment('')
         }
     }
