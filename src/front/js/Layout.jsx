@@ -19,9 +19,12 @@ import {About} from "./pages/About.jsx";
 import { CreateStory } from "./pages/CreateStory.jsx";
 import { Stories } from "./pages/Stories.jsx";
 import { Profile } from "./pages/Profile.jsx";
+import { CurrentMissingPersons } from "./pages/CurrentMissingPerson.jsx";
 import { CurrentTopTenCriminals } from "./pages/CurrentTopTenCriminals.jsx";
 import { CurrentMostWantedTerrorist } from "./pages/CurrentMostWantedTerrorist.jsx";
 import  PrivacyPolicy from "./pages/PrivacyPolicy.jsx";
+import {EditStory} from "./pages/EditStory.jsx"
+
 
 
 
@@ -45,6 +48,7 @@ const Layout = () => {
                         <Route element={<Criminals />} path="/criminals" />
                         <Route element={<MissingPersons />} path="/missing-persons" />
                         <Route element={<CurrentCriminal />} path="/current-criminal" />
+                        <Route element={<CurrentMissingPersons />} path="/current-missing-persons" />
                         <Route element={<Cookies />} path="/cookies" />
                         <Route element={<Contact />} path="/contact" />
                         <Route element={<About />} path="/about" />
@@ -54,6 +58,8 @@ const Layout = () => {
                         <Route element={<CurrentTopTenCriminals />} path="/current-top-ten-criminal" />
                         <Route element={<CurrentMostWantedTerrorist />} path="/current-most-wanted-criminal" />
                         <Route element={<PrivacyPolicy />} path="/privacy-policy" />
+                        <Route element={<EditStory />} path="/edit-story" />
+
                     </Routes>
                     <Footer />
                 </ScrollToTop>

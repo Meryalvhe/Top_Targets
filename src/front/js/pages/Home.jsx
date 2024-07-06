@@ -38,7 +38,7 @@ export const Home = () => {
                                                     <div className="d-flex col-4 jalign-items-start">
                                                         <img id="imgCardHome" src={item.images} className="mt-4" alt="..." />
                                                     </div>
-                                                    <div className="col-8 mt-4 text-end">
+                                                    <div  className="col-8 mt-4 text-end">
                                                         <div>
                                                             <h5 className="card-title title text-light">{item.title}</h5>
                                                         </div>

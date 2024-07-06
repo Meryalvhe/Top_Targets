@@ -8,6 +8,8 @@ export const CurrentCriminal = () => {
     const { store, actions } = useContext(Context);
     const [comment, setComment] = useState();
 
+    const [comment, setComment] = useState();
+
     console.log(comment)
     console.log(store.user.id, store.currentCriminal.id)
 
@@ -48,69 +50,74 @@ export const CurrentCriminal = () => {
                         </div>
                         <div className="col-md-6 ms-5">
                             <div className="card-body text-light">
-                                <div className='mb-5'>
-                                    <h1 className="card-title title"> {store.currentCriminal.title} </h1>
-                                    <p>{store.currentCriminal.subjects}</p>
+                                <div className ='mb-5'>
+                                <h1 className="card-title title"> {store.currentCriminal.title} </h1>
+                                <p>{store.currentCriminal.subjects ? store.currentCriminal.subjects.replace(/['"\[\]]/g, '') : ''}</p>
+                                </div>
+                                <div className="mb-1">
+                                {store.currentCriminal.dates_of_birth_used == null || store.currentCriminal.dates_of_birth_used == 'None' ? '' 
+                                :
+                                 <p className="card-text body"> <span className="title">Date of birth used:</span> {store.currentCriminal.dates_of_birth_used.replace(/['"\[\]]/g, '')}  </p> }
+                                </div>
+                                <div className="mb-1">
+                                {store.currentCriminal.nationality == null || store.currentCriminal.nationality == 'None' ? '' 
+                                :
+                                <p className="card-text body"> <span className="title">Nationality: </span> {store.currentCriminal.nationality} </p>
+                                }
                                 </div>
                                 <div>
-                                    {store.currentCriminal.dates_of_birth_used == null || store.currentCriminal.dates_of_birth_used == 'None' ? ''
-                                        :
-                                        <p className="card-text body"> Date of birth used: {store.currentCriminal.dates_of_birth_used.replace(/['"\[\]]/g, '')}  </p>}
+                                {store.currentCriminal.place_of_birth == null || store.currentCriminal.place_of_birth == 'None' ? '' 
+                                :
+                                <p className="card-text body"> <span className="title">Place of birth: </span> {store.currentCriminal.place_of_birth} </p>
+                                }
                                 </div>
-                                <div>
-                                    {store.currentCriminal.nationality == null || store.currentCriminal.nationality == 'None' ? ''
-                                        :
-                                        <p className="card-text body"> Nationality: {store.currentCriminal.nationality} </p>
-                                    }
+                                <div className="mb-1">
+                                {store.currentCriminal.sex == null || store.currentCriminal.sex == 'None' ? '' 
+                                :
+                                <p className="card-text body"> <span className="title">Sex: </span> {store.currentCriminal.sex}</p>
+                                }
                                 </div>
-                                <div>
-                                    {store.currentCriminal.place_of_birth == null || store.currentCriminal.place_of_birth == 'None' ? ''
-                                        :
-                                        <p className="card-text body"> Place of birth: {store.currentCriminal.place_of_birth} </p>
-                                    }
+                                <div className="mb-1">
+                                {store.currentCriminal.hair_raw == null || store.currentCriminal.hair_raw == 'None' ? '' 
+                                :
+                                <p className="card-text body"> <span className="title">Hair: </span> {store.currentCriminal.hair_raw} </p>
+                                }
                                 </div>
-                                <div>
-                                    {store.currentCriminal.sex == null || store.currentCriminal.sex == 'None' ? ''
-                                        :
-                                        <p className="card-text body"> Sex: {store.currentCriminal.sex}</p>
-                                    }
+                                <div className="mb-1">
+                                {store.currentCriminal.remarks == null || store.currentCriminal.remarks == 'None' ? '' 
+                                :
+                                <p className="card-text body"> <span className="title">Remarks: </span> {store.currentCriminal.remarks.replace(/\[|\]|<p>|<\/p>/g, '')} </p>
+                                }
                                 </div>
-                                <div>
-                                    {store.currentCriminal.hair_raw == null || store.currentCriminal.hair_raw == 'None' ? ''
-                                        :
-                                        <p className="card-text body"> Hair: {store.currentCriminal.hair_raw} </p>
-                                    }
+                                <div className="mb-1">
+                                {store.currentCriminal.field_offices == null || store.currentCriminal.field_offices == 'None' ? '' 
+                                :
+                                <p className="card-text mt-1 body"> <span className="title">Field offices: </span> {store.currentCriminal.field_offices.replace(/['"\[\]]/g, '')}  </p>
+                                }
                                 </div>
-                                <div>
-                                    {store.currentCriminal.remarks == null || store.currentCriminal.remarks == 'None' ? ''
-                                        :
-                                        <p className="card-text body"> Remarks: {store.currentCriminal.remarks.replace(/\[|\]|<p>|<\/p>/g, '')} </p>
-                                    }
-                                </div>
-                                <div>
-                                    {store.currentCriminal.field_offices == null || store.currentCriminal.field_offices == 'None' ? ''
-                                        :
-                                        <p className="card-text mt-1 body"> Field offices: {store.currentCriminal.field_offices.replace(/['"\[\]]/g, '')}  </p>
-                                    }
-                                </div>
-                                <div>
-                                    {store.currentCriminal.caution == null || store.currentCriminal.caution == 'None' ? ''
-                                        :
-                                        <p className="card-text body"> Caution: {store.currentCriminal.caution.replace(/\[|\]|<p>|<\/p>/g, '')}  </p>
-                                    }
+                                <div className="mb-1">
+                                {store.currentCriminal.caution == null || store.currentCriminal.caution == 'None' ? '' 
+                                :
+                                <p className="card-text body"> <span className="title">Caution: </span> {store.currentCriminal.caution.replace(/\[|\]|<p>|<\/p>/g, '')}  </p>
+                                }
                                 </div>
                             </div>
                         </div>
                         <div className="d-flex justify-content-end mb-5">
-                            <a href="/create-story" className="btn btn-outline-light ms-3 body">Create your Storie</a>
+                        {store.isLogin ? 
+                        <Link to="/create-story"  className="btn btn-outline-light ms-3 body">Create your Storie</Link> 
+                            : ''
+                            }
+                            
                         </div>
                         <div className='mb-2'>
                             {store.currentCriminalComments == '' ? '' : <h1 className="title text-light"> Comments </h1>}
                         </div>
                         {store.currentCriminalComments.map((item, id) =>
-                            <div className="card mb-3" key={id}>
-                                <div className="d-flex justify-content-end p-2">
-                                    <i className="fa-regular fa-trash-can"></i>
+                            <div className="card">
+                                <div className="d-flex justify-content-end p-2 me-2">
+                                   {/*  <i className="fa-regular fa-trash-can"></i>  */}
+                                    
                                 </div>
                                 <div className="row g-0">
                                     <div className="col-auto d-flex align-items-center">
@@ -125,20 +132,19 @@ export const CurrentCriminal = () => {
                                 </div>
                             </div>
                         )}
-                        {store.isLogin ?
-                            <div className="container-fluid p-3">
-                                <div className="row justify-content-center">
-                                    <div className="col-12 col-md-8">
-                                        <div className="mb-3 mt-3">
-                                            <label htmlFor="exampleFormControlTextarea1" className="form-label text-light">Write your comment here</label>
-                                            <textarea className="form-control" id="exampleFormControlTextarea1" rows="3" value={comment} onChange={(event) => setComment(event.target.value)}></textarea>
-                                        </div>
-                                        <button type="submit" className="btn btn-outline-light mt-3 w-100" onClick={() => handleSubmit()}>Comment</button>
-                                    </div>
-                                </div>
-                            </div>
-                            : ''
-                        }
+                    
+                            {store.isLogin ? 
+                        <div>
+
+                        <div className="mb-3 mt-3 justify-content-end">
+                            <label htmlFor="exampleFormControlTextarea1" className="form-label text-light"> Write your comment here</label>
+                            <textarea className="form-control" id="exampleFormControlTextarea1" rows="3" value={comment} onChange={(event) => setComment(event.target.value)}></textarea>
+                        </div>
+                        <button type="submit" className="btn btn-outline-light mt-3 body" onClick={()=> handleSubmit()}>Comment</button>
+                        </div>
+
+                                : ''
+                    }
                     </div>
                 </div>
             }
