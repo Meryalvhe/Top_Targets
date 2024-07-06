@@ -23,7 +23,7 @@ client = OpenAI(api_key= os.getenv("OPENAI_API_KEY"))
 def handle_hello():
     response_body = {}
     completion = client.chat.completions.create(model="gpt-3.5-turbo",
-                                                messages=[{"role": "user", "content": "give me a sentence with 3 words"}])
+                                                messages=[{"role": "user", "content": request.json.get("story", None).lower()}]) # 
     print(completion.choices[0].message)
     print(completion.choices[0].message.content)
     response_body["message"] = completion.choices[0].message.content
@@ -517,6 +517,33 @@ def handle_saved_criminals_id(saved_criminals_id):
         response_body['results'] = {}
         return response_body, 404
 
+@api.route('/users/<int:user_id>/saved-criminals', methods=['GET'])
+def handle_users_saved_criminals(user_id):
+    response_body = {}
+    saved_criminals = db.session.execute(db.select(SavedCriminals).where(SavedCriminals.user_id == user_id)).scalars()
+    results = [row.serialize() for row in saved_criminals]
+    response_body['results'] = results
+    response_body['message'] = 'Saved Criminals'
+    return response_body, 200
+
+@api.route('/criminals/<int:criminal_id>/comments', methods = ['GET'])
+def handle_criminal_comments(criminal_id):
+    response_body = {}
+    criminal_comments = db.session.execute(db.select(CommentsCriminals).where(CommentsCriminals.criminal_id == criminal_id)).scalars()
+    results = [row.serialize() for row in criminal_comments]
+    response_body['results'] = results
+    response_body['message'] = 'Criminal comments'
+    return response_body, 200
+
+@api.route('/missing-persons/<int:missing_person_id>/comments', methods = ['GET'])
+def handle_missing_persons_comments(missing_person_id):
+    response_body = {}
+    missing_person_comments = db.session.execute(db.select(CommentsMissingPersons).where(CommentsMissingPersons.missing_person_id == missing_person_id)).scalars()
+    results = [row.serialize() for row in missing_person_comments]
+    response_body['results'] = results
+    response_body['message'] = 'Missing Person comments'
+    return response_body, 200
+
 @api.route('/saved-missing-persons', methods=['GET','POST']) 
 def handle_saved_missing_persons():
     response_body = {}
@@ -536,6 +563,7 @@ def handle_saved_missing_persons():
         db.session.add(saved_missing_person)
         db.session.commit()
         response_body['message'] = 'Saved Missing Person'
+        response_body['results'] =  saved_missing_person.serialize()
         return response_body, 200
 
 @api.route('/saved-missing-persons/<int:saved_missing_person_id>', methods=['GET', 'DELETE']) 
@@ -714,6 +742,63 @@ def handle_stories_missing_persons_id(stories_missing_persons_id):
         response_body['results'] = {}
         return response_body, 404   
 
+@api.route('/users/<int:user_id>/stories-criminals', methods=['GET', 'PUT', 'DELETE']) 
+def handle_stories_criminals_user_id(user_id):
+    response_body = {}
+    if request.method == 'GET':
+        stories_criminals = db.session.execute(db.select(StoriesCriminals, Criminals)
+                                               .join(Criminals, StoriesCriminals.criminal_id==Criminals.id, isouter=True)
+                                               .where(StoriesCriminals.user_id == user_id))
+        if stories_criminals:
+            print(stories_criminals)
+            # stories_criminals = [story.serialize() for story in stories_criminals]   
+            results = []
+            for row in stories_criminals:
+                
+                criminal, stories = row
+                data = criminal.serialize()
+                data["Criminal"] = stories.serialize()
+                results.append(data)
+
+            response_body['results'] = results
+            response_body['message'] = 'Stories Found'
+            return response_body, 201
+        response_body['message'] = 'Story Not found'
+        response_body['results'] = {}
+        return response_body, 404
+    
+
+    """if request.method == 'PUT':
+        data = request.json
+        stories_missing_persons = db.session.execute(db.select(StoriesCriminals).where(StoriesCriminals.user_id == user_id)).scalars()
+        if stories_missing_persons:
+            stories_missing_persons.user_id = data['user_id']
+            stories_missing_persons.missing_person_id = data['missing_person_id']
+            stories_missing_persons.title = data['title']
+            stories_missing_persons.body = data['body']
+            stories_missing_persons.prompt = data['prompt']
+            stories_missing_persons.description = data['description']
+            stories_missing_persons.creation_date = data['creation_date']
+            stories_missing_persons.modification_date = data['modification_date']
+            db.session.commit()
+            response_body['message'] = 'Criminal Story Modified'
+            response_body['results'] = stories_missing_persons.serialize()
+            return response_body, 200
+        response_body['message'] = 'Missing Person Story Not Found'
+        response_body['results'] = {}
+        return response_body, 404
+       if request.method == 'DELETE':
+        stories_missing_persons = db.session.execute(db.select(StoriesMissingPersons).where(StoriesMissingPersons.id == user_id)).scalar()
+        if stories_missing_persons:
+            db.session.delete(stories_missing_persons)
+            db.session.commit()
+            response_body['message'] = 'Story Missing Person deleted'
+            response_body['results'] = {}
+            return response_body, 200
+        response_body['message'] = 'Story Missing Person Not Found'
+        response_body['results'] = {}
+        return response_body, 404 """
+
 
 @api.route('/missing-persons/<int:missing_person_id>', methods=['GET']) 
 def handle_missing_persons_id(missing_person_id):
@@ -741,4 +826,3 @@ def handle_criminals_id(criminals_id):
         response_body['message'] = 'Criminal Not Found'
         response_body['results'] = {}
         return response_body, 404
-
