@@ -23,7 +23,6 @@ const Login = () => {
     e.preventDefault();
     const dataToSend = { email, password };
     console.log("los datos que se mandan:", dataToSend);
-
     const url = `${process.env.BACKEND_URL}/api/login`;
     const options = {
       method: 'POST',
@@ -34,7 +33,7 @@ const Login = () => {
     }
     console.log("la url y la options:",url, options)
     const response = await fetch(url, options);
-    console.log(response)
+    
     if (!response.ok) {
       console.log('Error fatalisima: ', response.status, response.statusText)
       return
@@ -44,9 +43,9 @@ const Login = () => {
     // Aquí comienza nuestra lógica
     localStorage.setItem('token', data.access_token)
     localStorage.setItem('user', JSON.stringify(data.results))
+    //poner store islogin = a local storage
     actions.setIsLogin(true)
     actions.setCurrentUser(data.results)
-    
     // console.log(data.access_token);
     navigate('/')
   };

@@ -2,10 +2,9 @@ import React, {useContext, useState} from "react";
 import "../../styles/home.css";
 import { Context } from "../store/appContext";
 
-export const CreateStory = () => {
+export const EditStory = () => {
     const { store, actions } = useContext(Context);
     const currentStory = store.currentStory[0]
-    // setStore({ favoritesMissingPersons: [...getStore().favoritesMissingPersons, data.results] })
     const [story, setStory] = useState(currentStory);
     const temp=story
     temp["title"] = currentStory.title
@@ -16,7 +15,7 @@ export const CreateStory = () => {
 
     const handleTitle = event =>{
         const temp = story
-        temp["title"] = event.target.value
+        temp["title"] = event.target.placeholder
         setStory(temp);
         console.log(story)
     }
@@ -50,16 +49,14 @@ export const CreateStory = () => {
               'Content-Type': 'application/json'
             }
         }
-        /*const response = await fetch(url, options)
+        const response = await fetch(url, options)
 		if (!response.ok) {
             console.log(response)
 			console.log("Error loading message from backend", response.status, response.statusText)
 			return
 		}
 		const data = await response.json()
-		return data;  // Don't forget to return something, that is how the async resolves*/
-        const dataToSend2 = { id: "make a 2 words sentence", };
-
+		return data;  // Don't forget to return something, that is how the async resolves
     }
     
     
@@ -73,7 +70,7 @@ export const CreateStory = () => {
                 <section className="row my-2">
                     <p className="col-2 text-white">Title:</p>
                     <div className="col-10">
-                        <input type="text" class="form-control" value={currentStory.title}  onChange={handleTitle} aria-label="title" /> 
+                        <input type="text" class="form-control" placeholder={currentStory.title} value={story.title} onChange={handleTitle} aria-label="title" /> 
                     </div>
                 </section>
                 <section className="row my-2">
@@ -88,7 +85,7 @@ export const CreateStory = () => {
                 </section>
                 <section className="row my-2">
                     <p className="col-2 text-white"> Description:</p>
-                    <textarea className="col-10" name="Description" onChange={handleDescription} placeholder={currentStory.description} id="description"></textarea>
+                    <textarea className="col-10" name="Description" onChange={handleDescription} value={currentStory.description} id="description"></textarea>
                 </section>
                 <section className="row my-2">
                     <p className="col-2 text-white">Prompt:</p>

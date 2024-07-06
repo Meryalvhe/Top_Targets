@@ -3,7 +3,7 @@ import React, { useState, useContext } from "react";
 const Cookies = () => {
 
     return (
-        <div className="vh-100 bg-primary">
+        <div className=" bg-dark">
             <div className="px-5">
                 <div className="px-5 ms-5 me-5">
                     <h1 className="title text-light px-5 py-3">TopTargets Cookie Policy

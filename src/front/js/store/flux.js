@@ -4,7 +4,7 @@ const getState = ({ getStore, getActions, setStore }) => {
 			message: null,
 			demo: [{ title: "FIRST", background: "white", initial: "white" }],
 			isLogin: false,
-			user: 1, // user: '',
+			user: [{}], //user: '', // user: 1,
 			userId: '',
 			is_admin: false,
 			criminals: [],
@@ -17,7 +17,8 @@ const getState = ({ getStore, getActions, setStore }) => {
 			currentMissingPersonComments: [{}],
 			favoritesCriminals: [{}],
 			favoritesMissingPersons: [],
-			stories: [],
+			stories: {},
+      currentStory:[{Criminal:{}}],
 			toptencriminals: [],
 			mostwantedterrorists: [],
 			missingFromCriminals: [],
@@ -69,23 +70,22 @@ const getState = ({ getStore, getActions, setStore }) => {
 
 				setStore({ criminals: criminals })
 			},
-			getCurrentCriminal: async () => {
+		  getCurrentCriminal: async () => {
 				const response = await fetch(process.env.BACKEND_URL + "/api/criminals/" + getStore().currentCriminalId);
 				if (!response.ok) {
 					console.log('Error');
 					return
 				}
 				const data = await response.json();
-				setStore({ currentCriminal: data.results })
-
-			},
+        setStore({ currentCriminal: data.results })
+      },
 			getCurrentCriminalComments: async () => {
 				const response = await fetch(process.env.BACKEND_URL + "/api/criminals/" + getStore().currentCriminalId + '/comments');
 				if (!response.ok) {
 					console.log('Error');
 					return
 				}
-				const data = await response.json();
+        const data = await response.json();
 				console.log(data)
 				setStore({ currentCriminalComments: data.results })
 
@@ -136,6 +136,44 @@ const getState = ({ getStore, getActions, setStore }) => {
 
 				setStore({ favoritesCriminals: [...getStore().favoritesCriminals, data.results] })
 			},
+        
+        
+        
+        
+			removeFavoritesCriminals: (remove) => {
+				setStore({ favoritesCriminals: getStore().favoritesCriminals.filter((item) => item != remove) })
+				getActions().removeFavoriteCriminalDB(remove)
+			},
+			addFavoritesMissingPersons: async (id) => {
+				const uri = (process.env.BACKEND_URL + "/api/saved-missing-persons")
+				const dataToSend = {
+					user_id: getStore().user.id,
+					missing_person_id: id
+				}
+				const options = {
+					method: 'POST',
+					headers: {
+						'Content-Type': 'application/json'
+					},
+          
+          
+					body: JSON.stringify(dataToSend)
+				};
+				const response = await fetch(uri, options);
+				console.log(response)
+				if (!response.ok) {
+					console.log('Error: ', response.status, response.statusText);
+					if (response.status == 400) {
+						return;
+					}
+				}
+				const data = await response.json();
+				console.log(data.results)
+				setStore({ favoritesMissingPersons: [...getStore().favoritesMissingPersons, data.results] })
+
+
+			}, 
+			
 			removeFavoriteCriminalDB: async (id) => {
 				const criminalFavoriteId = getStore().favoritesCriminals.filter((item) => id == item.criminal_id)
 
@@ -168,7 +206,6 @@ const getState = ({ getStore, getActions, setStore }) => {
 				}
 				const data = await response.json();
 				setStore({ currentMissingPerson: data.results })
-
 			},
 			addFavoritesMissingPersons: async (id) => {
 				const uri = (process.env.BACKEND_URL + "/api/saved-missing-persons")
@@ -244,22 +281,18 @@ const getState = ({ getStore, getActions, setStore }) => {
 				const data = await response.json();
 				getActions().getCurrentMissingComments()
 			},
-			getStories: async () => {
-				const response = await fetch(process.env.BACKEND_URL + "/api/stories-criminals");
+      getCurrentStory: async ()=>{
+				const response = await fetch (process.env.BACKEND_URL + "/api/users/1/stories-criminals");
 				if (!response.ok) {
 					console.log('Error');
 					return
 				}
 				const data = await response.json();
-
-				if (data.user_id == getStore.userId) {
-					console.log(data)
-					setStore({ stories: data.results })
-				}
-
+        console.log(data)
+				setStore({currentStory: data.results})
 			},
-			getTopTenCriminals: async()=>{
-				const response = await fetch (process.env.BACKEND_URL + "/api/criminals");
+			getTopTenCriminals: async () => {
+				const response = await fetch("https://api.fbi.gov/wanted/v1/list?poster_classification=ten");
 				if (!response.ok) {
 					console.log('Error');
 					return
@@ -272,12 +305,11 @@ const getState = ({ getStore, getActions, setStore }) => {
 					}
 				})
 				console.log (toptencriminals)
-
-				setStore({toptencriminals: toptencriminals})
+				setStore({ toptencriminals: data.items })
 
 			},
-			getMostWantedTerrorists: async()=>{
-				const response = await fetch (process.env.BACKEND_URL + "/api/criminals");
+			getMostWantedTerrorists: async () => {
+				const response = await fetch("https://api.fbi.gov/wanted/v1/list?poster_classification=terrorist");
 				if (!response.ok) {
 					console.log('Error');
 					return
@@ -289,8 +321,7 @@ const getState = ({ getStore, getActions, setStore }) => {
 						return true
 					}
 				})
-
-				setStore({mostwantedterrorists: mostwanted})
+				setStore({ mostwantedterrorists: data.items })
 
 			},
 			getMissingFromDB: async () => {
@@ -314,27 +345,20 @@ const getState = ({ getStore, getActions, setStore }) => {
 				setStore({ missingFromCriminals: result })
 				console.log(items)
 			},
-			getStories: async () => {
-				const response = await fetch(process.env.BACKEND_URL + "/api/stories-criminals");
+			getStories: async ()=>{
+				const response = await fetch (process.env.BACKEND_URL + "/api/stories-criminals/user/"+JSON.parse(localStorage.getItem('user')).id);
 				if (!response.ok) {
 					console.log('Error');
 					return
 				}
 				const data = await response.json();
-
-				if (data.user_id == getStore.userId) {
-					console.log("Stories in flux")
-					console.log(data)
-					setStore({ stories: data.results })
-				}
-
+				setStore({stories: data.results})	
 			},
 			addFavoritesCrimianls: (text) => {
 				if (getStore().favoritesCriminals.includes(text)) {
 					return
 				}
 				setStore({ favoritesCriminals: [...getStore().favoritesCriminals, text] })
-
 			},
 			getUser: async () => {
 				const response = await fetch(process.env.BACKEND_URL + "/api/users/1"); //<int:user_id>
@@ -351,7 +375,47 @@ const getState = ({ getStore, getActions, setStore }) => {
 				}
 
 			},
+			getMostWantedTerrorists: async () => {
+				const response = await fetch(process.env.BACKEND_URL + "/api/criminals");
+				if (!response.ok) {
+					console.log('Error');
+					return
+				}
+				const data = await response.json();
+				const result = data.results
+				const mostwanted = result.filter(items => {
+					if (items.poster_classification == "terrorist") {
+						return true
+					}
+				})
+				console.log(mostwanted)
 
+				setStore({ mostwantedterrorists: mostwanted })
+
+			},
+			getTopTenCriminals: async () => {
+				const response = await fetch(process.env.BACKEND_URL + "/api/criminals");
+				if (!response.ok) {
+					console.log('Error');
+					return
+				}
+				const data = await response.json();
+				const result = data.results
+				const toptencriminals = result.filter(items => {
+					if (items.poster_classification == "ten") {
+						return true
+					}
+				})
+				console.log(toptencriminals)
+
+				setStore({ toptencriminals: toptencriminals })
+
+			},
+			getLocalStorage: () => {
+				if (localStorage.length > 0) {
+					setStore({ isLogin: 'true' })
+				}
+			},
 		}
 	};
 };
