@@ -20,7 +20,7 @@ const PrivacyPolicy = () => {
                         TopTargets uses cookies and similar technologies to improve your browsing experience and analyze website traffic. These tools help us understand user behavior and preferences, allowing us to optimize our content and services. You can manage your cookie settings through your browser at any time.
                     </p>
                     <p className="body text-light px-5">
-                        If you have any questions or concerns about our privacy practices, please contact us at toptargets@gmail.com . We are committed to resolving any issues promptly and transparently. Your trust is important to us, and we strive to protect your privacy in every interaction with TopTargets.
+                        If you have any questions or concerns about our privacy practices, please contact us at toptargets@protonmail.com . We are committed to resolving any issues promptly and transparently. Your trust is important to us, and we strive to protect your privacy in every interaction with TopTargets.
                     </p>
                     <p className="body text-light px-5">
                         TopTargets is committed to protecting your privacy and handling your personal data with the utmost confidentiality and security.
