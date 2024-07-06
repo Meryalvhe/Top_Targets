@@ -535,6 +535,15 @@ def handle_criminal_comments(criminal_id):
     response_body['message'] = 'Criminal comments'
     return response_body, 200
 
+@api.route('/missing-persons/<int:missing_person_id>/comments', methods = ['GET'])
+def handle_missing_persons_comments(missing_person_id):
+    response_body = {}
+    missing_person_comments = db.session.execute(db.select(CommentsMissingPersons).where(CommentsMissingPersons.missing_person_id == missing_person_id)).scalars()
+    results = [row.serialize() for row in missing_person_comments]
+    response_body['results'] = results
+    response_body['message'] = 'Missing Person comments'
+    return response_body, 200
+
 @api.route('/saved-missing-persons', methods=['GET','POST']) 
 def handle_saved_missing_persons():
     response_body = {}

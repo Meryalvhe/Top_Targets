@@ -1,6 +1,4 @@
-
 import React, { useContext, useEffect, useState } from "react";
-
 import "../../styles/index.css";
 import "../../styles/cards.css";
 import { Link, useParams } from "react-router-dom";
@@ -8,6 +6,7 @@ import { Context } from "../store/appContext";
 
 export const CurrentCriminal = () => {
     const { store, actions } = useContext(Context);
+    const [comment, setComment] = useState();
 
     const [comment, setComment] = useState();
 
@@ -34,7 +33,6 @@ export const CurrentCriminal = () => {
         } 
     }
 
-
     return (
         <div className="p-5 justify-content-center bg-dark">
             {!store.currentCriminal ? <p>Not found</p> :
@@ -48,75 +46,69 @@ export const CurrentCriminal = () => {
                         <div className="col-3 mb-5 current-card border-none">
                             <img src={store.currentCriminal.images} className="img-fluid" alt="..." />
                             <h4 className="mt-3 text-center title"> aliases: </h4>
-
                             <p calssName= " body">{store.currentCriminal.aliases ? store.currentCriminal.aliases.replace(/['"\[\]]/g, '') : ''}</p>
-
                         </div>
                         <div className="col-md-6 ms-5">
                             <div className="card-body text-light">
                                 <div className ='mb-5'>
                                 <h1 className="card-title title"> {store.currentCriminal.title} </h1>
-                                <p>{store.currentCriminal.subjects}</p>
+                                <p>{store.currentCriminal.subjects ? store.currentCriminal.subjects.replace(/['"\[\]]/g, '') : ''}</p>
                                 </div>
-                                <div>
+                                <div className="mb-1">
                                 {store.currentCriminal.dates_of_birth_used == null || store.currentCriminal.dates_of_birth_used == 'None' ? '' 
                                 :
-
-                                 <p className="card-text body"> Date of birth used: {store.currentCriminal.dates_of_birth_used.replace(/['"\[\]]/g, '')}  </p> }
-
+                                 <p className="card-text body"> <span className="title">Date of birth used:</span> {store.currentCriminal.dates_of_birth_used.replace(/['"\[\]]/g, '')}  </p> }
                                 </div>
-                                <div>
+                                <div className="mb-1">
                                 {store.currentCriminal.nationality == null || store.currentCriminal.nationality == 'None' ? '' 
                                 :
-                                <p className="card-text body"> Nationality: {store.currentCriminal.nationality} </p>
+                                <p className="card-text body"> <span className="title">Nationality: </span> {store.currentCriminal.nationality} </p>
                                 }
                                 </div>
                                 <div>
                                 {store.currentCriminal.place_of_birth == null || store.currentCriminal.place_of_birth == 'None' ? '' 
                                 :
-                                <p className="card-text body"> Place of birth: {store.currentCriminal.place_of_birth} </p>
+                                <p className="card-text body"> <span className="title">Place of birth: </span> {store.currentCriminal.place_of_birth} </p>
                                 }
                                 </div>
-                                <div>
+                                <div className="mb-1">
                                 {store.currentCriminal.sex == null || store.currentCriminal.sex == 'None' ? '' 
                                 :
-                                <p className="card-text body"> Sex: {store.currentCriminal.sex}</p>
+                                <p className="card-text body"> <span className="title">Sex: </span> {store.currentCriminal.sex}</p>
                                 }
                                 </div>
-                                <div>
+                                <div className="mb-1">
                                 {store.currentCriminal.hair_raw == null || store.currentCriminal.hair_raw == 'None' ? '' 
                                 :
-                                <p className="card-text body"> Hair: {store.currentCriminal.hair_raw} </p>
+                                <p className="card-text body"> <span className="title">Hair: </span> {store.currentCriminal.hair_raw} </p>
                                 }
                                 </div>
-                                <div>
+                                <div className="mb-1">
                                 {store.currentCriminal.remarks == null || store.currentCriminal.remarks == 'None' ? '' 
                                 :
-
-                                <p className="card-text body"> Remarks: {store.currentCriminal.remarks.replace(/\[|\]|<p>|<\/p>/g, '')} </p>
-
+                                <p className="card-text body"> <span className="title">Remarks: </span> {store.currentCriminal.remarks.replace(/\[|\]|<p>|<\/p>/g, '')} </p>
                                 }
                                 </div>
-                                <div>
+                                <div className="mb-1">
                                 {store.currentCriminal.field_offices == null || store.currentCriminal.field_offices == 'None' ? '' 
                                 :
-
-                                <p className="card-text mt-1 body"> Field offices: {store.currentCriminal.field_offices.replace(/['"\[\]]/g, '')}  </p>
-
+                                <p className="card-text mt-1 body"> <span className="title">Field offices: </span> {store.currentCriminal.field_offices.replace(/['"\[\]]/g, '')}  </p>
                                 }
                                 </div>
-                                <div>
+                                <div className="mb-1">
                                 {store.currentCriminal.caution == null || store.currentCriminal.caution == 'None' ? '' 
                                 :
-
-                                <p className="card-text body"> Caution: {store.currentCriminal.caution.replace(/\[|\]|<p>|<\/p>/g, '')}  </p>
-
+                                <p className="card-text body"> <span className="title">Caution: </span> {store.currentCriminal.caution.replace(/\[|\]|<p>|<\/p>/g, '')}  </p>
                                 }
                                 </div>
                             </div>
                         </div>
                         <div className="d-flex justify-content-end mb-5">
-                            <a href="/create-story" className="btn btn-outline-light ms-3 body">Create your Storie</a>
+                        {store.isLogin ? 
+                        <Link to="/create-story"  className="btn btn-outline-light ms-3 body">Create your Storie</Link> 
+                            : ''
+                            }
+                            
                         </div>
                         <div className='mb-2'>
                         {store.currentCriminalComments == '' ? '' : <h1 className="title text-light"> Comments </h1> }
@@ -124,7 +116,8 @@ export const CurrentCriminal = () => {
                         {store.currentCriminalComments.map((item, id) =>
                             <div className="card">
                                 <div className="d-flex justify-content-end p-2 me-2">
-                                    <i className="fa-regular fa-trash-can"></i>
+                                   {/*  <i className="fa-regular fa-trash-can"></i>  */}
+                                    
                                 </div>
                                 <div key={item.id} className="row">
                                     <div className=" col-1 avatar-comment ms-3 d-flex justify-content-end ">
@@ -137,9 +130,7 @@ export const CurrentCriminal = () => {
                                 </div>
                             </div>
                         )}
-
                             {store.isLogin ? 
-
                         <div>
 
                         <div className="mb-3 mt-3 justify-content-end">
