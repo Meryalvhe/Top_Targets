@@ -101,9 +101,11 @@ export const CurrentTopTenCriminals = () => {
                                 </div>
                             </div>
                         </div>
+                        {store.isLogin ? 
                         <div className="d-flex justify-content-end mb-5">
                             <a href="/create-story" className="btn btn-outline-light ms-3 body">Create your Storie</a>
                         </div>
+                        : ''}
                         <div className='mb-2'>
                         {store.currentCriminalComments == '' ? '' : <h1 className="title text-light"> Comments </h1> }
                         </div>
