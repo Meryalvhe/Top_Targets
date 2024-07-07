@@ -24,6 +24,7 @@ import { CurrentTopTenCriminals } from "./pages/CurrentTopTenCriminals.jsx";
 import { CurrentMostWantedTerrorist } from "./pages/CurrentMostWantedTerrorist.jsx";
 import  PrivacyPolicy from "./pages/PrivacyPolicy.jsx";
 import {EditStory} from "./pages/EditStory.jsx"
+import {Story} from "./pages/Story.jsx"
 
 
 
@@ -59,7 +60,7 @@ const Layout = () => {
                         <Route element={<CurrentMostWantedTerrorist />} path="/current-most-wanted-criminal" />
                         <Route element={<PrivacyPolicy />} path="/privacy-policy" />
                         <Route element={<EditStory />} path="/edit-story" />
-
+                        <Route element={<Story />} path="/story" />
                     </Routes>
                     <Footer />
                 </ScrollToTop>

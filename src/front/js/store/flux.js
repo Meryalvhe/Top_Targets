@@ -18,7 +18,7 @@ const getState = ({ getStore, getActions, setStore }) => {
 			favoritesCriminals: [{}],
 			favoritesMissingPersons: [],
 			stories: {},
-			currentStory: [{ Criminal: {} }],
+			currentStory: [{}], // { Criminal: {} }
 			toptencriminals: [],
 			mostwantedterrorists: [],
 			missingFromCriminals: [],
@@ -275,7 +275,8 @@ const getState = ({ getStore, getActions, setStore }) => {
 				getActions().getCurrentMissingComments()
 			},
 			getCurrentStory: async () => {
-				const response = await fetch(process.env.BACKEND_URL + "/api/users/1/stories-criminals");
+				const response = await fetch(process.env.BACKEND_URL + "/api/users/" + JSON.parse(localStorage.getItem('user')).id +"/stories-criminals/9");
+				console.log(response)
 				if (!response.ok) {
 					console.log('Error');
 					return

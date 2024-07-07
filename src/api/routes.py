@@ -742,6 +742,21 @@ def handle_stories_missing_persons_id(stories_missing_persons_id):
         response_body['results'] = {}
         return response_body, 404   
 
+@api.route('/users/<int:user_id>/stories-criminals/<int:id>', methods=['GET', 'PUT', 'DELETE']) 
+def handle_story_criminal_user_id(user_id,id):
+    response_body = {}
+    if request.method == 'GET':
+        story_criminal = db.session.execute(db.select(StoriesCriminals).where((StoriesCriminals.user_id == user_id) & (StoriesCriminals.id ==id))).scalar()
+        if story_criminal:
+            print(story_criminal)
+            response_body['results'] = story_criminal.serialize()
+            response_body['message'] = 'Story Found'
+            return response_body, 201
+        response_body['message'] = 'Story Not found'
+        response_body['results'] = {}
+        return response_body, 404
+    
+
 @api.route('/users/<int:user_id>/stories-criminals', methods=['GET', 'PUT', 'DELETE']) 
 def handle_stories_criminals_user_id(user_id):
     response_body = {}
@@ -751,13 +766,13 @@ def handle_stories_criminals_user_id(user_id):
                                                .where(StoriesCriminals.user_id == user_id))
         if stories_criminals:
             print(stories_criminals)
-            # stories_criminals = [story.serialize() for story in stories_criminals]   
+              
             results = []
             for row in stories_criminals:
                 
-                criminal, stories = row
-                data = criminal.serialize()
-                data["Criminal"] = stories.serialize()
+                story, criminal = row
+                data = story.serialize()
+                data["Criminal"] = criminal.serialize()
                 results.append(data)
 
             response_body['results'] = results

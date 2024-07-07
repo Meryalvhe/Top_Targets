@@ -5,37 +5,33 @@ import { Context } from "../store/appContext";
 export const EditStory = () => {
     const { store, actions } = useContext(Context);
     const currentStory = store.currentStory[0]
-    const [story, setStory] = useState(currentStory);
-    const temp=story
-    temp["title"] = currentStory.title
     const [generateStory,setGenerateStory] = useState(["Make a story about this criminal ", "John Goutenbergh",])
-    console.log("this is is it")
-    console.log(story)
-    console.log(currentStory)
-
-    const handleTitle = event =>{
-        const temp = story
-        temp["title"] = event.target.placeholder
-        setStory(temp);
-        console.log(story)
+    const [updatedTitle, setTitle] = useState()
+    const [updatedDescription,setDescription] = useState()
+    const [updatedPrompt, setPrompt] = useState()
+    const [updatedBody, setBody] = useState()
+    const [isEditing, setIsEditing] = useState(false);
+    const handleClick = () => {
+        setIsEditing(true);
+    };
+    const handleBlur = () => {
+        setIsEditing(false);
+        // Save the changes or perform any required actions here
+    };
+    const handleChange = (event) => {
+        setText(event.target.value);
+      };
+    const handleTitle = (event) =>{
+        setTitle(event.target.value)
     }
     const handleDescription = event =>{
-        const temp = story
-        temp["description"] = event.target.value
-        setStory(temp);
-        console.log(story)
+        setDescription(event.target.value)
     }
     const handlePrompt = event =>{
-        const temp = story
-        temp["prompt"] = event.target.value
-        setStory(temp);
-        console.log(story)
+        setPrompt(event.target.value)
     }
     const handleBody = event =>{
-        const temp = story
-        temp["body"] = event.target.value
-        setStory(temp);
-        console.log(story)
+        setBody(event.target.value)
     }
     const handleSubmit = async(e) => {
         e.preventDefault();
@@ -49,28 +45,33 @@ export const EditStory = () => {
               'Content-Type': 'application/json'
             }
         }
-        const response = await fetch(url, options)
+        /*const response = await fetch(url, options)
 		if (!response.ok) {
             console.log(response)
 			console.log("Error loading message from backend", response.status, response.statusText)
 			return
 		}
 		const data = await response.json()
-		return data;  // Don't forget to return something, that is how the async resolves
+		return data;  // Don't forget to return something, that is how the async resolves*/
+        const dataToSend2 = { id: "make a 2 words sentence", };
+
     }
     
-    
+    const [text, setText] = useState("bitch");
     return (
-        <div className=" p-5 d-flex justify-content-center bg-dark text-white  vh-100">
+        <div className=" p-5 d-flex justify-content-center bg-dark text-white  vh-100" >
             <article className="card shadow bg-dark w-75 row" >
-                <div className="card-header bg-dark">
+                <header className="card-header bg-dark">
                     <h3 className="text-center  title text-white">Create your story</h3>
-                </div>
-                
+                </header>
                 <section className="row my-2">
                     <p className="col-2 text-white">Title:</p>
-                    <div className="col-10">
-                        <input type="text" class="form-control" placeholder={currentStory.title} value={story.title} onChange={handleTitle} aria-label="title" /> 
+                    <div className="col-10" onClick={handleClick}>
+                        {isEditing ? (
+                            <input type="text"  value={updatedTitle}  onChange={handleTitle}  onBlur={handleBlur} aria-label="title" />
+                        ) : (
+                            <input type="text"  value={currentStory.title} readOnly aria-label="title" />
+                        )}
                     </div>
                 </section>
                 <section className="row my-2">
@@ -85,7 +86,13 @@ export const EditStory = () => {
                 </section>
                 <section className="row my-2">
                     <p className="col-2 text-white"> Description:</p>
-                    <textarea className="col-10" name="Description" onChange={handleDescription} value={currentStory.description} id="description"></textarea>
+                    <div className="col-10" onClick={handleClick}>
+                    {isEditing ? (
+                        <textarea className="col-12" name="Description" onChange={handleDescription} value={updatedDescription} onBlur={handleBlur} id="description"></textarea>
+                    ) : (
+                        <textarea className="col-12" name="Description" value={currentStory.description} id="description"></textarea>
+                    )}
+                    </div>
                 </section>
                 <section className="row my-2">
                     <p className="col-2 text-white">Prompt:</p>
