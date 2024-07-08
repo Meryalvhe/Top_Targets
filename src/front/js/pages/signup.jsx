@@ -41,7 +41,6 @@ const Signup = () => {
     localStorage.setItem("user", JSON.stringify(data.results));
     actions.setIsLogin(true);
     actions.setCurrentUser(user);
-    // console.log(data.access_token);
     navigate("/");
   };
 

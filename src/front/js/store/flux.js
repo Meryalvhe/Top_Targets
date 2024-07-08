@@ -4,21 +4,23 @@ const getState = ({ getStore, getActions, setStore }) => {
 			message: null,
 			demo: [{ title: "FIRST", background: "white", initial: "white" }],
 			isLogin: false,
-			user: [{}], //user: '', // user: 1,
+			user: [{}], 
 			userId: '',
 			is_admin: false,
 			criminals: [],
 			missing: [],
 			currentCriminalId: [{}],
+			currentStoryId: 0,
 			currentCriminal: [{}],
 			currentCriminalComments: [{user:{}}],
 			currentMissingPersonId: '',
 			currentMissingPerson: [{}],
 			currentMissingPersonComments: [{user:{}}],
-			favoritesCriminals: [{}],
-			favoritesMissingPersons: [],
-			stories: {},
-			currentStory: [{}], // { Criminal: {} }
+			favoritesCriminals: [{criminal: {}}],
+			favoritesMissingPersons: [{missing_person: {}}],
+			stories: [{ criminal: {} }],
+			storiesMissingPersons: [{missing_person: {}}],
+			currentStory: [{}],
 			toptencriminals: [],
 			mostwantedterrorists: [],
 			missingFromCriminals: [],
@@ -255,14 +257,12 @@ const getState = ({ getStore, getActions, setStore }) => {
 				getActions().getCurrentMissingComments()
 			},
 			getCurrentStory: async () => {
-				const response = await fetch(process.env.BACKEND_URL + "/api/users/" + JSON.parse(localStorage.getItem('user')).id + "/stories-criminals/9");
-				console.log(response)
+				const response = await fetch(process.env.BACKEND_URL + "/api/users/" + JSON.parse(localStorage.getItem('user')).id +"/stories-criminals/"+ getStore().currentCriminalId);
 				if (!response.ok) {
 					console.log('Error');
 					return
 				}
 				const data = await response.json();
-				console.log(data)
 				setStore({ currentStory: data.results })
 			},
 			getMissingFromDB: async () => {
@@ -285,13 +285,23 @@ const getState = ({ getStore, getActions, setStore }) => {
 				console.log(items)
 			},
 			getStories: async () => {
-				const response = await fetch(process.env.BACKEND_URL + "/api/stories-criminals/user/" + JSON.parse(localStorage.getItem('user')).id);
+				const response = await fetch(process.env.BACKEND_URL + "/api/users/" + JSON.parse(localStorage.getItem('user')).id + "/stories-criminals");
 				if (!response.ok) {
 					console.log('Error');
 					return
 				}
 				const data = await response.json();
 				setStore({ stories: data.results })
+			},
+			getStoriesMissing: async () => {
+				const response = await fetch(process.env.BACKEND_URL + "/api/users/" + JSON.parse(localStorage.getItem('user')).id + "/stories-missing-persons");
+				console.log(response)
+				if (!response.ok) {
+					console.log('Error');
+					return
+				}
+				const data = await response.json();
+				setStore({ storiesMissingPersons: data.results })
 			},
 			addFavoritesCrimianls: (text) => {
 				if (getStore().favoritesCriminals.includes(text)) {
@@ -306,7 +316,7 @@ const getState = ({ getStore, getActions, setStore }) => {
 					return
 				}
 				const data = await response.json();
-				console.log(data)
+				
 				if (data.user_id == getStore().userId) {
 					console.log("User in flux")
 					console.log(data)
@@ -349,6 +359,28 @@ const getState = ({ getStore, getActions, setStore }) => {
 				setStore({ toptencriminals: toptencriminals })
 
 			},
+			getSavedMissingPersons: async () => {
+				const response = await fetch(process.env.BACKEND_URL + "/api/users/" + JSON.parse(localStorage.getItem('user')).id +"/saved-missing-persons");
+				if (!response.ok) {
+					console.log('Error');
+					return
+				}
+				const data = await response.json();
+				const result = data.results
+
+				setStore({ favoritesMissingPersons: result })
+			},
+			getSavedCriminals: async () => {
+				const response = await fetch(process.env.BACKEND_URL + "/api/users/" + JSON.parse(localStorage.getItem('user')).id +"/saved-criminals");
+				if (!response.ok) {
+					console.log('Error');
+					return
+				}
+				const data = await response.json();
+				const result = data.results
+
+				setStore({ favoritesCriminals: result })
+			}
 		}
 	};
 };

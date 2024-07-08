@@ -63,7 +63,6 @@ def login():
         response_body['message'] = 'User logged in'
         response_body['access_token'] = access_token
         response_body['results'] = user.serialize()
-        # Nos hace falta devolver los favoritos del usuario. Incluyendo el ID del favorito y el ID del criminal.
         rows = db.session.execute(db.select(SavedCriminals).where(SavedCriminals.user_id == user.id)).scalars()
         results = [row.public_serialize() for row in rows]
         response_body['saved_criminals'] = results
@@ -399,14 +398,25 @@ def handle_saved_criminals_id(saved_criminals_id):
         return response_body, 404
 
 
-@api.route('/users/<int:user_id>/saved-criminals', methods=['GET'])
-def handle_users_saved_criminals(user_id):
+@api.route('/users/<int:user_id>/saved-criminals', methods=['GET','POST']) 
+def handle_user_saved_criminals(user_id):
     response_body = {}
-    saved_criminals = db.session.execute(db.select(SavedCriminals).where(SavedCriminals.user_id == user_id)).scalars()
-    results = [row.serialize() for row in saved_criminals]
-    response_body['results'] = results
-    response_body['message'] = 'Saved Criminals'
-    return response_body, 200
+    if request.method == 'GET':
+        saved_criminals = db.session.execute(db.select(SavedCriminals, Criminals)
+                                .join(Criminals, SavedCriminals.criminal_id==Criminals.id, isouter=True).where(SavedCriminals.user_id==user_id))
+        if saved_criminals:
+            results = []
+            for row in saved_criminals:
+                saved_criminal, criminal = row
+                data = saved_criminal.serialize()
+                data["criminal"] = criminal.serialize()
+                results.append(data)
+            response_body['results'] = results
+            response_body['message'] = 'Criminals Found'
+            return response_body, 201
+        response_body['message'] = 'Missing Persons Not found'
+        response_body['results'] = {}
+        return response_body, 404
 
 
 @api.route('/criminals/<int:criminal_id>/comments', methods = ['GET'])
@@ -533,9 +543,17 @@ def handle_stories_criminals():
 def handle_stories_criminals_id(stories_criminals_id):
     response_body = {}
     if request.method == 'GET':
-        stories_criminals = db.session.execute(db.select(StoriesCriminals).where(StoriesCriminals.id == stories_criminals_id)).scalar()
-        if stories_criminals:
-            response_body['results'] = stories_criminals.serialize()
+        story_criminal = db.session.execute(db.select(StoriesCriminals,Criminals).join(Criminals,SavedCriminals.criminal_id==Criminals.id, isouter=True)
+                            .where(StoriesCriminals.id == stories_criminals_id))
+        print(story_criminal)
+        if story_criminal:
+            results =[]
+            for row in story_criminal:
+                story,criminal =row
+                data=story.serialize()
+                data["criminal"] = criminal.serialize()
+                results.append(data)
+            response_body['results'] = results
             response_body['message'] = 'Story Found'
             return response_body, 200
         response_body['message'] = 'Story Not Found'
@@ -674,14 +692,11 @@ def handle_stories_criminals_user_id(user_id):
                                                .join(Criminals, StoriesCriminals.criminal_id==Criminals.id, isouter=True)
                                                .where(StoriesCriminals.user_id == user_id))
         if stories_criminals:
-            print(stories_criminals)
-              
             results = []
             for row in stories_criminals:
-                
                 story, criminal = row
                 data = story.serialize()
-                data["Criminal"] = criminal.serialize()
+                data["criminal"] = criminal.serialize()
                 results.append(data)
 
             response_body['results'] = results
@@ -720,11 +735,10 @@ def handle_criminals_id(criminals_id):
         return response_body, 404
 
 
-""" MERY ESTAS DOS SON LAS QUE AGREGAMOS ANOCHE  """
 def fetch_data_from_api():
     url = 'https://api.fbi.gov/wanted/v1/list'
     page = 1
-    rate_limit = 2  # Tiempo en segundos entre las solicitudes
+    rate_limit = 2  
     while True:
         response = requests.get(f'{url}?page={page}')
         if response.status_code != 200:
@@ -786,3 +800,46 @@ def handle_data_Criminals():
     fetch_data_from_api()
     return 'data update'
 
+
+@api.route('/users/<int:user_id>/saved-missing-persons', methods=['GET','POST']) 
+def handle_user_saved_missing_persons(user_id):
+    response_body = {}
+    if request.method == 'GET':
+        saved_missing_persons = db.session.execute(db.select(SavedMissingPersons, MissingPersons)
+                                .join(MissingPersons, SavedMissingPersons.missing_person_id==MissingPersons.id, isouter=True).where(SavedMissingPersons.user_id==user_id))
+        if saved_missing_persons:
+            results = []
+            for row in saved_missing_persons:
+                saved_missing_person, missing_person = row
+                data = saved_missing_person.serialize()
+                data["missing_person"] = missing_person.serialize()
+                results.append(data)
+            response_body['results'] = results
+            response_body['message'] = 'Missing persons Found'
+            return response_body, 201
+        response_body['message'] = 'Missing Persons Not found'
+        response_body['results'] = {}
+        return response_body, 404
+
+
+@api.route('/users/<int:user_id>/stories-missing-persons', methods=['GET']) 
+def handle_user_stories_missing_persons_id(user_id):
+    response_body = {}
+    if request.method == 'GET':
+        stories_missing_person = db.session.execute(db.select(StoriesMissingPersons, MissingPersons)
+                                               .join(MissingPersons, StoriesMissingPersons.missing_person_id==MissingPersons.id, isouter=True)
+                                               .where(StoriesMissingPersons.user_id == user_id))
+        print(stories_missing_person)
+        if stories_missing_person:
+            results = []
+            for row in stories_missing_person:
+                story, missing_person = row
+                data = story.serialize()
+                data["missing_person"] = missing_person.serialize()
+                results.append(data)
+            response_body['results'] = results
+            response_body['message'] = 'Stories Found'
+            return response_body, 201
+        response_body['message'] = 'Story Not found'
+        response_body['results'] = {}
+        return response_body, 404
