@@ -517,23 +517,29 @@ def handle_saved_criminals_id(saved_criminals_id):
         response_body['results'] = {}
         return response_body, 404
 
-@api.route('/users/<int:user_id>/saved-criminals', methods=['GET'])
-def handle_users_saved_criminals(user_id):
-    response_body = {}
-    saved_criminals = db.session.execute(db.select(SavedCriminals).where(SavedCriminals.user_id == user_id)).scalars()
-    results = [row.serialize() for row in saved_criminals]
-    response_body['results'] = results
-    response_body['message'] = 'Saved Criminals'
-    return response_body, 200
 
 @api.route('/criminals/<int:criminal_id>/comments', methods = ['GET'])
 def handle_criminal_comments(criminal_id):
     response_body = {}
-    criminal_comments = db.session.execute(db.select(CommentsCriminals).where(CommentsCriminals.criminal_id == criminal_id)).scalars()
-    results = [row.serialize() for row in criminal_comments]
-    response_body['results'] = results
-    response_body['message'] = 'Criminal comments'
-    return response_body, 200
+    criminal_comments = db.session.execute(db.select(CommentsCriminals,Users).join(Users,CommentsCriminals.user_id==Users.id,isouter=True).where(CommentsCriminals.criminal_id == criminal_id))
+    if criminal_comments:
+        print(criminal_comments)
+        results =[]
+        for row in criminal_comments:
+            comment,user = row
+            data=comment.serialize()
+            print("japon")
+            print(data)
+            data['user']=user.serialize()
+            results.append(data)
+        response_body['results'] = results
+        response_body['message'] = 'Criminal comments'
+        return response_body, 200
+    response_body['message'] = 'No comments'
+    response_body['results'] = {}
+    return response_body, 404
+    
+    
 
 @api.route('/missing-persons/<int:missing_person_id>/comments', methods = ['GET'])
 def handle_missing_persons_comments(missing_person_id):
@@ -589,6 +595,59 @@ def handle_saved_missing_persons_id(saved_missing_person_id):
         response_body['message'] = 'Saved Missin Person Not Found'
         response_body['results'] = {}
         return response_body, 404
+
+@api.route('/users/<int:user_id>/saved-missing-persons', methods=['GET','POST']) 
+def handle_user_saved_missing_persons(user_id):
+    response_body = {}
+    if request.method == 'GET':
+        saved_missing_persons = db.session.execute(db.select(SavedMissingPersons, MissingPersons)
+                                .join(MissingPersons, SavedMissingPersons.missing_person_id==MissingPersons.id, isouter=True).where(SavedMissingPersons.user_id==user_id))
+        if saved_missing_persons:
+            results = []
+            for row in saved_missing_persons:
+                saved_missing_person, missing_person = row
+                data = saved_missing_person.serialize()
+                data["missing_person"] = missing_person.serialize()
+                results.append(data)
+            response_body['results'] = results
+            response_body['message'] = 'Missing persons Found'
+            return response_body, 201
+        response_body['message'] = 'Missing Persons Not found'
+        response_body['results'] = {}
+        return response_body, 404
+
+
+        results = [row.serialize() for row in rows]
+        response_body['results'] = results
+        response_body['message'] = 'Saved Missing Persons List'
+        return response_body, 200
+
+@api.route('/users/<int:user_id>/saved-criminals', methods=['GET','POST']) 
+def handle_user_saved_criminals(user_id):
+    response_body = {}
+    if request.method == 'GET':
+        saved_criminals = db.session.execute(db.select(SavedCriminals, Criminals)
+                                .join(Criminals, SavedCriminals.criminal_id==Criminals.id, isouter=True).where(SavedCriminals.user_id==user_id))
+        if saved_criminals:
+            results = []
+            for row in saved_criminals:
+                saved_criminal, criminal = row
+                data = saved_criminal.serialize()
+                data["criminal"] = criminal.serialize()
+                results.append(data)
+            response_body['results'] = results
+            response_body['message'] = 'Criminals Found'
+            return response_body, 201
+        response_body['message'] = 'Missing Persons Not found'
+        response_body['results'] = {}
+        return response_body, 404
+
+
+        results = [row.serialize() for row in rows]
+        response_body['results'] = results
+        response_body['message'] = 'Saved Missing Persons List'
+        return response_body, 200
+
 
 @api.route('/stories-criminals', methods=['GET', 'POST']) 
 def handle_stories_criminals():
@@ -765,14 +824,11 @@ def handle_stories_criminals_user_id(user_id):
                                                .join(Criminals, StoriesCriminals.criminal_id==Criminals.id, isouter=True)
                                                .where(StoriesCriminals.user_id == user_id))
         if stories_criminals:
-            print(stories_criminals)
-              
             results = []
             for row in stories_criminals:
-                
                 story, criminal = row
                 data = story.serialize()
-                data["Criminal"] = criminal.serialize()
+                data["criminal"] = criminal.serialize()
                 results.append(data)
 
             response_body['results'] = results

@@ -17,8 +17,8 @@ import { CurrentCriminal } from "./pages/CurrentCriminals.jsx";
 import { Contact } from "./pages/Contact.jsx";
 import {About} from "./pages/About.jsx";
 import { CreateStory } from "./pages/CreateStory.jsx";
-import { Stories } from "./pages/Stories.jsx";
-import { Profile } from "./pages/Profile.jsx";
+import { Profile } from "./pages/ProfilePage.jsx";
+import { EditProfile } from "./pages/EditProfile.jsx";
 import { CurrentMissingPersons } from "./pages/CurrentMissingPerson.jsx";
 import { CurrentTopTenCriminals } from "./pages/CurrentTopTenCriminals.jsx";
 import { CurrentMostWantedTerrorist } from "./pages/CurrentMostWantedTerrorist.jsx";
@@ -54,7 +54,7 @@ const Layout = () => {
                         <Route element={<Contact />} path="/contact" />
                         <Route element={<About />} path="/about" />
                         <Route element={<CreateStory />} path="/create-story" />
-                        <Route element={<Stories />} path="/stories" />
+                        <Route element={<EditProfile />} path="/edit-profile" />
                         <Route element={<Profile />} path="/profile" />
                         <Route element={<CurrentTopTenCriminals />} path="/current-top-ten-criminal" />
                         <Route element={<CurrentMostWantedTerrorist />} path="/current-most-wanted-criminal" />

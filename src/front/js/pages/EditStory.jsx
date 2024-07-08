@@ -1,16 +1,18 @@
-import React, {useContext, useState} from "react"; 
+import React, {useContext, useState, useEffect} from "react"; 
 import "../../styles/home.css";
 import { Context } from "../store/appContext";
 
 export const EditStory = () => {
     const { store, actions } = useContext(Context);
-    const currentStory = store.currentStory[0]
     const [generateStory,setGenerateStory] = useState(["Make a story about this criminal ", "John Goutenbergh",])
     const [updatedTitle, setTitle] = useState()
     const [updatedDescription,setDescription] = useState()
     const [updatedPrompt, setPrompt] = useState()
     const [updatedBody, setBody] = useState()
     const [isEditing, setIsEditing] = useState(false);
+    useEffect(() => {
+        actions.getCurrentStory()
+    }, [])
     const handleClick = () => {
         setIsEditing(true);
     };
@@ -24,9 +26,9 @@ export const EditStory = () => {
     const handleTitle = (event) =>{
         setTitle(event.target.value)
     }
-    const handleDescription = event =>{
+    /*const handleDescription = event =>{
         setDescription(event.target.value)
-    }
+    }*/
     const handlePrompt = event =>{
         setPrompt(event.target.value)
     }
@@ -59,50 +61,43 @@ export const EditStory = () => {
     
     const [text, setText] = useState("bitch");
     return (
-        <div className=" p-5 d-flex justify-content-center bg-dark text-white  vh-100" >
+        <div className=" p-5 d-flex justify-content-center bg-dark text-white" >
             <article className="card shadow bg-dark w-75 row" >
                 <header className="card-header bg-dark">
-                    <h3 className="text-center  title text-white">Create your story</h3>
+                    <h3 className="text-center  title text-white">Edit your story</h3>
                 </header>
-                <section className="row my-2">
-                    <p className="col-2 text-white">Title:</p>
-                    <div className="col-10" onClick={handleClick}>
-                        {isEditing ? (
-                            <input type="text"  value={updatedTitle}  onChange={handleTitle}  onBlur={handleBlur} aria-label="title" />
-                        ) : (
-                            <input type="text"  value={currentStory.title} readOnly aria-label="title" />
-                        )}
-                    </div>
-                </section>
-                <section className="row my-2">
+                <section className="card-header row py-2">
+                    <h5 className="text-white col-12 mb-3">Parameters used to generate story:</h5>
                     <p className="col-2 bt-3 text-white">Subject:</p>
                     <div className="col-2 bt-3">
                         <input class="form-control " type="text" placeholder="Criminal" aria-label="Disabled input example" disabled />
                     </div>
                     <div className="col-4 bt-3">
-                        <input class="form-control " type="text" placeholder={currentStory.Criminal.title} aria-label="Disabled input example" disabled />
+                        <input class="form-control " type="text" placeholder={store.currentStory.description} aria-label="Disabled input example" disabled />
                     </div>
-                    <p className="col-4 text-white">This subject information will be loaded automatically as reference</p>
-                </section>
-                <section className="row my-2">
+                    <p className="col-4 text-white"></p>
                     <p className="col-2 text-white"> Description:</p>
-                    <div className="col-10" onClick={handleClick}>
-                    {isEditing ? (
-                        <textarea className="col-12" name="Description" onChange={handleDescription} value={updatedDescription} onBlur={handleBlur} id="description"></textarea>
-                    ) : (
-                        <textarea className="col-12" name="Description" value={currentStory.description} id="description"></textarea>
-                    )}
-                    </div>
-                </section>
-                <section className="row my-2">
+                    <textarea className="col-10" name="Description" value={store.currentStory.description} id="description"></textarea>
                     <p className="col-2 text-white">Prompt:</p>
-                    <textarea className="col-10" name="prompt" placeholder={currentStory.prompt} onChange={handlePrompt} id="prompt"></textarea>
+                    <textarea className="col-10 p-0" name="prompt" placeholder={store.currentStory.prompt} onChange={handlePrompt} id="prompt"></textarea>
+                    
                 </section>
-                <button className="btn btn-primary my-2" onClick={handleSubmit} type="submit">Button</button>
-                <section className="row my-2">
-                    <p>Body:</p>
-                    <textarea name="body" onChange={handleBody} placeholder={currentStory.body} id="body"></textarea>  
+                <section className="card-body row py-2">
+                    <h5 className="text-white col-12 mb-3">Editable parameters:</h5>
+                    <p className="col-2 text-white">Title:</p>
+                    <div className="col-10" onClick={handleClick}>
+                        {isEditing ? (
+                            <input type="text"  value={updatedTitle}  onChange={handleTitle}  onBlur={handleBlur} aria-label="title" />
+                        ) : (
+                            <input className="col-12" type="text"  value={store.currentStory.title} readOnly aria-label="title" />
+                        )}
+                    </div>
+                    <p className="text-white col-2">Body:</p>
+                    <textarea className="col-10 body" onChange={handleBody} placeholder={store.currentStory.body} id="body"></textarea> 
                 </section>
+                <footer>
+                    <button className="btn btn-primary my-2" onClick={handleSubmit} type="submit">Button</button>
+                </footer>
             </article>
         </div>
     );

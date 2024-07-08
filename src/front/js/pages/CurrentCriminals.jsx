@@ -3,10 +3,23 @@ import "../../styles/index.css";
 import "../../styles/cards.css";
 import { Link, useParams } from "react-router-dom";
 import { Context } from "../store/appContext";
+import freddy from "../../img/freddykrueger.jpg"
+import hannibal from "../../img/hannibal.webp"
+import jason from "../../img/jason.webp"
+import psycho from "../../img/psycho.png"
+import dahmer from "../../img/dahmer.jpeg"
+import missery from "../../img/Missery.jpeg"
+import ma from "../../img/ma.png"
+import monster from "../../img/monster.png"
+import tiffany from "../../img/tiffany.png"
+import karla from "../../img/karla.png"
+import bundy from "../../img/bundy.jpeg"
+import american from "../../img/american.png"
 
 export const CurrentCriminal = () => {
     const { store, actions } = useContext(Context);
     const [comment, setComment] = useState();
+    const avatars=[freddy,missery,hannibal,jason,karla,psycho,tiffany,american,monster,ma,dahmer,bundy]
 
 
     useEffect(() => {
@@ -117,10 +130,10 @@ export const CurrentCriminal = () => {
                                 </div>
                                 <div  className="row">
                                     <div className=" col-1 avatar-comment ms-3 d-flex justify-content-end ">
-                                        <img src="https://github.com/mdo.png" alt="mdo" className="rounded-circle" />
+                                        <img src={avatars[item.user.avatar]} alt="mdo" className="rounded-circle" />
                                     </div>
                                     <div className="col-9 card-body p-none aling-text-start user-comment mt-1 mb-3 title me-5">
-                                        User Name. <p className="body">
+                                        {item.user.name} {item.user.surname}<p className="body">
                                             {item.comment} </p>
                                     </div>
                                 </div>

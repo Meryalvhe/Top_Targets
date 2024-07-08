@@ -9,25 +9,46 @@ export const CreateStory = () => {
     const currentStory = store.currentStory
     const [updatedTitle, setTitle] = useState()
     const [updatedDescription,setDescription] = useState()
-    const [updatedPrompt, setPrompt] = useState()
-    const [updatedBody, setBody] = useState()
+    const [genre, setGenre] =useState("a criminal biography")
+    const [length, setLength] =useState("250")
+    const [era, setEra] =useState("in no specific time")
+    const [language, setLanguage] =useState("english")
+    const [characters, setCharacters] =useState("no specific amount of")
+    const [purpose, setPurpose] =useState("a simple story")
     const navigate = useNavigate();
+    const handlePurpose =(e)=>{
+        setPurpose(e.target.value)
+    }
+    const handleLanguage =(e)=>{
+        setLanguage(e.target.value)
+    }
+    const handleEra =(e)=>{
+        setEra(e.target.value)
+    }
+    const handleLength =(e)=>{
+        setLength(e.target.value)
+    }
+    const handleCharacters =(e)=>{
+        setCharacters(e.target.value)
+    }
+    const handleGenre =(e)=>{
+        setGenre(e.target.value)
+    }
     const handleTitle = (event) =>{
         setTitle(event.target.value)
     }
     const handleDescription = event =>{
         setDescription(event.target.value)
     }
-    const handlePrompt = event =>{
-        setPrompt(event.target.value)
-    }
-    const handleBody = event =>{
-        setBody(event.target.value)
-    }
     const generatePrompt= ()=>{
-        return "Make a story about " + "Christian" + " a criminal that has this description " + "white man with brown hair used to use a knife." + 
-        " The title of the story is " + updatedTitle + ". The prompt given by the writer is " + updatedPrompt + " The initial story is " +updatedBody + 
-        " make it 10 sentences long. A short description about the story: " +updatedDescription + ". The genre is " +"Drama"+ " it is set in " + "2004"
+        return "I want to write " + purpose + " in " + language + ". The length should be " + length + " words and the genre should be " + genre
+         + ". It should be set " + era + " and have " + characters + " characters. I want you to consider the following while generating the text: " 
+        + updatedDescription + ". The text generated should be related to the " + store.currentCriminal.sex + " criminal " + store.currentCriminal.title 
+        + " who's race is " + store.currentCriminal.race + ", hair is " + store.currentCriminal.hair_raw + " and nationality is " +
+        store.currentCriminal.nationality + ". The criminal was born in " + store.currentCriminal.place_of_birth + " in " + 
+        store.currentCriminal.dates_of_birth_used + ". The criminal uses the aliases: " + store.currentCriminal.aliases + ". Description of the criminal's crime: " 
+        + store.currentCriminal.description + ". Remarks about the criminal: " + store.currentCriminal.remarks + ". A caution about the criminal: " + 
+        store.currentCriminal.caution 
     }
     const handleSubmit = async(e) => {
         e.preventDefault();
@@ -52,7 +73,10 @@ export const CreateStory = () => {
 		console.log("this is what IA RETURNS")
         console.log(data.message)
 
-        const dataToSend2 = {"user_id": store.user.id, "criminal_id": 1,"title": updatedTitle, "description": updatedDescription, "prompt": updatedPrompt, "body": data.message};
+        const dataToSend2 = {"user_id": store.user.id, "criminal_id": 1,"title": updatedTitle, 
+                            "description": updatedDescription, "body": data.message, 
+                            "prompt":dataToSend.story, "creation_date":new Date()};
+        actions.setCurrentStory(dataToSend2)
         console.log("data to send 2", dataToSend2)
         const url2 = `${process.env.BACKEND_URL}/api/stories-criminals`;
         const options2 = {
@@ -78,68 +102,116 @@ export const CreateStory = () => {
                 <header className="card-header bg-dark">
                     <h3 className="text-center  title text-white">Create your story</h3>
                 </header>
-                <section className="card-header bg-dark">
-                    <div class="btn-group col-3 p-1">
-                        <button type="button" className="btn btn-danger dropdown-toggle" data-bs-toggle="dropdown" aria-expanded="false">
-                            Genre
-                        </button>
-                        <ul class="dropdown-menu">
-                            <li><a className="dropdown-item" href="#">Action</a></li>
-                            <li><a className="dropdown-item" href="#">Drama</a></li>
-                            <li><a className="dropdown-item" href="#">Comedy</a></li>
-                            <li><a className="dropdown-item" href="#">Terror</a></li>
-                            <li><hr className="dropdown-divider"/></li>
-                            <li><a className="dropdown-item" href="#">Separated link</a></li>
-                        </ul>
-                    </div>
-                    <div class="btn-group col-3 p-1">
-                        <button type="button" className="btn btn-danger dropdown-toggle" data-bs-toggle="dropdown" aria-expanded="false">
-                            Era
-                        </button>
-                        <ul class="dropdown-menu">
-                            <li><a className="dropdown-item" href="#">Modern Era</a></li>
-                            <li><a className="dropdown-item" href="#">In the 2000s</a></li>
-                            <li><a className="dropdown-item" href="#">In the 1990s</a></li>
-                            <li><a className="dropdown-item" href="#">In the 1980s</a></li>
-                            <li><a className="dropdown-item" href="#">In the 1960s</a></li>
-                            <li><a className="dropdown-item" href="#">In the WWII</a></li>
-                            <li><a className="dropdown-item" href="#">In the WWI</a></li>
-                            <li><a className="dropdown-item" href="#">During the time of Napoleon</a></li>
-                            <li><a className="dropdown-item" href="#">On the Day of Independence of USA</a></li>
-                            <li><a className="dropdown-item" href="#">During Jesus Christ life</a></li>
-                            <li><a className="dropdown-item" href="#">Ancient Rome</a></li>
-                            <li><hr className="dropdown-divider"/></li>
-                            <li><a className="dropdown-item" href="#">Separated link</a></li>
-                        </ul>
-                    </div>
-                    <div class="btn-group col-3 p-1">
-                        <button type="button" className="btn btn-danger dropdown-toggle" data-bs-toggle="dropdown" aria-expanded="false">
-                            Number of characters
-                        </button>
-                        <ul class="dropdown-menu">
-                            <li><a className="dropdown-item" href="#">1</a></li>
-                            <li><a className="dropdown-item" href="#">2</a></li>
-                            <li><a className="dropdown-item" href="#">3</a></li>
-                            <li><a className="dropdown-item" href="#">4</a></li>
-                            <li><a className="dropdown-item" href="#">less than 10</a></li>
-                            <li><hr className="dropdown-divider"/></li>
-                            <li><a className="dropdown-item" href="#">Separated link</a></li>
-                        </ul>
-                    </div>
-                    <div class="btn-group col-3 p-1">
-                        <button type="button" className="btn btn-danger dropdown-toggle" data-bs-toggle="dropdown" aria-expanded="false">
-                            Genre
-                        </button>
-                        <ul class="dropdown-menu">
-                            <li><a className="dropdown-item" href="#">Action</a></li>
-                            <li><a className="dropdown-item" href="#">Drama</a></li>
-                            <li><a className="dropdown-item" href="#">Comedy</a></li>
-                            <li><a className="dropdown-item" href="#">Terror</a></li>
-                            <li><hr className="dropdown-divider"/></li>
-                            <li><a className="dropdown-item" href="#">Separated link</a></li>
-                        </ul>
+                <section className="card-header row bg-dark mx-0">
+                    <div className="col-2 p-1">
+                        <select class="form-select "  onChange={handlePurpose} aria-label="Default select example">
+                            <option selected>Purpose</option>
+                            <option value="a Tv show script">TV show script</option>
+                            <option value="a Tv show script in the style of South Park">TV Show script in the style of South Park</option>
+                            <option value="an essay">Essay</option>
+                            <option value="a police detailed description of a crime">Police detailed description of a crime</option>
+                            <option value="social Media content">Social media content</option>
+                            <option value="a podcast script">Podcast script</option>
+                            <option value="a novel">Novel</option>
+                            <option value="a story">Story</option>
+                            <option value="a biography not from the criminal">Biography not from the criminal</option>
+                            <option value="a criminal autobiography">Criminal autobiogrpahy</option>
+                            <option value="a twitter thread">Twitter thread</option>
+                            <option value="a youtube video script">Youtube video script</option>
+                            <option value="a youtube video script in the style of Mrs Beast">Youtube video script in the style of Mrs Beast</option>
+                            <option value="a tik tok script">Tik tok script</option>
+                            <option value="a musical script">Musical script</option>
+                            <option value="a musical scripte in the style of Hamilton">Musical script in the style of Hamilton</option>
+                            <option value="a film script">Film script</option>
+                            <option value="a film script in the style of Quentin Tarantino">Film script in the style of Quentin Tarantino</option>
+                            <option value="a film script in the style of Greta Gerwig">Film script in the Style of Greta Gerwig</option>
+                            <option value="a film script in the style of James Cameron">Film script in the Style of James Cameron</option>
+                            <option value="a pop song lyrics">Pop song lyrics</option>
+                            <option value="a pop song lyrics in the Style of Taylor Swift">Pop song lyrics in the style of Taylor Swift</option>
+                            <option value="a rap song lyrics">Rap song lyrics</option>
+                            <option value="a rap song lyrics in the style of Kendric Lamar">Rap song lyrics in the Style of Kendric Lamar</option>
+                        </select>
                     </div>
                     
+                    <div className="col-2 p-1">
+                        <select class="form-select " onChange={handleGenre} aria-label="Default select example">
+                            <option selected>Genre</option>
+                            <option value="drama">Drama</option>
+                            <option value="comedy">Comedy</option>
+                            <option value="terror">Terror</option>
+                            <option value="crime">Crime</option>
+                            <option value="biopic">Biopic</option>
+                            <option value="sci-fi">Sci-fi</option>
+                            <option value="documentary">Documentary</option>
+                            <option value="romance">Romance</option>
+                            <option value="sports">Sports</option>
+                            <option value="Action Flick">Action flick</option>
+                        </select>
+                    </div>  
+                    <div className="col-2 p-1">
+                        <select class="form-select " onChange={handleLength} aria-label="Default select example">
+                            <option selected>Length</option>
+                            <option value="100">100 words</option>
+                            <option value="250">250 words</option>
+                            <option value="500">500 words</option>
+                            <option value="750">750 words</option>
+                            <option value="1000">1000 words</option>
+                            <option value="1250">1250 words</option>
+                            <option value="1500">1500 words</option>
+                            <option value="2000">2000 words</option>
+                            <option value="2500">2500 words</option>
+                            <option value="3000">3000 words</option>
+                        </select>
+                    </div>
+                    <div className="col-2 p-1">
+                        <select class="form-select " onChange={handleLanguage} aria-label="Default select example">
+                            <option selected>Language</option>
+                            <option value="english">English</option>
+                            <option value="spanish">Spanish</option>
+                            <option value="french">French</option>
+                            <option value="mandarin">Mandarin</option>
+                            <option value="arabic">Arabic</option>
+                            <option value="portuguese">Portuguese</option>
+                            <option value="french">German</option>
+                            <option value="morse code">Morse code</option>
+                        </select>
+                    </div>
+                    <div className="col-2 p-1">
+                        <select class="form-select " onChange={handleCharacters} aria-label="Default select example">
+                            <option selected>Nº of characters</option>
+                            <option value="one">One chracter</option>
+                            <option value="two">Two chracters</option>
+                            <option value="three">Three chracters</option>
+                            <option value="four">Four chracters</option>
+                            <option value="five">Five characters</option>
+                            <option value="more than six">more than six characters</option>
+                        </select>
+                    </div>
+                    <div className="col-2 p-1">
+                        <select class="form-select " onChange={handleEra} aria-label="Default select example">
+                            <option selected>Era</option>
+                            <option value="in the current time">Current time</option>
+                            <option value="in thousands of years from now">In thousands of years from now</option>
+                            <option value="in the year 2300">In the year 2300</option>
+                            <option value="in the near future">Near future</option>
+                            <option value="during covid-19 pandemic">During COVID-19 pandemic</option>
+                            <option value="during the premiere of Avengers: Endgame">During the premiere of Avengers: Endgame</option>
+                            <option value="during the 2010's World Cup">During the 2010's World Cup</option>
+                            <option value="in the 2000s">In the 2000s</option>
+                            <option value="in the 1990s">In the 1990s</option>
+                            <option value="in the 1980s">In the 1980s</option>
+                            <option value="in the 1960s">In the 1960s</option>
+                            <option value="during WWII">During WWII</option>
+                            <option value="during WWI">During WWI</option>
+                            <option value="during Napoleon's time">During Napoleon's time</option>
+                            <option value="during America's day of Independence">During America's day of Independence</option>
+                            <option value="during the discovery of America">During the discovery of the Americas</option>
+                            <option value="during Jesus' time">During Jesus' time</option>
+                            <option value="in Ancient Greece">In Ancient Greece</option>
+                            <option value="in Ancient Rome">In Ancient Rome</option>
+                            <option value="during the Jurrasic era">During the Jurassic era</option>
+                        </select>
+                    </div>
                 </section>
                 <section className="row my-2">
                     <p className="col-2 text-white">Title:</p>
@@ -160,14 +232,6 @@ export const CreateStory = () => {
                 <section className="row my-2">
                     <p className="col-2 text-white"> Description:</p>
                         <textarea className="col-10" name="Description"  value={updatedDescription} onChange={handleDescription} id="description"></textarea>
-                </section>
-                <section className="row my-2">
-                    <p className="col-2 text-white">Prompt:</p>
-                    <textarea className="col-10" name="prompt" value={updatedPrompt} onChange={handlePrompt} id="prompt"></textarea>
-                </section>
-                <section className="row my-2">
-                    <p className="col-12 text-white">Story:</p>
-                    <textarea className="col-12 ms-3" name="body" onChange={handleBody} value={updatedBody} id="body"></textarea>  
                 </section>
                 <footer className="row">
                     <span className="col-9"></span>

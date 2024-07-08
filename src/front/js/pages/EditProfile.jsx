@@ -1,4 +1,4 @@
-import React, {useContext, useState} from "react"; 
+import React, {useContext, useState } from "react"; 
 import "../../styles/index.css";
 import "../../styles/profile.css";
 import freddy from "../../img/freddykrueger.jpg"
@@ -15,7 +15,7 @@ import bundy from "../../img/bundy.jpeg"
 import american from "../../img/american.png"
 import { Context } from "../store/appContext";
 
-export const Profile = () => {
+export const EditProfile = () => {
     const { store, actions } = useContext(Context);
     
     const avatars=[freddy,missery,hannibal,jason,karla,psycho,tiffany,american,monster,ma,dahmer,bundy]
