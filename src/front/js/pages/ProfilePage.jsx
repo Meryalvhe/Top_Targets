@@ -29,9 +29,17 @@ export const Profile = () => {
     const handleMissingPersons =(id) =>{
         actions.setCurrentMissingPerson(id)
     }
-    const handleButton= (e)=>{
+    const handleButtonCriminal= (e)=>{
+        actions.setCurrentStoryId(e.currentTarget.getAttribute("id-criminal"))        
+        actions.setCurrentCriminalId(e.currentTarget.getAttribute("id-criminal"))
+        actions.getCurrentStory()
+        navigate("/edit-story")
+        return
+    }
+    const handleButtonMissing= (e)=>{
         console.log(e.currentTarget.getAttribute("id-criminal"))
         actions.setCurrentCriminal(e.currentTarget.getAttribute("id-criminal"))
+        actions.setCurrentCriminal(id)
         navigate("/edit-story")
         return
     }
@@ -52,16 +60,16 @@ export const Profile = () => {
                 <section className="col-9 row">
                     <ul className="nav nav-tabs" id="myTab" role="tablist">
                         <li className="nav-item" role="presentation">
-                            <button className="nav-link active" id="home-tab" data-bs-toggle="tab" data-bs-target="#home-tab-pane" type="button" role="tab" aria-controls="home-tab-pane" aria-selected="true">Criminal Stories</button>
+                            <button className="nav-link active text-white" id="home-tab" data-bs-toggle="tab" data-bs-target="#home-tab-pane" type="button" role="tab" aria-controls="home-tab-pane" aria-selected="true">Criminal Stories</button>
                         </li>
                         <li className="nav-item" role="presentation">
-                            <button className="nav-link" id="profile-tab" data-bs-toggle="tab" data-bs-target="#profile-tab-pane" type="button" role="tab" aria-controls="profile-tab-pane" aria-selected="false">Missing Person Stories</button>
+                            <button className="nav-link text-white" id="profile-tab" data-bs-toggle="tab" data-bs-target="#profile-tab-pane" type="button" role="tab" aria-controls="profile-tab-pane" aria-selected="false">Missing Person Stories</button>
                         </li>
                         <li className="nav-item" role="presentation">
-                            <button className="nav-link" id="contact-tab" data-bs-toggle="tab" data-bs-target="#contact-tab-pane" type="button" role="tab" aria-controls="contact-tab-pane" aria-selected="false">Saved Criminals</button>
+                            <button className="nav-link text-white" id="contact-tab" data-bs-toggle="tab" data-bs-target="#contact-tab-pane" type="button" role="tab" aria-controls="contact-tab-pane" aria-selected="false">Saved Criminals</button>
                         </li>
                         <li className="nav-item" role="presentation">
-                            <button className="nav-link" id="disabled-tab" data-bs-toggle="tab" data-bs-target="#disabled-tab-pane" type="button" role="tab" aria-controls="disabled-tab-pane" aria-selected="false" >Saved Missing Persons</button>
+                            <button className="nav-link text-white" id="disabled-tab" data-bs-toggle="tab" data-bs-target="#disabled-tab-pane" type="button" role="tab" aria-controls="disabled-tab-pane" aria-selected="false" >Saved Missing Persons</button>
                         </li>
                     </ul>
                     <div class="tab-content" id="myTabContent">
@@ -84,13 +92,34 @@ export const Profile = () => {
                                         <p className="card-text text-white">Last Modification Date: {item.modification_date} </p>
                                         <p className="card-text text-white">Creation Date: {item.creation_date} </p>
                                     </div>
-                                    <button  onClick={handleButton} id-criminal={1} className="btn btn-primary bg-info col-3 p-0 text-center">Edit Story</button>
+                                    <button  onClick={handleButtonCriminal} id-story={9} id-criminal={item.criminal_id} className="btn btn-primary bg-info col-3 p-0 text-center">Edit Story</button>
                                 </div>
                             </div>
                             )}
                         </div>
                         <div className="tab-pane fade" id="profile-tab-pane" role="tabpanel" aria-labelledby="profile-tab" tabindex="0">
-                            
+                        {store.storiesMissingPersons.map((item)=>
+                            <div className="card col-12 my-1 bg-dark shadow-lg" >
+                                <div className="card-header mt-3">
+                                    <h4 className="card-title text-center text-white"> {item.title} </h4>
+                                </div>
+                                <div className="card-body my-1">
+                                    <div className="card bg-primary my-1" >
+                                        <div className="card-body">
+                                            <p className="card-text text-white">{item.body}</p>
+                                        </div>
+                                    </div>
+                                    
+                                </div>
+                                <div className="card-footer row ">
+                                    <div className="col-9">
+                                        <p className="card-text text-white">Last Modification Date: {item.modification_date} </p>
+                                        <p className="card-text text-white">Creation Date: {item.creation_date} </p>
+                                    </div>
+                                    <button  onClick={handleButtonMissing} id-criminal={1} className="btn btn-primary bg-info col-3 p-0 text-center">Edit Story</button>
+                                </div>
+                            </div>
+                            )}
                         </div>
                         <div className="tab-pane fade" id="contact-tab-pane" role="tabpanel" aria-labelledby="contact-tab" tabindex="0">
                         {!store.criminals ? <p> not found </p> :

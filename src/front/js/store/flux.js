@@ -9,7 +9,8 @@ const getState = ({ getStore, getActions, setStore }) => {
 			is_admin: false,
 			criminals: [],
 			missing: [],
-			currentCriminalId: [{}],
+			currentCriminalId: '',
+			currentStoryId: 0,
 			currentCriminal: [{}],
 			currentCriminalComments: [{ user: {} }],
 			currentMissingPersonId: '',
@@ -18,6 +19,7 @@ const getState = ({ getStore, getActions, setStore }) => {
 			favoritesCriminals: [{criminal: {}}],
 			favoritesMissingPersons: [{missing_person: {}}],
 			stories: [{ criminal: {} }],
+			storiesMissingPersons: [{missing_person: {}}],
 			currentStory: [{}], // { Criminal: {} }
 			toptencriminals: [],
 			mostwantedterrorists: [],
@@ -50,6 +52,8 @@ const getState = ({ getStore, getActions, setStore }) => {
 			setCurrentCriminal: (id) => { setStore({ currentCriminalId: id }) },
 			setCurrentMissingPerson: (id) => { setStore({ currentMissingPersonId: id }) },
 			setCurrentStory: (story)=>{setStore({currentStory:story})},
+			setCurrentCriminalId: (id)=>{setStore({currentCriminalId:id})},
+			setCurrentStoryId: (storyId)=>{setStore({currentStoryId:storyId})},
 			getLocalStorage: () => {
 				if (localStorage.length > 0) {
 					setStore({ isLogin: 'true' })
@@ -276,8 +280,7 @@ const getState = ({ getStore, getActions, setStore }) => {
 				getActions().getCurrentMissingComments()
 			},
 			getCurrentStory: async () => {
-				const response = await fetch(process.env.BACKEND_URL + "/api/users/" + JSON.parse(localStorage.getItem('user')).id +"/stories-criminals/"+ getStore.currentCriminalId);
-				console.log(response)
+				const response = await fetch(process.env.BACKEND_URL + "/api/users/" + JSON.parse(localStorage.getItem('user')).id +"/stories-criminals/"+ getStore().currentCriminalId);
 				if (!response.ok) {
 					console.log('Error');
 					return
@@ -315,6 +318,16 @@ const getState = ({ getStore, getActions, setStore }) => {
 				}
 				const data = await response.json();
 				setStore({ stories: data.results })
+			},
+			getStoriesMissing: async () => {
+				const response = await fetch(process.env.BACKEND_URL + "/api/users/" + JSON.parse(localStorage.getItem('user')).id + "/stories-missing-persons");
+				console.log(response)
+				if (!response.ok) {
+					console.log('Error');
+					return
+				}
+				const data = await response.json();
+				setStore({ storiesMissingPersons: data.results })
 			},
 			addFavoritesCrimianls: (text) => {
 				if (getStore().favoritesCriminals.includes(text)) {

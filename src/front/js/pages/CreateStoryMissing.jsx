@@ -43,12 +43,12 @@ export const CreateStoryMissing = () => {
     const generatePrompt= ()=>{
         return "I want to write " + purpose + " in " + language + ". The length should be " + length + " words and the genre should be " + genre
          + ". It should be set " + era + " and have " + characters + " characters. I want you to consider the following while generating the text: " 
-        + updatedDescription + ". The text generated should be related to the " + store.currentCriminal.sex + " criminal " + store.currentCriminal.title 
+        + updatedDescription + ". The text generated should be related to the " + store.currentMissingPerson.sex + " missing person " + store.currentMissingPerson.title 
         + " who's race is " + store.currentCriminal.race + ", hair is " + store.currentCriminal.hair_raw + " and nationality is " +
-        store.currentCriminal.nationality + ". The criminal was born in " + store.currentCriminal.place_of_birth + " in " + 
-        store.currentCriminal.dates_of_birth_used + ". The criminal uses the aliases: " + store.currentCriminal.aliases + ". Description of the criminal's crime: " 
-        + store.currentCriminal.description + ". Remarks about the criminal: " + store.currentCriminal.remarks + ". A caution about the criminal: " + 
-        store.currentCriminal.caution 
+        store.currentMissingPerson.nationality + ". The missing person was born in " + store.currentMissingPerson.place_of_birth + " in " + 
+        store.currentMissingPerson.dates_of_birth_used + ". Details about the case of the missing person: " 
+        + store.currentMissingPerson.details + ". Remarks about the missing person: " + store.currentMissingPerson.remarks + ".  " + 
+        store.currentCriminal.reward_text
     }
     const handleSubmit = async(e) => {
         e.preventDefault();

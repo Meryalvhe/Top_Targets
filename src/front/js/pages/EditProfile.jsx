@@ -1,4 +1,4 @@
-import React, {useContext, useState } from "react"; 
+import React, {useContext, useState, useEffect } from "react"; 
 import "../../styles/index.css";
 import "../../styles/profile.css";
 import freddy from "../../img/freddykrueger.jpg"
@@ -71,7 +71,6 @@ export const EditProfile = () => {
         console.log(data);
         // Aquí comienza nuestra lógica
         const user = JSON.stringify(data.results)
-        localStorage.setItem('token', data.access_token)
         localStorage.setItem('user', user)
         actions.setCurrentUser(user)
         // console.log(data.access_token);

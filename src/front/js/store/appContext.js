@@ -35,10 +35,11 @@ const injectContext = PassedComponent => {
 			state.actions.getMissing();
 			state.actions.getUser();
 			state.actions.getStories();
+			state.actions.getStoriesMissing();
       		state.actions.getMissingFromDB();
 			state.actions.getTopTenCriminals();
 			state.actions.getMostWantedTerrorists();
-      		state.actions.getCurrentStory();
+      		
 			state.actions.getLocalStorage();
 			state.actions.getSavedCriminals();
 			state.actions.getSavedMissingPersons();
