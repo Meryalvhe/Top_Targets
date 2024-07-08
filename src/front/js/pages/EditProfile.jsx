@@ -153,7 +153,7 @@ export const EditProfile = () => {
                         </section>
                         <section className="col-lg-8 col-md-12 row">
                             <p className="col-2 my-1 text-white body card-text">Email: </p>
-                            <input className="col-10 my-1" type="text" value={user.email} aria-label="email" disabled readonly></input>
+                            <input className="col-10 my-1" type="text" value={user.email} aria-label="email" disabled readOnly></input>
                             <p className="text-white body card-text col-2 mb-1 mt-4">Name:</p>
                             <input id="name"className="col-10 mb-1 mt-4" type="text" onChange={handleName} placeholder={user.name} aria-label="Name"></input>
                             <p className="text-white body my-1 card-text col-2">Surname:</p>

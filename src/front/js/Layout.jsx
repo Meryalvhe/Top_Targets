@@ -25,6 +25,7 @@ import { CurrentMostWantedTerrorist } from "./pages/CurrentMostWantedTerrorist.j
 import  PrivacyPolicy from "./pages/PrivacyPolicy.jsx";
 import {EditStory} from "./pages/EditStory.jsx"
 import {Story} from "./pages/Story.jsx"
+import { CreateStoryMissing } from "./pages/CreateStoryMissing.jsx";
 
 
 
@@ -61,6 +62,7 @@ const Layout = () => {
                         <Route element={<PrivacyPolicy />} path="/privacy-policy" />
                         <Route element={<EditStory />} path="/edit-story" />
                         <Route element={<Story />} path="/story" />
+                        <Route element={<CreateStoryMissing />} path="/create-story-missing" />
                     </Routes>
                     <Footer />
                 </ScrollToTop>

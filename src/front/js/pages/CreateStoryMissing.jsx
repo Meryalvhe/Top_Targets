@@ -4,7 +4,7 @@ import { Context } from "../store/appContext";
 import { Link, useParams } from "react-router-dom";
 import { useNavigate } from "react-router-dom";
 
-export const CreateStory = () => {
+export const CreateStoryMissing = () => {
     const { store, actions } = useContext(Context);
     const currentStory = store.currentStory
     const [updatedTitle, setTitle] = useState()
@@ -73,12 +73,12 @@ export const CreateStory = () => {
 		console.log("this is what IA RETURNS")
         console.log(data.message)
 
-        const dataToSend2 = {"user_id": store.user.id, "criminal_id": store.currentCriminal.id,"title": updatedTitle, 
+        const dataToSend2 = {"user_id": store.user.id, "missing_person_id": store.currentMissingPerson.id,"title": updatedTitle, 
                             "description": updatedDescription, "body": data.message, 
                             "prompt":dataToSend.story, "creation_date":new Date()};
         actions.setCurrentStory(dataToSend2)
         console.log("data to send 2", dataToSend2)
-        const url2 = `${process.env.BACKEND_URL}/api/stories-criminals`;
+        const url2 = `${process.env.BACKEND_URL}/api/stories-missing-persons`;
         const options2 = {
             method: 'POST',
             body: JSON.stringify(dataToSend2),
@@ -222,10 +222,10 @@ export const CreateStory = () => {
                 <section className="row my-2">
                     <p className="col-2 bt-3 text-white">Subject:</p>
                     <div className="col-2 bt-3">
-                        <input class="form-control " type="text" placeholder={store.currentCriminal.poster_classification} aria-label="Disabled input example" disabled />
+                        <input class="form-control " type="text" placeholder={store.currentMissingPerson.poster_classification} aria-label="Disabled input example" disabled />
                     </div>
                     <div className="col-4 bt-3">
-                        <input class="form-control " type="text" placeholder={store.currentCriminal.title} aria-label="Disabled input example" disabled />
+                        <input class="form-control " type="text" placeholder={store.currentMissingPerson.title} aria-label="Disabled input example" disabled />
                     </div>
                     <p className="col-4 text-white">This subject information will be loaded automatically as reference</p>
                 </section>
