@@ -63,7 +63,6 @@ def login():
         response_body['message'] = 'User logged in'
         response_body['access_token'] = access_token
         response_body['results'] = user.serialize()
-        # Nos hace falta devolver los favoritos del usuario. Incluyendo el ID del favorito y el ID del criminal.
         rows = db.session.execute(db.select(SavedCriminals).where(SavedCriminals.user_id == user.id)).scalars()
         results = [row.public_serialize() for row in rows]
         response_body['saved_criminals'] = results
@@ -124,131 +123,7 @@ def handle_users_id(user_id):
         return response_body, 404  
 
 
-def fetch_data_from_api():
-    url = 'https://api.fbi.gov/wanted/v1/list'
-    page = 1
-    rate_limit = 2  # Tiempo en segundos entre las solicitudes
-
-    while True:
-        response = requests.get(f'{url}?page={page}')
-        if response.status_code != 200:
-            break
-        data = response.json()
-        if 'items' not in data or not data['items']:
-            break
-        for row in data['items']:
-            if row['poster_classification'] != 'missing':
-                criminals = Criminals()
-                criminals.title = row.get('title','')
-                criminals.nationality = row["nationality"]
-                criminals.sex = row["sex"]
-                criminals.description = row["description"]
-                criminals.caution = row["caution"]
-                criminals.race = row["race"]
-                criminals.remarks = str(row["remarks"])
-                criminals.hair_raw = row["hair_raw"]
-                criminals.possible_countries = str(row["possible_countries"])
-                criminals.aliases = str(row["aliases"])
-                criminals.place_of_birth = row["place_of_birth"]
-                criminals.dates_of_birth_used = str(row["dates_of_birth_used"])
-                criminals.eyes = row["eyes"]
-                criminals.subjects = str(row["subjects"])
-                criminals.images = row["images"][0]["original"]
-                criminals.field_offices = str(row["field_offices"])
-                criminals.reward_text = row["reward_text"]
-                criminals.weight = row["weight"]
-                criminals.poster_classification = row['poster_classification']
-                db.session.add(criminals)
-        db.session.commit()
-        page += 1
-        time.sleep(rate_limit) 
-
-
-def fetch_data_api():
-    url = 'https://api.fbi.gov/wanted/v1/list'
-    page = 1
-    rate_limit = 2  # Tiempo en segundos entre las solicitudes
-
-    while True:
-        response = requests.get(f'{url}?page={page}')
-        if response.status_code != 200:
-            break
-        data = response.json()
-        if 'items' not in data or not data['items']:
-            break
-        for row in data['items']:
-            if row['poster_classification'] == 'missing':
-                missing_persons = MissingPersons()
-                missing_persons.title = row['title']
-                missing_persons.nationality = row['nationality']
-                missing_persons.sex = row['sex']
-                missing_persons.description = row['description']
-                missing_persons.race = row['race']
-                missing_persons.remarks = row['remarks']
-                missing_persons.hair_raw = row['hair_raw']
-                missing_persons.possible_countries = row['possible_countries']
-                missing_persons.place_of_birth = row['place_of_birth']
-                missing_persons.dates_of_birth_used = json.dumps(row['dates_of_birth_used'])
-                missing_persons.eyes = row['eyes']
-                missing_persons.subjects = json.dumps(row['subjects'])
-                missing_persons.details = row['details']
-                missing_persons.images = row["images"][0]["original"]
-                missing_persons.field_offices = json.dumps(row['field_offices'])
-                missing_persons.reward_text = row['reward_text']
-                missing_persons.weight = row['weight']
-                missing_persons.poster_classification = row['poster_classification']
-                db.session.add(missing_persons)
-        db.session.commit()
-        page += 1
-        time.sleep(rate_limit) 
-
-
-@api.route('/data-criminals', methods=['GET'])
-def handle_data_Criminals():
-     fetch_data_from_api()
-     return 'data update'
-"""     response_body = {}
-    all_data = []
-    response = requests.get("https://api.fbi.gov/wanted/v1/list")
-    if response.status_code == 200:
-        data = response.json()
-        all_data.extend(data["items"])
-        time.sleep(0.5)
-    else:
-       print(f"Error en la página {page}: {response.status_code} - {response.reason}")
-    for row in all_data:
-        criminals = Criminals()
-        criminals.title = row["title"]
-        criminals.nationality = row["nationality"]
-        criminals.sex = row["sex"]
-        criminals.description = row["description"]
-        criminals.caution = row["caution"]
-        criminals.race = row["race"]
-        criminals.remarks = str(row["remarks"])
-        criminals.hair_raw = row["hair_raw"]
-        criminals.possible_countries = str(row["possible_countries"])
-        criminals.aliases = str(row["aliases"])
-        criminals.place_of_birth = row["place_of_birth"]
-        criminals.dates_of_birth_used = str(row["dates_of_birth_used"])
-        criminals.eyes = row["eyes"]
-        criminals.subjects = str(row["subjects"])
-        criminals.images = row["images"][0]["original"]
-        criminals.field_offices = str(row["field_offices"])
-        criminals.reward_text = row["reward_text"]
-        criminals.weight = row["weight"]
-        criminals.poster_classification = row['poster_classification']
-        db.session.add(criminals)
-        db.session.commit()
-    response_body['results'] = all_data
-    return response_body, 200 """
-
-
-@api.route('/data-missing', methods=['GET'])
-def handle_data_Missing():
-    fetch_data_api()
-    return 'Data update'
-
-@api.route('/criminals', methods=['GET','POST'])  # Debemos modificar según clase del Lunes 17/06, ya que debemos traer la inf de la API del FBI
+@api.route('/criminals', methods=['GET','POST'])  
 def handle_criminals():     
     if request.method == 'POST':
         title = request.json.get("title", None)
@@ -303,7 +178,8 @@ def handle_criminals():
         response_body ['message'] = 'List Of Criminals'
         return response_body, 200
 
-@api.route('/missing-persons', methods=['GET','POST'])  # Debemos modificar según clase del Lunes 17/06, ya que debemos traer la inf de la API del FBI
+
+@api.route('/missing-persons', methods=['GET','POST'])  
 def handle_missing_persons(): 
     response_body = {}
     if request.method == 'POST':
@@ -423,6 +299,7 @@ def handle_comments_criminals_id(comments_criminal_id):
         response_body['results'] = {}
         return response_body, 200
 
+
 @api.route('/comments-missing-persons', methods=['GET','POST']) 
 def handle_comments_missing_persons():
     response_body = {}
@@ -448,6 +325,7 @@ def handle_comments_missing_persons():
         response_body['message'] = 'Created comment'
         return response_body, 200
 
+
 @api.route('/comments-missing-persons/<int:comments_missing_person_id>', methods=['GET', 'DELETE']) 
 def handle_comments_missing_persons_id(comments_missing_person_id):
     response_body = {}
@@ -471,6 +349,7 @@ def handle_comments_missing_persons_id(comments_missing_person_id):
         response_body['results'] = {}
         return response_body, 404
 
+
 @api.route('/saved-criminals', methods=['GET','POST']) 
 def handle_saved_criminals():
     response_body = {}
@@ -492,6 +371,7 @@ def handle_saved_criminals():
         response_body['message'] = 'Saved criminal'
         response_body['results'] = saved_criminals.serialize()
         return response_body, 200
+
 
 @api.route('/saved-criminals/<int:saved_criminals_id>', methods=['GET', 'DELETE']) 
 def handle_saved_criminals_id(saved_criminals_id):
@@ -518,18 +398,37 @@ def handle_saved_criminals_id(saved_criminals_id):
         return response_body, 404
 
 
+@api.route('/users/<int:user_id>/saved-criminals', methods=['GET','POST']) 
+def handle_user_saved_criminals(user_id):
+    response_body = {}
+    if request.method == 'GET':
+        saved_criminals = db.session.execute(db.select(SavedCriminals, Criminals)
+                                .join(Criminals, SavedCriminals.criminal_id==Criminals.id, isouter=True).where(SavedCriminals.user_id==user_id))
+        if saved_criminals:
+            results = []
+            for row in saved_criminals:
+                saved_criminal, criminal = row
+                data = saved_criminal.serialize()
+                data["criminal"] = criminal.serialize()
+                results.append(data)
+            response_body['results'] = results
+            response_body['message'] = 'Criminals Found'
+            return response_body, 201
+        response_body['message'] = 'Missing Persons Not found'
+        response_body['results'] = {}
+        return response_body, 404
+
+
+
 @api.route('/criminals/<int:criminal_id>/comments', methods = ['GET'])
 def handle_criminal_comments(criminal_id):
     response_body = {}
     criminal_comments = db.session.execute(db.select(CommentsCriminals,Users).join(Users,CommentsCriminals.user_id==Users.id,isouter=True).where(CommentsCriminals.criminal_id == criminal_id))
     if criminal_comments:
-        print(criminal_comments)
         results =[]
         for row in criminal_comments:
             comment,user = row
             data=comment.serialize()
-            print("japon")
-            print(data)
             data['user']=user.serialize()
             results.append(data)
         response_body['results'] = results
@@ -538,17 +437,26 @@ def handle_criminal_comments(criminal_id):
     response_body['message'] = 'No comments'
     response_body['results'] = {}
     return response_body, 404
-    
-    
+
 
 @api.route('/missing-persons/<int:missing_person_id>/comments', methods = ['GET'])
 def handle_missing_persons_comments(missing_person_id):
     response_body = {}
-    missing_person_comments = db.session.execute(db.select(CommentsMissingPersons).where(CommentsMissingPersons.missing_person_id == missing_person_id)).scalars()
-    results = [row.serialize() for row in missing_person_comments]
-    response_body['results'] = results
-    response_body['message'] = 'Missing Person comments'
-    return response_body, 200
+    missing_person_comments = db.session.execute(db.select(CommentsMissingPersons,Users).join(Users,CommentsMissingPersons.user_id==Users.id,isouter=True).where(CommentsMissingPersons.missing_person_id == missing_person_id))
+    if missing_person_comments:
+        results = []
+        for row in missing_person_comments:
+            comment,user = row
+            data=comment.serialize()
+            data['user']=user.serialize()
+            results.append(data)
+        response_body['results'] = results
+        response_body['message'] = 'Missing Person comments'
+        return response_body, 200
+    response_body['message'] = 'No comments'
+    response_body['results'] = {}
+    return response_body, 404
+    
 
 @api.route('/saved-missing-persons', methods=['GET','POST']) 
 def handle_saved_missing_persons():
@@ -571,6 +479,7 @@ def handle_saved_missing_persons():
         response_body['message'] = 'Saved Missing Person'
         response_body['results'] =  saved_missing_person.serialize()
         return response_body, 200
+
 
 @api.route('/saved-missing-persons/<int:saved_missing_person_id>', methods=['GET', 'DELETE']) 
 def handle_saved_missing_persons_id(saved_missing_person_id):
@@ -596,6 +505,7 @@ def handle_saved_missing_persons_id(saved_missing_person_id):
         response_body['results'] = {}
         return response_body, 404
 
+
 @api.route('/users/<int:user_id>/saved-missing-persons', methods=['GET','POST']) 
 def handle_user_saved_missing_persons(user_id):
     response_body = {}
@@ -615,7 +525,6 @@ def handle_user_saved_missing_persons(user_id):
         response_body['message'] = 'Missing Persons Not found'
         response_body['results'] = {}
         return response_body, 404
-
 
 
 @api.route('/users/<int:user_id>/saved-criminals', methods=['GET','POST']) 
@@ -672,6 +581,7 @@ def handle_stories_criminals():
         response_body['message'] = 'Story Criminal Created'
         return response_body, 200
 
+
 @api.route('/stories-criminals/<int:stories_criminals_id>', methods=['GET', 'PUT', 'DELETE'])
 def handle_stories_criminals_id(stories_criminals_id):
     response_body = {}
@@ -725,6 +635,7 @@ def handle_stories_criminals_id(stories_criminals_id):
         response_body['results'] = {}
         return response_body, 404  
 
+
 @api.route('/stories-missing-persons', methods=['GET', 'POST']) 
 def handle_stories_missing_person():
     response_body = {}
@@ -757,6 +668,7 @@ def handle_stories_missing_person():
         db.session.commit()
         response_body['message'] = 'Story Missing Person Created'
         return response_body, 200
+
 
 @api.route('/stories-missing-persons/<int:stories_missing_persons_id>', methods=['GET', 'PUT', 'DELETE']) 
 def handle_stories_missing_persons_id(stories_missing_persons_id):
@@ -800,6 +712,7 @@ def handle_stories_missing_persons_id(stories_missing_persons_id):
         response_body['message'] = 'Story Missing Person Not Found'
         response_body['results'] = {}
         return response_body, 404   
+
 
 @api.route('/users/<int:user_id>/stories-criminals/<int:id>', methods=['GET', 'PUT', 'DELETE']) 
 def handle_story_criminal_user_id(user_id,id):
@@ -884,5 +797,115 @@ def handle_criminals_id(criminals_id):
             response_body['message'] = 'Criminal Found'
             return response_body, 200
         response_body['message'] = 'Criminal Not Found'
+        response_body['results'] = {}
+        return response_body, 404
+
+
+def fetch_data_from_api():
+    url = 'https://api.fbi.gov/wanted/v1/list'
+    page = 1
+    rate_limit = 2  
+    while True:
+        response = requests.get(f'{url}?page={page}')
+        if response.status_code != 200:
+            break
+        data = response.json()
+        if 'items' not in data or not data['items']:
+            break
+        for row in data['items']:
+            if row['poster_classification'] != 'missing' and row['subjects'] != "['ViCAP Missing Persons']" and row['subjects'] != "['ViCAP Unidentified Persons']" and row['caution'] != 'null':
+                criminals = Criminals()
+                criminals.title = row.get('title','')
+                criminals.nationality = row["nationality"]
+                criminals.sex = row["sex"]
+                criminals.description = row["description"]
+                criminals.caution = row["caution"]
+                criminals.race = row["race"]
+                criminals.remarks = str(row["remarks"])
+                criminals.hair_raw = row["hair_raw"]
+                criminals.possible_countries = str(row["possible_countries"])
+                criminals.aliases = str(row["aliases"])
+                criminals.place_of_birth = row["place_of_birth"]
+                criminals.dates_of_birth_used = str(row["dates_of_birth_used"])
+                criminals.eyes = row["eyes"]
+                criminals.subjects = str(row["subjects"])
+                criminals.images = row["images"][0]["original"]
+                criminals.field_offices = str(row["field_offices"])
+                criminals.reward_text = row["reward_text"]
+                criminals.weight = row["weight"]
+                criminals.poster_classification = row['poster_classification']
+                db.session.add(criminals)
+            else:
+                missing_persons = MissingPersons()
+                missing_persons.title = row['title']
+                missing_persons.nationality = row['nationality']
+                missing_persons.sex = row['sex']
+                missing_persons.description = row['description']
+                missing_persons.race = row['race']
+                missing_persons.remarks = row['remarks']
+                missing_persons.hair_raw = row['hair_raw']
+                missing_persons.possible_countries = row['possible_countries']
+                missing_persons.place_of_birth = row['place_of_birth']
+                missing_persons.dates_of_birth_used = json.dumps(row['dates_of_birth_used'])
+                missing_persons.eyes = row['eyes']
+                missing_persons.subjects = json.dumps(row['subjects'])
+                missing_persons.details = row['details']
+                missing_persons.images = row["images"][0]["original"]
+                missing_persons.field_offices = json.dumps(row['field_offices'])
+                missing_persons.reward_text = row['reward_text']
+                missing_persons.weight = row['weight']
+                missing_persons.poster_classification = row['poster_classification']
+                db.session.add(missing_persons)
+        db.session.commit()
+        page += 1
+        time.sleep(rate_limit)
+
+
+@api.route('/data', methods=['GET'])
+def handle_data_Criminals():
+    fetch_data_from_api()
+    return 'data update'
+
+
+@api.route('/users/<int:user_id>/saved-missing-persons', methods=['GET','POST']) 
+def handle_user_saved_missing_persons(user_id):
+    response_body = {}
+    if request.method == 'GET':
+        saved_missing_persons = db.session.execute(db.select(SavedMissingPersons, MissingPersons)
+                                .join(MissingPersons, SavedMissingPersons.missing_person_id==MissingPersons.id, isouter=True).where(SavedMissingPersons.user_id==user_id))
+        if saved_missing_persons:
+            results = []
+            for row in saved_missing_persons:
+                saved_missing_person, missing_person = row
+                data = saved_missing_person.serialize()
+                data["missing_person"] = missing_person.serialize()
+                results.append(data)
+            response_body['results'] = results
+            response_body['message'] = 'Missing persons Found'
+            return response_body, 201
+        response_body['message'] = 'Missing Persons Not found'
+        response_body['results'] = {}
+        return response_body, 404
+
+
+@api.route('/users/<int:user_id>/stories-missing-persons', methods=['GET']) 
+def handle_user_stories_missing_persons_id(user_id):
+    response_body = {}
+    if request.method == 'GET':
+        stories_missing_person = db.session.execute(db.select(StoriesMissingPersons, MissingPersons)
+                                               .join(MissingPersons, StoriesMissingPersons.missing_person_id==MissingPersons.id, isouter=True)
+                                               .where(StoriesMissingPersons.user_id == user_id))
+        print(stories_missing_person)
+        if stories_missing_person:
+            results = []
+            for row in stories_missing_person:
+                story, missing_person = row
+                data = story.serialize()
+                data["missing_person"] = missing_person.serialize()
+                results.append(data)
+            response_body['results'] = results
+            response_body['message'] = 'Stories Found'
+            return response_body, 201
+        response_body['message'] = 'Story Not found'
         response_body['results'] = {}
         return response_body, 404

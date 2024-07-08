@@ -4,7 +4,7 @@ const getState = ({ getStore, getActions, setStore }) => {
 			message: null,
 			demo: [{ title: "FIRST", background: "white", initial: "white" }],
 			isLogin: false,
-			user: [{}], //user: '', // user: 1,
+			user: [{}], 
 			userId: '',
 			is_admin: false,
 			criminals: [],
@@ -20,36 +20,16 @@ const getState = ({ getStore, getActions, setStore }) => {
 			favoritesMissingPersons: [{missing_person: {}}],
 			stories: [{ criminal: {} }],
 			storiesMissingPersons: [{missing_person: {}}],
-			currentStory: [{}], // { Criminal: {} }
+			currentStory: [{}],
 			toptencriminals: [],
 			mostwantedterrorists: [],
 			missingFromCriminals: [],
 		},
 		actions: {
-			exampleFunction: () => { getActions().changeColor(0, "green"); },  // Use getActions to call a function within a fuction
-			changeColor: (index, color) => {
-				const store = getStore();  // Get the store
-				// We have to loop the entire demo array to look for the respective index and change its color
-				const demo = store.demo.map((element, i) => {
-					if (i === index) element.background = color;
-					return element;
-				});
-				setStore({ demo: demo });  // Reset the global store
-			},
-			getMessage: async () => {
-				const response = await fetch(process.env.BACKEND_URL + "/api/hello")
-				if (!response.ok) {
-					console.log("Error loading message from backend", response.status, response.statusText)
-					return
-				}
-				const data = await response.json()
-				setStore({ message: data.message })
-				return data;  // Don't forget to return something, that is how the async resolves
-			},
 			setIsLogin: (login) => { setStore({ isLogin: login }) },
 			setLogout: (logout) => { setStore({ isLogin: logout }) },
 			setCurrentUser: (user) => { setStore({ user: user }) },
-			setCurrentCriminal: (id) => { setStore({ currentCriminalId: id }) },
+			setCurrentCriminal: (id) => { setStore({ currentCriminalId: id })},
 			setCurrentMissingPerson: (id) => { setStore({ currentMissingPersonId: id }) },
 			setCurrentStory: (story)=>{setStore({currentStory:story})},
 			setCurrentCriminalId: (id)=>{setStore({currentCriminalId:id})},
@@ -75,7 +55,6 @@ const getState = ({ getStore, getActions, setStore }) => {
 						return true
 					}
 				})
-
 				setStore({ criminals: criminals })
 			},
 			getCurrentCriminal: async () => {
@@ -170,10 +149,7 @@ const getState = ({ getStore, getActions, setStore }) => {
 				const data = await response.json();
 				console.log(data.results)
 				setStore({ favoritesMissingPersons: [...getStore().favoritesMissingPersons, data.results] })
-
-
 			},
-
 			removeFavoriteCriminalDB: async (id) => {
 				const criminalFavoriteId = getStore().favoritesCriminals.filter((item) => id == item.criminal_id)
 
@@ -236,7 +212,7 @@ const getState = ({ getStore, getActions, setStore }) => {
 				setStore({ favoritesMissingPersons: [...getStore().favoritesMissingPersons, data.results] })
 
 
-			}, // Estoy aquí, que no se me olvide.
+			}, 
 			removeFavoritesMissingPersons: async (id) => {
 				const missingFavoriteId = getStore().favoritesMissingPersons.filter((item) => id == item.missing_person_id)
 
@@ -261,7 +237,6 @@ const getState = ({ getStore, getActions, setStore }) => {
 				const data = await response.json();
 				console.log(data)
 				setStore({ currentMissingPersonComments: data.results })
-
 			},
 			addCommentMissingPerson: async (dataToSend) => {
 				console.log(dataToSend)
@@ -291,11 +266,10 @@ const getState = ({ getStore, getActions, setStore }) => {
 					return
 				}
 				const data = await response.json();
-				console.log(data)
 				setStore({ currentStory: data.results })
 			},
 			getMissingFromDB: async () => {
-				const response = await fetch("https://opulent-space-zebra-pjj675j6wjj7frg7j-3001.app.github.dev/api/criminals");
+				const response = await fetch(process.env.BACKEND_URL + "/api/criminals");
 				if (!response.ok) {
 					console.log('Error');
 					return
@@ -310,8 +284,6 @@ const getState = ({ getStore, getActions, setStore }) => {
 						return true
 					}
 				})
-
-				/* setStore({missingFromCriminals: items}) */
 				setStore({ missingFromCriminals: result })
 				console.log(items)
 			},
@@ -409,10 +381,8 @@ const getState = ({ getStore, getActions, setStore }) => {
 				}
 				const data = await response.json();
 				const result = data.results
-
 				setStore({ favoritesCriminals: result })
 			}
-
 		}
 	};
 };

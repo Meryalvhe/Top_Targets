@@ -30,7 +30,6 @@ export const Navbar = () => {
 	const avatars=[freddy,missery,hannibal,jason,karla,psycho,tiffany,american,monster,ma,dahmer,bundy];
 
 
-
 	return (
 		<nav className="navbar navbar-expand-lg navbar-light bg-primary">
 			<div className="container-fluid mt-auto">
@@ -64,7 +63,6 @@ export const Navbar = () => {
 							</Link>
 						</li>
 					</ul>
-
 
 					{localStorage.getItem("user") ?
 						<div className="dropdown">
