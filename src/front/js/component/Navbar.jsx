@@ -71,6 +71,7 @@ export const Navbar = () => {
 							</Link>
 							<ul className="dropdown-menu dropdown-menu-end">
 								<li><Link to="/profile" className="dropdown-item title">Profile</Link></li>
+								<li><Link to="/edit-profile" className="dropdown-item title">Edit Profile</Link></li>
 								<li><Link to="/stories" className="dropdown-item title">Your stories</Link></li>
 								<li><hr className="dropdown-divider" /></li>
 								<li><Link to="" className="dropdown-item title" onClick={logOut}>Log out</Link></li>

@@ -17,14 +17,15 @@ import { CurrentCriminal } from "./pages/CurrentCriminals.jsx";
 import { Contact } from "./pages/Contact.jsx";
 import {About} from "./pages/About.jsx";
 import { CreateStory } from "./pages/CreateStory.jsx";
-import { Stories } from "./pages/Stories.jsx";
-import { Profile } from "./pages/Profile.jsx";
+import { Profile } from "./pages/ProfilePage.jsx";
+import { EditProfile } from "./pages/EditProfile.jsx";
 import { CurrentMissingPersons } from "./pages/CurrentMissingPerson.jsx";
 import { CurrentTopTenCriminals } from "./pages/CurrentTopTenCriminals.jsx";
 import { CurrentMostWantedTerrorist } from "./pages/CurrentMostWantedTerrorist.jsx";
 import  PrivacyPolicy from "./pages/PrivacyPolicy.jsx";
 import {EditStory} from "./pages/EditStory.jsx"
 import {Story} from "./pages/Story.jsx"
+import { CreateStoryMissing } from "./pages/CreateStoryMissing.jsx";
 
 
 
@@ -54,13 +55,14 @@ const Layout = () => {
                         <Route element={<Contact />} path="/contact" />
                         <Route element={<About />} path="/about" />
                         <Route element={<CreateStory />} path="/create-story" />
-                        <Route element={<Stories />} path="/stories" />
+                        <Route element={<EditProfile />} path="/edit-profile" />
                         <Route element={<Profile />} path="/profile" />
                         <Route element={<CurrentTopTenCriminals />} path="/current-top-ten-criminal" />
                         <Route element={<CurrentMostWantedTerrorist />} path="/current-most-wanted-criminal" />
                         <Route element={<PrivacyPolicy />} path="/privacy-policy" />
                         <Route element={<EditStory />} path="/edit-story" />
                         <Route element={<Story />} path="/story" />
+                        <Route element={<CreateStoryMissing />} path="/create-story-missing" />
                     </Routes>
                     <Footer />
                 </ScrollToTop>

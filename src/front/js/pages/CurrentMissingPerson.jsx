@@ -22,8 +22,6 @@ export const CurrentMissingPersons = () => {
 	const avatars=[freddy,missery,hannibal,jason,karla,psycho,tiffany,american,monster,ma,dahmer,bundy];
 
 
-    console.log(avatars)
-
     useEffect(() => {
         actions.getCurrentMissingPerson()
         actions.getCurrentMissingComments()
@@ -123,7 +121,9 @@ export const CurrentMissingPersons = () => {
                             </div>
                         </div>
                         <div className="d-flex justify-content-end mb-5">
+
                             {store.isLogin ? <Link to="/create-story" className="btn btn-outline-light ms-3 body">Create your Story</Link>
+
                                 : ''
                             }
 

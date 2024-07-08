@@ -113,7 +113,9 @@ export const CurrentCriminal = () => {
                         </div>
                         <div className="d-flex justify-content-end mb-5">
                             {store.isLogin ?
+
                                 <Link to="/create-story" className="btn btn-outline-light ms-3 body">Create your Story</Link>
+
                                 : ''
                             }
 

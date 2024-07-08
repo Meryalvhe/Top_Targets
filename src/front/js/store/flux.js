@@ -9,13 +9,13 @@ const getState = ({ getStore, getActions, setStore }) => {
 			is_admin: false,
 			criminals: [],
 			missing: [],
-			currentCriminalId: [{}],
+			currentCriminalId: '',
 			currentStoryId: 0,
 			currentCriminal: [{}],
-			currentCriminalComments: [{user:{}}],
+			currentCriminalComments: [{ user: {} }],
 			currentMissingPersonId: '',
 			currentMissingPerson: [{}],
-			currentMissingPersonComments: [{user:{}}],
+			currentMissingPersonComments: [{}],
 			favoritesCriminals: [{criminal: {}}],
 			favoritesMissingPersons: [{missing_person: {}}],
 			stories: [{ criminal: {} }],
@@ -31,6 +31,9 @@ const getState = ({ getStore, getActions, setStore }) => {
 			setCurrentUser: (user) => { setStore({ user: user }) },
 			setCurrentCriminal: (id) => { setStore({ currentCriminalId: id })},
 			setCurrentMissingPerson: (id) => { setStore({ currentMissingPersonId: id }) },
+			setCurrentStory: (story)=>{setStore({currentStory:story})},
+			setCurrentCriminalId: (id)=>{setStore({currentCriminalId:id})},
+			setCurrentStoryId: (storyId)=>{setStore({currentStoryId:storyId})},
 			getLocalStorage: () => {
 				if (localStorage.length > 0) {
 					setStore({ isLogin: 'true' })
@@ -378,7 +381,6 @@ const getState = ({ getStore, getActions, setStore }) => {
 				}
 				const data = await response.json();
 				const result = data.results
-
 				setStore({ favoritesCriminals: result })
 			}
 		}
