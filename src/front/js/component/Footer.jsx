@@ -39,14 +39,9 @@ export const Footer = () => (
                         </a>
                     </span>
                     <span className="m-2">
-                        <Link to="https://www.google.com">
-                            <i className="fab fa-instagram" style={{ color: "#ffffff" }} />
-                        </Link>
-                    </span>
-                    <span className="m-2">
-                        <Link to="https://www.google.com">
-                            <i className="fab fa-linkedin" style={{ color: "#ffffff" }} />
-                        </Link>
+                        <a href="https://www.facebook.com/profile.php?id=61561687935433&locale=ca_ES">
+                            <i class="fa-brands fa-facebook" style={{ color: "#ffffff" }} />
+                        </a>
                     </span>
                 </div>
             </div>

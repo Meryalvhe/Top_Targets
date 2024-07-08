@@ -398,7 +398,7 @@ def handle_saved_criminals_id(saved_criminals_id):
         return response_body, 404
 
 
-@api.route('/users/<int:user_id>/saved-criminals', methods=['GET','POST']) 
+""" @api.route('/users/<int:user_id>/saved-criminals', methods=['GET','POST']) 
 def handle_user_saved_criminals(user_id):
     response_body = {}
     if request.method == 'GET':
@@ -417,7 +417,7 @@ def handle_user_saved_criminals(user_id):
         response_body['message'] = 'Missing Persons Not found'
         response_body['results'] = {}
         return response_body, 404
-
+ """
 
 
 @api.route('/criminals/<int:criminal_id>/comments', methods = ['GET'])
@@ -867,45 +867,3 @@ def handle_data_Criminals():
     return 'data update'
 
 
-@api.route('/users/<int:user_id>/saved-missing-persons', methods=['GET','POST']) 
-def handle_user_saved_missing_persons(user_id):
-    response_body = {}
-    if request.method == 'GET':
-        saved_missing_persons = db.session.execute(db.select(SavedMissingPersons, MissingPersons)
-                                .join(MissingPersons, SavedMissingPersons.missing_person_id==MissingPersons.id, isouter=True).where(SavedMissingPersons.user_id==user_id))
-        if saved_missing_persons:
-            results = []
-            for row in saved_missing_persons:
-                saved_missing_person, missing_person = row
-                data = saved_missing_person.serialize()
-                data["missing_person"] = missing_person.serialize()
-                results.append(data)
-            response_body['results'] = results
-            response_body['message'] = 'Missing persons Found'
-            return response_body, 201
-        response_body['message'] = 'Missing Persons Not found'
-        response_body['results'] = {}
-        return response_body, 404
-
-
-@api.route('/users/<int:user_id>/stories-missing-persons', methods=['GET']) 
-def handle_user_stories_missing_persons_id(user_id):
-    response_body = {}
-    if request.method == 'GET':
-        stories_missing_person = db.session.execute(db.select(StoriesMissingPersons, MissingPersons)
-                                               .join(MissingPersons, StoriesMissingPersons.missing_person_id==MissingPersons.id, isouter=True)
-                                               .where(StoriesMissingPersons.user_id == user_id))
-        print(stories_missing_person)
-        if stories_missing_person:
-            results = []
-            for row in stories_missing_person:
-                story, missing_person = row
-                data = story.serialize()
-                data["missing_person"] = missing_person.serialize()
-                results.append(data)
-            response_body['results'] = results
-            response_body['message'] = 'Stories Found'
-            return response_body, 201
-        response_body['message'] = 'Story Not found'
-        response_body['results'] = {}
-        return response_body, 404

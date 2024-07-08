@@ -15,7 +15,7 @@ const getState = ({ getStore, getActions, setStore }) => {
 			currentCriminalComments: [{ user: {} }],
 			currentMissingPersonId: '',
 			currentMissingPerson: [{}],
-			currentMissingPersonComments: [{}],
+			currentMissingPersonComments: [{user: {} }],
 			favoritesCriminals: [{criminal: {}}],
 			favoritesMissingPersons: [{missing_person: {}}],
 			stories: [{ criminal: {} }],

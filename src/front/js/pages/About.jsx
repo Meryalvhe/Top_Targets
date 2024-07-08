@@ -1,9 +1,11 @@
 import React from "react";
 import "../../styles/index.css";
-import fide from "../../img/Fidev.jpeg"
-import mar  from "../../img/Mar.jpeg"
-import mery from "../../img/Mery.jpeg"
-import logo from "../../img/logo.png"
+import mar  from "../../img/mar.jpg"
+import mery from "../../img/mery.jpg"
+import fide from "../../img/fide.jpg"
+import profes from "../../img/edo y hector.jpg"
+import { Link } from "react-router-dom";
+
 
 export const About = () => {
 
@@ -72,10 +74,10 @@ export const About = () => {
                 <img className="card-img-top mt-3 img-fluid w-75 mx-auto d-block" src={mery} alt="Card image cap"/>
                         <div className="card-body">
                             <h5 className="card-title">Mery Alvarez</h5>
-                            <p className="card-text">Some quick example text to build on the card title and make up the bulk of the card's content.</p>
+                            <p className="card-text">"It's just murder. All God's creatures do it. You look in the forests and you see species killing other species, our species killing all species including the forests, and we just call it industry, not murder" - Natural born killers</p>
                             <aside className="d-flex justify-content-center">
                                 <span className="m-3">
-                                    <a href="https://www.google.com">
+                                    <a href="https://www.linkedin.com/in/luz-mery-alvarez-herrera-223533129/">
                                         <i className="fab fa-linkedin fa-xl" style={{ color: "#ffffff" }} />
                                     </a>
                                 </span>
@@ -92,7 +94,7 @@ export const About = () => {
                             <p className="card-text">Computer Science student at 4Geeks Academy. Currently studying computer science and developing my knowledge.</p>
                             <aside className="d-flex justify-content-center">
                                 <span className="m-3">
-                                    <a href="https://www.google.com">
+                                    <a href="https://www.linkedin.com/in/josé-fidel-paredes">
                                         <i className="fab fa-linkedin fa-xl" style={{ color: "#ffffff" }} />
                                     </a>
                                 </span>
@@ -107,13 +109,13 @@ export const About = () => {
 
                 <div className="col-12 col-md-4 px-1 mb-3">
                 <aside className="card bg-primary text-white">
-                <img className="card-img-top mt-3 img-fluid w-75 mx-auto d-block" src={mery} alt="Card image cap"/>
+                <img className="card-img-top mt-3 img-fluid w-75 mx-auto d-block" src={profes} alt="Card image cap"/>
                         <div className="card-body">
-                            <h5 className="card-title">Mery Alvarez</h5>
-                            <p className="card-text">Some quick example text to build on the card title and make up the bulk of the card's content.</p>
+                            <h5 className="card-title">Hector Chocobar & Eduardo Fernandez</h5>
+                            <p className="card-text">Driving some crazy people onto the fascinating world of coding. </p>
                             <aside className="d-flex justify-content-center">
                                 <span className="m-3">
-                                    <a href="https://www.google.com">
+                                    <a href="https://www.linkedin.com/school/4geeksacademyes/posts/?feedView=all">
                                         <i className="fab fa-linkedin fa-xl" style={{ color: "#ffffff" }} />
                                     </a>
                                 </span>
@@ -122,22 +124,6 @@ export const About = () => {
                     </aside>
                 </div>
 
-                <div className="col-12 col-md-4 px-1 mb-3">
-                <aside className="card bg-primary text-white">
-                <img className="card-img-top mt-3 img-fluid w-75 mx-auto d-block" src={mery} alt="Card image cap"/>
-                        <div className="card-body">
-                            <h5 className="card-title">Mery Alvarez</h5>
-                            <p className="card-text">Some quick example text to build on the card title and make up the bulk of the card's content.</p>
-                            <aside className="d-flex justify-content-center">
-                                <span className="m-3">
-                                    <a href="https://www.google.com">
-                                        <i className="fab fa-linkedin fa-xl" style={{ color: "#ffffff" }} />
-                                    </a>
-                                </span>
-                            </aside>
-                        </div>
-                    </aside>
-                </div>
             </section>
         </div>
     );

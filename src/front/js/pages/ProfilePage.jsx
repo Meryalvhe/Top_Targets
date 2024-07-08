@@ -127,7 +127,7 @@ export const Profile = () => {
                     {store.favoritesCriminals.map((item, id) =>
                         <div key={id} className="col mt-5 mb-5 mx-4 col-lg-2 col-md-6 col-sm-10 mb-1 cardM bg-primary">
                             <div  className="card border-primary border-none mt-5">
-                               <Link to="/current-criminal" onClick={()=>handleCriminal(item.criminal_id)} className="bg-primary"><img src={item.criminal.images} className="ms-1" alt="..." /></Link> 
+                               <Link to="/current-criminal" onClick={()=>handleCriminal(item.criminal_id)} className="bg-primary"><img src={item.criminal['images']} className="ms-1" alt="..." /></Link> 
                                 {!store.isLogin ? '' : <button className="btn-save favoriteLocation bg-primary">
                                     
                                 {store.favoritesCriminals.filter((element)=> item.id == element.criminal_id).length > 0 ? <i className="fa-solid fa-heart-crack fa-xl favoriteSize" onClick={() => actions.removeFavoriteCriminalDB(item.id)}></i> :
