@@ -21,6 +21,9 @@ export const CurrentMissingPersons = () => {
     const [comment, setComment] = useState();
 	const avatars=[freddy,missery,hannibal,jason,karla,psycho,tiffany,american,monster,ma,dahmer,bundy];
 
+
+    console.log(avatars)
+
     useEffect(() => {
         actions.getCurrentMissingPerson()
         actions.getCurrentMissingComments()
