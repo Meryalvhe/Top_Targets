@@ -69,13 +69,9 @@ export const Profile = () => {
         }
         const data = await response.json();
         console.log(data);
-        // Aquí comienza nuestra lógica
-        const user = JSON.stringify(data.results)
-        localStorage.setItem('token', data.access_token)
-        localStorage.setItem('user', user)
+        const user = data.results
+        localStorage.setItem('user', JSON.stringify(data.results))
         actions.setCurrentUser(user)
-        // console.log(data.access_token);
-        
       };
 
     return (

@@ -40,7 +40,7 @@ const injectContext = PassedComponent => {
 			state.actions.getMostWantedTerrorists();
       		state.actions.getCurrentStory();
 			state.actions.getLocalStorage();
-	
+			
 		}, []);
 
 		// The initial value for the context is not null anymore, but the current state of this component,

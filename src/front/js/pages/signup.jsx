@@ -38,7 +38,7 @@ const Signup = () => {
     const user = JSON.stringify(data.results);
     // Aquí comienza nuestra lógica
     localStorage.setItem("token", data.access_token);
-    localStorage.setItem("user", user);
+    localStorage.setItem("user", JSON.stringify(data.results));
     actions.setIsLogin(true);
     actions.setCurrentUser(user);
     // console.log(data.access_token);

@@ -412,22 +412,40 @@ def handle_users_saved_criminals(user_id):
 @api.route('/criminals/<int:criminal_id>/comments', methods = ['GET'])
 def handle_criminal_comments(criminal_id):
     response_body = {}
-    criminal_comments = db.session.execute(db.select(CommentsCriminals).where(CommentsCriminals.criminal_id == criminal_id)).scalars()
-    results = [row.serialize() for row in criminal_comments]
-    response_body['results'] = results
-    response_body['message'] = 'Criminal comments'
-    return response_body, 200
+    criminal_comments = db.session.execute(db.select(CommentsCriminals,Users).join(Users,CommentsCriminals.user_id==Users.id,isouter=True).where(CommentsCriminals.criminal_id == criminal_id))
+    if criminal_comments:
+        results =[]
+        for row in criminal_comments:
+            comment,user = row
+            data=comment.serialize()
+            data['user']=user.serialize()
+            results.append(data)
+        response_body['results'] = results
+        response_body['message'] = 'Criminal comments'
+        return response_body, 200
+    response_body['message'] = 'No comments'
+    response_body['results'] = {}
+    return response_body, 404
 
 
 @api.route('/missing-persons/<int:missing_person_id>/comments', methods = ['GET'])
 def handle_missing_persons_comments(missing_person_id):
     response_body = {}
-    missing_person_comments = db.session.execute(db.select(CommentsMissingPersons).where(CommentsMissingPersons.missing_person_id == missing_person_id)).scalars()
-    results = [row.serialize() for row in missing_person_comments]
-    response_body['results'] = results
-    response_body['message'] = 'Missing Person comments'
-    return response_body, 200
-
+    missing_person_comments = db.session.execute(db.select(CommentsMissingPersons,Users).join(Users,CommentsMissingPersons.user_id==Users.id,isouter=True).where(CommentsMissingPersons.missing_person_id == missing_person_id))
+    if missing_person_comments:
+        results = []
+        for row in missing_person_comments:
+            comment,user = row
+            data=comment.serialize()
+            data['user']=user.serialize()
+            results.append(data)
+        response_body['results'] = results
+        response_body['message'] = 'Missing Person comments'
+        return response_body, 200
+    response_body['message'] = 'No comments'
+    response_body['results'] = {}
+    return response_body, 404
+    
 
 @api.route('/saved-missing-persons', methods=['GET','POST']) 
 def handle_saved_missing_persons():
