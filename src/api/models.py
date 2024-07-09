@@ -243,8 +243,9 @@ class SavedCriminals(db.Model):
                 'criminal_id': self.criminal_id}
     
     def public_serialize (self):
-        return {'id_save_criminal': self.id,
-                'criminal_id': self.criminal_id}
+        return {'saved_criminal_id': self.id,
+                'criminal_id': self.criminal_id,
+                'user_id':self.user_id}
 
 
 class SavedMissingPersons(db.Model):
@@ -262,6 +263,11 @@ class SavedMissingPersons(db.Model):
         return {'id': self.id,
                 'user_id': self.user_id,
                 'missing_person_id': self.missing_person_id}
+    
+    def public_serialize (self):
+        return {'saved_missing_person_id': self.id,
+                'missing_person_id': self.missing_person_id,
+                'user_id':self.user_id}
 
 
 class CommentsCriminals(db.Model):

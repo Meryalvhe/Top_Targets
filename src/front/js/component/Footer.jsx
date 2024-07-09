@@ -40,7 +40,7 @@ export const Footer = () => (
                     </span>
                     <span className="m-2">
                         <a href="https://www.facebook.com/profile.php?id=61561687935433&locale=ca_ES">
-                            <i class="fa-brands fa-facebook" style={{ color: "#ffffff" }} />
+                            <i className="fa-brands fa-facebook" style={{ color: "#ffffff" }} />
                         </a>
                     </span>
                 </div>

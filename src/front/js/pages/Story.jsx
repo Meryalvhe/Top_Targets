@@ -4,12 +4,8 @@ import { Context } from "../store/appContext";
 
 export const Story = () => {
     const { store, actions } = useContext(Context);
-    console.log("this is the story")
-    console.log(store.currentStory)
     const currentStory = store.currentStory
-    useEffect(() => {
-        actions.getCurrentStory()
-    }, [])
+    
     return (
         <div className=" p-5 d-flex justify-content-center bg-dark text-white  " >
             <article className="card shadow bg-dark w-75  row" >
@@ -22,7 +18,7 @@ export const Story = () => {
                 </section>
                 <footer className="card-footer ms-1 row">
                     <span className="col-9"></span>
-                    <a href="/edit-story" className="btn btn-primary bg-info col-3">Edit Story</a>
+                    <a href="/profile" className="btn btn-primary bg-info col-3">Go to Profile</a>
                 </footer>
             </article>
             <span></span>

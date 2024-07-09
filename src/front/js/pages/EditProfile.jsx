@@ -14,10 +14,11 @@ import karla from "../../img/karla.png"
 import bundy from "../../img/bundy.jpeg"
 import american from "../../img/american.png"
 import { Context } from "../store/appContext";
+import { useNavigate } from "react-router-dom";
 
 export const EditProfile = () => {
     const { store, actions } = useContext(Context);
-    
+    const navigate = useNavigate();
     const avatars=[freddy,missery,hannibal,jason,karla,psycho,tiffany,american,monster,ma,dahmer,bundy]
    
     const [profile,setProfile]=useState(JSON.parse(localStorage.getItem('user')))
@@ -73,8 +74,7 @@ export const EditProfile = () => {
         const user = JSON.stringify(data.results)
         localStorage.setItem('user', user)
         actions.setCurrentUser(user)
-        // console.log(data.access_token);
-        
+        navigate("/profile")
       };
 
     return (

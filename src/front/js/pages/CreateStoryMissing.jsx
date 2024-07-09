@@ -6,9 +6,8 @@ import { useNavigate } from "react-router-dom";
 
 export const CreateStoryMissing = () => {
     const { store, actions } = useContext(Context);
-    const currentStory = store.currentStory
-    const [updatedTitle, setTitle] = useState()
-    const [updatedDescription,setDescription] = useState()
+    const [updatedTitle, setTitle] = useState("")
+    const [updatedDescription,setDescription] = useState("")
     const [genre, setGenre] =useState("a criminal biography")
     const [length, setLength] =useState("250")
     const [era, setEra] =useState("in no specific time")
@@ -69,13 +68,22 @@ export const CreateStoryMissing = () => {
 			console.log("Error loading message from backend", response.status, response.statusText)
 			return
 		}
+        const today = new Date();
+        const month = today.getMonth()+1;
+        const year = today.getFullYear();
+        const date = today. getDate();
+        const currentDate = month + "/" + date + "/" + year;
+        const showTime = today.getHours() 
+        + ':' + today.getMinutes() 
+        + ":" + today.getSeconds();
+
 		const data = await response.json()
 		console.log("this is what IA RETURNS")
         console.log(data.message)
 
         const dataToSend2 = {"user_id": store.user.id, "missing_person_id": store.currentMissingPerson.id,"title": updatedTitle, 
                             "description": updatedDescription, "body": data.message, 
-                            "prompt":dataToSend.story, "creation_date":new Date()};
+                            "prompt":dataToSend.story, "creation_date":currentDate + "-" + showTime};
         actions.setCurrentStory(dataToSend2)
         console.log("data to send 2", dataToSend2)
         const url2 = `${process.env.BACKEND_URL}/api/stories-missing-persons`;
@@ -104,7 +112,7 @@ export const CreateStoryMissing = () => {
                 </header>
                 <section className="card-header row bg-dark mx-0">
                     <div className="col-2 p-1">
-                        <select class="form-select "  onChange={handlePurpose} aria-label="Default select example">
+                        <select className="form-select "  onChange={handlePurpose} aria-label="Default select example">
                             <option selected>Purpose</option>
                             <option value="a Tv show script">TV show script</option>
                             <option value="a Tv show script in the style of South Park">TV Show script in the style of South Park</option>
@@ -134,7 +142,7 @@ export const CreateStoryMissing = () => {
                     </div>
                     
                     <div className="col-2 p-1">
-                        <select class="form-select " onChange={handleGenre} aria-label="Default select example">
+                        <select className="form-select " onChange={handleGenre} aria-label="Default select example">
                             <option selected>Genre</option>
                             <option value="drama">Drama</option>
                             <option value="comedy">Comedy</option>
@@ -149,7 +157,7 @@ export const CreateStoryMissing = () => {
                         </select>
                     </div>  
                     <div className="col-2 p-1">
-                        <select class="form-select " onChange={handleLength} aria-label="Default select example">
+                        <select className="form-select " onChange={handleLength} aria-label="Default select example">
                             <option selected>Length</option>
                             <option value="100">100 words</option>
                             <option value="250">250 words</option>
@@ -164,7 +172,7 @@ export const CreateStoryMissing = () => {
                         </select>
                     </div>
                     <div className="col-2 p-1">
-                        <select class="form-select " onChange={handleLanguage} aria-label="Default select example">
+                        <select className="form-select " onChange={handleLanguage} aria-label="Default select example">
                             <option selected>Language</option>
                             <option value="english">English</option>
                             <option value="spanish">Spanish</option>
@@ -177,7 +185,7 @@ export const CreateStoryMissing = () => {
                         </select>
                     </div>
                     <div className="col-2 p-1">
-                        <select class="form-select " onChange={handleCharacters} aria-label="Default select example">
+                        <select className="form-select " onChange={handleCharacters} aria-label="Default select example">
                             <option selected>Nº of characters</option>
                             <option value="one">One chracter</option>
                             <option value="two">Two chracters</option>
@@ -188,7 +196,7 @@ export const CreateStoryMissing = () => {
                         </select>
                     </div>
                     <div className="col-2 p-1">
-                        <select class="form-select " onChange={handleEra} aria-label="Default select example">
+                        <select className="form-select " onChange={handleEra} aria-label="Default select example">
                             <option selected>Era</option>
                             <option value="in the current time">Current time</option>
                             <option value="in thousands of years from now">In thousands of years from now</option>
@@ -216,16 +224,16 @@ export const CreateStoryMissing = () => {
                 <section className="row my-2">
                     <p className="col-2 text-white">Title:</p>
                     <div className="col-10" >
-                        <input class="form-control " type="text"  value={updatedTitle}  onChange={handleTitle}  aria-label="title" />
+                        <input className="form-control " type="text"  value={updatedTitle}  onChange={handleTitle}  aria-label="title" />
                     </div>
                 </section>
                 <section className="row my-2">
                     <p className="col-2 bt-3 text-white">Subject:</p>
                     <div className="col-2 bt-3">
-                        <input class="form-control " type="text" placeholder={store.currentMissingPerson.poster_classification} aria-label="Disabled input example" disabled />
+                        <input className="form-control " type="text" placeholder={store.currentMissingPerson.poster_classification} aria-label="Disabled input example" disabled />
                     </div>
                     <div className="col-4 bt-3">
-                        <input class="form-control " type="text" placeholder={store.currentMissingPerson.title} aria-label="Disabled input example" disabled />
+                        <input className="form-control " type="text" placeholder={store.currentMissingPerson.title} aria-label="Disabled input example" disabled />
                     </div>
                     <p className="col-4 text-white">This subject information will be loaded automatically as reference</p>
                 </section>

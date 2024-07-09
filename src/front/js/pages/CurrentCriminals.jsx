@@ -54,7 +54,7 @@ export const CurrentCriminal = () => {
                         <div className="col-3 mb-5 current-card border-none">
                             <img src={store.currentCriminal.images} className="img-fluid" alt="..." />
                             <h4 className="mt-3 text-center title"> aliases: </h4>
-                            <p calssName=" body">{store.currentCriminal.aliases ? store.currentCriminal.aliases.replace(/['"\[\]]/g, '') : ''}</p>
+                            <p className=" body">{store.currentCriminal.aliases ? store.currentCriminal.aliases.replace(/['"\[\]]/g, '') : ''}</p>
                         </div>
                         <div className="col-md-6 ms-5">
                             <div className="card-body text-light">

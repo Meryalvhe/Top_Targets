@@ -6,9 +6,8 @@ import { useNavigate } from "react-router-dom";
 
 export const CreateStory = () => {
     const { store, actions } = useContext(Context);
-    const currentStory = store.currentStory
-    const [updatedTitle, setTitle] = useState()
-    const [updatedDescription,setDescription] = useState()
+    const [updatedTitle, setTitle] = useState("")
+    const [updatedDescription,setDescription] = useState("")
     const [genre, setGenre] =useState("a criminal biography")
     const [length, setLength] =useState("250")
     const [era, setEra] =useState("in no specific time")
@@ -65,12 +64,10 @@ export const CreateStory = () => {
         }
         const response = await fetch(url, options)
 		if (!response.ok) {
-            console.log(response)
 			console.log("Error loading message from backend", response.status, response.statusText)
 			return
 		}
 		const data = await response.json()
-		console.log("this is what IA RETURNS")
         console.log(data.message)
 
         const dataToSend2 = {"user_id": store.user.id, "criminal_id": store.currentCriminal.id,"title": updatedTitle, 
@@ -88,7 +85,6 @@ export const CreateStory = () => {
         }
         const response2 = await fetch(url2, options2)
         if (!response2.ok) {
-            console.log(response2)
 			console.log("Error loading message from backend", response2.status, response2.statusText)
 			return
 		}
@@ -104,8 +100,8 @@ export const CreateStory = () => {
                 </header>
                 <section className="card-header row bg-dark mx-0">
                     <div className="col-2 p-1">
-                        <select class="form-select "  onChange={handlePurpose} aria-label="Default select example">
-                            <option selected>Purpose</option>
+                        <select className="form-select "  onChange={handlePurpose} aria-label="Default select example">
+                            <option defaultValue="Purpose">Purpose</option>
                             <option value="a Tv show script">TV show script</option>
                             <option value="a Tv show script in the style of South Park">TV Show script in the style of South Park</option>
                             <option value="an essay">Essay</option>
@@ -134,8 +130,8 @@ export const CreateStory = () => {
                     </div>
                     
                     <div className="col-2 p-1">
-                        <select class="form-select " onChange={handleGenre} aria-label="Default select example">
-                            <option selected>Genre</option>
+                        <select className="form-select " onChange={handleGenre} aria-label="Default select example">
+                            <option defaultValue="Genre">Genre</option>
                             <option value="drama">Drama</option>
                             <option value="comedy">Comedy</option>
                             <option value="terror">Terror</option>
@@ -149,8 +145,8 @@ export const CreateStory = () => {
                         </select>
                     </div>  
                     <div className="col-2 p-1">
-                        <select class="form-select " onChange={handleLength} aria-label="Default select example">
-                            <option selected>Length</option>
+                        <select className="form-select " onChange={handleLength} aria-label="Default select example">
+                            <option defaultValue="Length">Length</option>
                             <option value="100">100 words</option>
                             <option value="250">250 words</option>
                             <option value="500">500 words</option>
@@ -164,8 +160,8 @@ export const CreateStory = () => {
                         </select>
                     </div>
                     <div className="col-2 p-1">
-                        <select class="form-select " onChange={handleLanguage} aria-label="Default select example">
-                            <option selected>Language</option>
+                        <select className="form-select " onChange={handleLanguage} aria-label="Default select example">
+                            <option defaultValue="Language">Language</option>
                             <option value="english">English</option>
                             <option value="spanish">Spanish</option>
                             <option value="french">French</option>
@@ -177,8 +173,8 @@ export const CreateStory = () => {
                         </select>
                     </div>
                     <div className="col-2 p-1">
-                        <select class="form-select " onChange={handleCharacters} aria-label="Default select example">
-                            <option selected>Nº of characters</option>
+                        <select className="form-select " onChange={handleCharacters} aria-label="Default select example">
+                            <option defaultValue="Characters">Nº of characters</option>
                             <option value="one">One chracter</option>
                             <option value="two">Two chracters</option>
                             <option value="three">Three chracters</option>
@@ -188,8 +184,8 @@ export const CreateStory = () => {
                         </select>
                     </div>
                     <div className="col-2 p-1">
-                        <select class="form-select " onChange={handleEra} aria-label="Default select example">
-                            <option selected>Era</option>
+                        <select className="form-select " onChange={handleEra} aria-label="Default select example">
+                            <option defaultValue="Era">Era</option>
                             <option value="in the current time">Current time</option>
                             <option value="in thousands of years from now">In thousands of years from now</option>
                             <option value="in the year 2300">In the year 2300</option>
@@ -216,16 +212,16 @@ export const CreateStory = () => {
                 <section className="row my-2">
                     <p className="col-2 text-white">Title:</p>
                     <div className="col-10" >
-                        <input class="form-control " type="text"  value={updatedTitle}  onChange={handleTitle}  aria-label="title" />
+                        <input className="form-control " type="text"  value={updatedTitle}  onChange={handleTitle}  aria-label="title" />
                     </div>
                 </section>
                 <section className="row my-2">
                     <p className="col-2 bt-3 text-white">Subject:</p>
                     <div className="col-2 bt-3">
-                        <input class="form-control " type="text" placeholder={store.currentCriminal.poster_classification} aria-label="Disabled input example" disabled />
+                        <input className="form-control " type="text" placeholder={store.currentCriminal.poster_classification} aria-label="Disabled input example" disabled />
                     </div>
                     <div className="col-4 bt-3">
-                        <input class="form-control " type="text" placeholder={store.currentCriminal.title} aria-label="Disabled input example" disabled />
+                        <input className="form-control " type="text" placeholder={store.currentCriminal.title} aria-label="Disabled input example" disabled />
                     </div>
                     <p className="col-4 text-white">This subject information will be loaded automatically as reference</p>
                 </section>

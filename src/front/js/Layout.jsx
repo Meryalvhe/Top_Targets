@@ -26,6 +26,7 @@ import  PrivacyPolicy from "./pages/PrivacyPolicy.jsx";
 import {EditStory} from "./pages/EditStory.jsx"
 import {Story} from "./pages/Story.jsx"
 import { CreateStoryMissing } from "./pages/CreateStoryMissing.jsx";
+import {EditStoryMissing} from "./pages/EditStoryMissing.jsx"
 
 
 
@@ -63,6 +64,7 @@ const Layout = () => {
                         <Route element={<EditStory />} path="/edit-story" />
                         <Route element={<Story />} path="/story" />
                         <Route element={<CreateStoryMissing />} path="/create-story-missing" />
+                        <Route element={<EditStoryMissing />} path="/edit-story-missing" />
                     </Routes>
                     <Footer />
                 </ScrollToTop>
