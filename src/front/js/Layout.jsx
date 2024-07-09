@@ -16,14 +16,14 @@ import { MissingPersons } from "./pages/MissingPersons.jsx";
 import { CurrentCriminal } from "./pages/CurrentCriminals.jsx";
 import { Contact } from "./pages/Contact.jsx";
 import {About} from "./pages/About.jsx";
-import { CreateStory } from "./pages/CreateStory.jsx";
+import { CreateStoryCriminal } from "./pages/CreateStoryCriminal.jsx";
 import { Profile } from "./pages/ProfilePage.jsx";
 import { EditProfile } from "./pages/EditProfile.jsx";
 import { CurrentMissingPersons } from "./pages/CurrentMissingPerson.jsx";
 import { CurrentTopTenCriminals } from "./pages/CurrentTopTenCriminals.jsx";
 import { CurrentMostWantedTerrorist } from "./pages/CurrentMostWantedTerrorist.jsx";
 import  PrivacyPolicy from "./pages/PrivacyPolicy.jsx";
-import {EditStory} from "./pages/EditStory.jsx"
+import {EditStoryCriminal} from "./pages/EditStoryCriminal.jsx"
 import {Story} from "./pages/Story.jsx"
 import { CreateStoryMissing } from "./pages/CreateStoryMissing.jsx";
 import {EditStoryMissing} from "./pages/EditStoryMissing.jsx"
@@ -55,13 +55,13 @@ const Layout = () => {
                         <Route element={<Cookies />} path="/cookies" />
                         <Route element={<Contact />} path="/contact" />
                         <Route element={<About />} path="/about" />
-                        <Route element={<CreateStory />} path="/create-story" />
+                        <Route element={<CreateStoryCriminal />} path="/create-story" />
                         <Route element={<EditProfile />} path="/edit-profile" />
                         <Route element={<Profile />} path="/profile" />
                         <Route element={<CurrentTopTenCriminals />} path="/current-top-ten-criminal" />
                         <Route element={<CurrentMostWantedTerrorist />} path="/current-most-wanted-criminal" />
                         <Route element={<PrivacyPolicy />} path="/privacy-policy" />
-                        <Route element={<EditStory />} path="/edit-story" />
+                        <Route element={<EditStoryCriminal />} path="/edit-story" />
                         <Route element={<Story />} path="/story" />
                         <Route element={<CreateStoryMissing />} path="/create-story-missing" />
                         <Route element={<EditStoryMissing />} path="/edit-story-missing" />

@@ -4,7 +4,7 @@ import { Context } from "../store/appContext";
 import { Link, useParams } from "react-router-dom";
 import { useNavigate } from "react-router-dom";
 
-export const CreateStory = () => {
+export const CreateStoryCriminal = () => {
     const { store, actions } = useContext(Context);
     const [updatedTitle, setTitle] = useState("")
     const [updatedDescription,setDescription] = useState("")

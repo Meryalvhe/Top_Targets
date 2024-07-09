@@ -3,7 +3,7 @@ import "../../styles/home.css";
 import { Context } from "../store/appContext";
 import { useNavigate } from "react-router-dom";
 
-export const EditStory = () => {
+export const EditStoryCriminal = () => {
     const { store, actions } = useContext(Context);
     const navigate = useNavigate();
     const [updatedTitle, setTitle] = useState(store.currentStory.title)
