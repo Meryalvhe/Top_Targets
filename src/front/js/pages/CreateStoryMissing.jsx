@@ -180,7 +180,7 @@ export const CreateStoryMissing = () => {
                             <option value="mandarin">Mandarin</option>
                             <option value="arabic">Arabic</option>
                             <option value="portuguese">Portuguese</option>
-                            <option value="french">German</option>
+                            <option value="german">German</option>
                             <option value="morse code">Morse code</option>
                         </select>
                     </div>
@@ -244,7 +244,7 @@ export const CreateStoryMissing = () => {
                 <footer className="row">
                     <span className="col-9"></span>
                     
-                    <button className="btn btn-primary bg-info my-2 col-3" onClick={handleSubmit} type="submit">Create Story</button>
+                    <button className="btn my-2 w-100 btn-outline-light mt-3 body rounded-3" onClick={handleSubmit} type="submit">Create Story</button>
                     
                     
                 </footer>

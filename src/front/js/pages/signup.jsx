@@ -50,11 +50,11 @@ const Signup = () => {
         <div className="row justify-content-center">
           <div className="col-md-6 col-lg-4">
             <h1 className="text-light text-center pb-3">Create account</h1>
-            <div className="card">
+            <div className="card bg-primary">
               <div className="card-body">
                 <form onSubmit={handleSubmit}>
                   <div className="form-group mt-3">
-                    <label htmlFor="email" className="mb-1">
+                    <label htmlFor="email" className="mb-1 text-light">
                       Your email:
                     </label>
                     <input
@@ -67,7 +67,7 @@ const Signup = () => {
                     />
                   </div>
                   <div className="form-group mt-3">
-                    <label htmlFor="password" className="mb-1">
+                    <label htmlFor="password" className="mb-1 text-light">
                       Your password:
                     </label>
                     <input
@@ -80,7 +80,7 @@ const Signup = () => {
                     />
                   </div>
                   <div className="text-center">
-                    <button type="submit" className="btn btn-primary mt-3">
+                    <button type="submit" className="btn my-2 w-100 btn-outline-light mt-3 body rounded-3">
                       SIGN UP
                     </button>
                   </div>

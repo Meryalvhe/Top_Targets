@@ -1,6 +1,6 @@
 import React, { useContext, useEffect, useState } from "react";
 import "../../styles/index.css";
-import "../../styles/cards.css";
+import "../../styles/current.css";
 import { Link, useParams } from "react-router-dom";
 import { Context } from "../store/appContext";
 import freddy from "../../img/freddykrueger.jpg";
@@ -19,7 +19,7 @@ import american from "../../img/american.png";
 export const CurrentMostWantedTerrorist = () => {
     const { store, actions } = useContext(Context);
     const [comment, setComment] = useState();
-	const avatars=[freddy,missery,hannibal,jason,karla,psycho,tiffany,american,monster,ma,dahmer,bundy];
+    const avatars = [freddy, missery, hannibal, jason, karla, psycho, tiffany, american, monster, ma, dahmer, bundy];
 
     console.log(comment)
     console.log(store.user.id, store.currentCriminal.id)
@@ -50,18 +50,18 @@ export const CurrentMostWantedTerrorist = () => {
                 <div className="card mb-3 bg-primary">
                     <div className="text-end mt-2">
                         <Link to="/">
-                            <i className="fas fa-times close fa-xl sing-close"></i>
+                            <i className="fas fa-times close fa-xl sing-close btn btn-outline-light rounded-3"></i>
                         </Link>
                     </div>
                     <div className="row g-0 p-5">
-                        <div className="col-3 mb-5 current-card border-none">
-                            <img src={store.currentCriminal.images} className="img-fluid" alt="..." />
+                        <div className="col-3 mb-5 current-card border-none rounded-3">
+                            <img src={store.currentCriminal.images} className="img-fluid rounded-3" alt="..." />
                             <h4 className="mt-3 text-center title"> aliases: </h4>
                             <p calssName=" body">{store.currentCriminal.aliases ? store.currentCriminal.aliases.replace(/['"\[\]]/g, '') : ''}</p>
                         </div>
-                        <div className="col-md-6 ms-5">
+                        <div className="col-md-6 ms-xl-5">
                             <div className="card-body text-light">
-                                <div className='mb-5'>
+                                <div className=''>
                                     <h1 className="card-title title"> {store.currentCriminal.title} </h1>
                                     <p>{store.currentCriminal.subjects ? store.currentCriminal.subjects.replace(/['"\[\]]/g, '') : ''}</p>
                                 </div>
@@ -116,33 +116,41 @@ export const CurrentMostWantedTerrorist = () => {
                         </div>
                         {store.isLogin ?
                             <div className="d-flex justify-content-end mb-5">
-                                <a href="/create-story" className="btn btn-outline-light ms-3 body">Create your Storie</a>
+                                <a href="/create-story" className="btn btn-outline-light ms-3 body rounded-3">Create your Storie</a>
                             </div>
                             : ''}
                         <div className='mb-2'>
                             {store.currentCriminalComments == '' ? '' : <h1 className="title text-light"> Comments </h1>}
                         </div>
                         {store.currentCriminalComments.map((item, id) =>
-                            <div key={id} className="card">
-                                <div className="row mt-4">
-                                    <div className=" col-1 avatar-comment ms-3 d-flex justify-content-end ">
+                            <div key={id} className="bg-white rounded-3 m-1 p-2 ">
+                                <div className="row  m-xl-3">
+                                    <div className="avatar-comment d-flex">
                                         <img src={avatars[item.user.avatar]} alt="mdo" className="rounded-circle" />
+                                        <div className="row ms-1">
+                                            <div className="col">
+                                                <p className="title ms-1">{item.user.name}</p>
+                                            </div>
+                                            <div className="col">
+                                                <p className="title">{item.user.surname}</p>
+                                            </div>
+                                        </div>
                                     </div>
-                                    <div className="col-9 card-body p-none aling-text-start user-comment mt-1 mb-3 title me-5">
-                                        {item.user.name} {item.user.surname} <p className="body">
-                                            {item.comment} </p>
+                                    <div className="row">
+                                        <p className="body">
+                                            {item.comment}
+                                        </p>
                                     </div>
                                 </div>
                             </div>
                         )}
                         {store.isLogin ?
                             <div>
-
                                 <div className="mb-3 mt-3 justify-content-end">
                                     <label htmlFor="exampleFormControlTextarea1" className="form-label text-light"> Write your comment here</label>
-                                    <textarea className="form-control" id="exampleFormControlTextarea1" rows="3" value={comment} onChange={(event) => setComment(event.target.value)}></textarea>
+                                    <textarea className="form-control rounded-3" id="exampleFormControlTextarea1" rows="3" value={comment} onChange={(event) => setComment(event.target.value)}></textarea>
                                 </div>
-                                <button type="submit" className="btn btn-outline-light mt-3 body" onClick={() => handleSubmit()}>Comment</button>
+                                <button type="submit" className="btn btn-outline-light mt-3 body rounded-3" onClick={() => handleSubmit()}>Comment</button>
                             </div>
                             : ''
                         }

@@ -18,7 +18,7 @@ export const Story = () => {
                 </section>
                 <footer className="card-footer ms-1 row">
                     <span className="col-9"></span>
-                    <a href="/profile" className="btn btn-primary bg-info col-3">Go to Profile</a>
+                    <a href="/profile" className="btn my-2 w-100 btn-outline-light mt-3 body rounded-3">Go to Profile</a>
                 </footer>
             </article>
             <span></span>

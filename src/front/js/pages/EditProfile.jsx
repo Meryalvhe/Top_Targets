@@ -159,7 +159,7 @@ export const EditProfile = () => {
                             <input className="col-10 my-1" type="text" onChange={handleSurname} placeholder={user.surname} aria-label="Surname"></input>
                             <p className="col-2 mt-1 mb-3 text-white body card-text">Description:</p>
                             <textarea className="col-10 mt-1 mb-3" id="description" onChange={handleDescription} placeholder={user.description} rows="3"></textarea>
-                            <a href="#" className="btn btn-primary p-0 pt-3" onClick={updateUser}>Update</a>
+                            <a href="#" className="btn my-2 w-100 btn-outline-light mt-3 body rounded-3" onClick={updateUser}>Update</a>
                         </section>
                         
                     </div>
