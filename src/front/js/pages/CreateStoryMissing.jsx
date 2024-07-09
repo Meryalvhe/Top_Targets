@@ -51,6 +51,7 @@ export const CreateStoryMissing = () => {
     }
     const handleSubmit = async(e) => {
         e.preventDefault();
+        navigate("/story");
         console.log(generatePrompt())
         const dataToSend = { story: generatePrompt() };
         console.log("los datos que se mandan:", dataToSend);
@@ -101,7 +102,6 @@ export const CreateStoryMissing = () => {
 			return
 		}
 		const data2 = await response2.json()
-        navigate("/story");
 		return data2; // Don't forget to return something, that is how the async resolves
     }
     return (

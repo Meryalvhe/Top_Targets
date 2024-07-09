@@ -27,6 +27,7 @@ import {EditStoryCriminal} from "./pages/EditStoryCriminal.jsx"
 import {Story} from "./pages/Story.jsx"
 import { CreateStoryMissing } from "./pages/CreateStoryMissing.jsx";
 import {EditStoryMissing} from "./pages/EditStoryMissing.jsx"
+import { Spinner } from "./component/Spinner.jsx";
 
 
 
@@ -65,6 +66,7 @@ const Layout = () => {
                         <Route element={<Story />} path="/story" />
                         <Route element={<CreateStoryMissing />} path="/create-story-missing" />
                         <Route element={<EditStoryMissing />} path="/edit-story-missing" />
+                        <Route element={<Spinner/>} path="/spinner" />
                     </Routes>
                     <Footer />
                 </ScrollToTop>

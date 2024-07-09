@@ -16,38 +16,33 @@ export const EditStoryCriminal = () => {
         setBody(event.target.value);
     };
 
-    const handleSubmit = async (e) => {
+   const handleSubmit = async(e) => {
         e.preventDefault();
-        const dataToSend = {
-            id: store.currentStory.id,
-            user_id: store.currentStory.user_id,
-            criminal_id: store.currentStory.criminal_id,
-            title: updatedTitle,
-            description: store.currentStory.description,
-            body: updatedBody,
-            prompt: store.currentStory.prompt,
-            creation_date: store.currentStory.creation_date,
-            modification_date: new Date()
-        };
+        console.log("This is the updated story: title: "+updatedTitle+" body: "+updatedBody)
+        const dataToSend = {"id":store.currentStory.id,"user_id": store.currentStory.user_id, "criminal_id": store.currentStory.criminal_id, "title": updatedTitle, 
+            "description": store.currentStory.description, "body": updatedBody, 
+            "prompt":store.currentStory.prompt, "creation_date":store.currentStory.creation_date, "modification_date":new Date()};
 
-        const url = `${process.env.BACKEND_URL}/api/stories-criminals/` + store.currentStory.id;
+        console.log("los datos que se mandan:", dataToSend);
+        const url = ⁠ ${process.env.BACKEND_URL}/api/stories-criminals/ ⁠ + store.currentStory.id;
         const options = {
             method: 'PUT',
             body: JSON.stringify(dataToSend),
             headers: {
-                'Content-Type': 'application/json'
+              'Content-Type': 'application/json'
             }
-        };
-
-        const response = await fetch(url, options);
-        if (!response.ok) {
-            console.log("Error loading message from backend", response.status, response.statusText);
-            return;
         }
-        const data = await response.json();
+        const response = await fetch(url, options)
+        if (!response.ok) {
+			console.log("Error loading message from backend", response.status, response.statusText)
+			return
+		}
+		const data = await response.json()
         navigate("/profile");
-        return data;
-    };
+		return data;
+
+    }
+    
 
     return (
         <div className="container p-3 bg-dark text-white">
