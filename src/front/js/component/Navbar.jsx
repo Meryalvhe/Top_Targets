@@ -25,7 +25,7 @@ export const Navbar = () => {
 		actions.setIsLogin(false)
 		actions.setCurrentUser("")
 	};
-	const avatars=[freddy,missery,hannibal,jason,karla,psycho,tiffany,american,monster,ma,dahmer,bundy];
+	const avatars = [freddy, missery, hannibal, jason, karla, psycho, tiffany, american, monster, ma, dahmer, bundy];
 
 
 	return (
@@ -61,33 +61,36 @@ export const Navbar = () => {
 							</Link>
 						</li>
 					</ul>
-
+					<div className="d-flex align-items-center">
 					{localStorage.getItem("user") ?
+						<div className="ms-auto">
 						<div className="dropdown">
 							<Link to="#" className="d-block text-decoration-none dropdown-toggle custom-dropdown perfil" data-bs-toggle="dropdown" aria-expanded="false">
-								<img src={avatars[store.user.avatar]} alt="mdo" width="32" height="32" className="rounded-circle object-fit-cover perfil"/>
+								<img src={avatars[store.user.avatar]} alt="mdo" width="32" height="32" className="rounded-circle object-fit-cover perfil" />
 							</Link>
-							<ul className="dropdown-menu dropdown-menu-end">
+							<ul className="dropdown-menu dropdown-menu-end"> 
 								<li><Link to="/profile" className="dropdown-item title">Profile</Link></li>
 								<li><Link to="/edit-profile" className="dropdown-item title">Edit Profile</Link></li>
 								<li><hr className="dropdown-divider" /></li>
 								<li><Link to="" className="dropdown-item title" onClick={logOut}>Log out</Link></li>
 							</ul>
 						</div>
+					</div>
 						:
-						<div className="d-flex">
-							<Link to="/login" className="btn me-2">
-								<button className="cta">
-									<span id="NavbarButton" className="hover-underline-animation body text-light"> Login </span>
-								</button>
-							</Link>
-							<Link to="/signup" className="btn me-2">
-								<button className="cta">
-									<span id="NavbarButton" className="hover-underline-animation body text-light"> Signup </span>
-								</button>
-							</Link>
-						</div>
+						<div className="ms-auto"> 
+						<Link to="/login" className="btn me-2">
+							<button className="cta">
+								<span id="NavbarButton" className="hover-underline-animation body text-light"> Login </span>
+							</button>
+						</Link>
+						<Link to="/signup" className="btn me-2">
+							<button className="cta">
+								<span id="NavbarButton" className="hover-underline-animation body text-light"> Signup </span>
+							</button>
+						</Link>
+					</div>
 					}
+					</div>
 				</div>
 			</div>
 		</nav>

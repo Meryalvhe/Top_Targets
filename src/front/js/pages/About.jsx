@@ -43,7 +43,7 @@ export const About = () => {
             </section>
 
             <section className="row">
-                <h3 className="mt-3 mb-3 title text-white">Developers</h3>
+                <h1 className="mt-3 mb-3 title text-white">Developers</h1>
 
                 <div className="col-12 col-md-4 px-1 mb-3">
                     <aside className="card bg-primary text-white fixed-size-card rounded-3 cardAbout">
@@ -98,7 +98,7 @@ export const About = () => {
             </section>
 
             <section className="row">
-                <h3 className="mt-3 mb-3 text-white">Managers</h3>
+                <h1 className="mt-3 mb-3 text-white">Project Managers</h1>
 
                 <div className="col-12 col-md-4 px-1 mb-3">
                     <aside className="card bg-primary text-white fixed-size-card rounded-3 cardAbout">

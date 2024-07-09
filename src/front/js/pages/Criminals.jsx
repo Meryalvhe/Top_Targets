@@ -25,13 +25,13 @@ export const Criminals = () => {
                                  <i className="fa-solid fa-heart fa-xl text-light favoriteSize" onClick={() => actions.addFavoriteCriminalDB(item.id)}></i> }
                                 </button>}
 
-                                <div className="card-body bg-primary border-primary innerCard">
-                                    <div className="row text-center text-light innerCard">
-                                        <div className="col innerCard">
+                                <div className="card-body bg-primary border-primary ">
+                                    <div className="row text-center text-light ">
+                                        <div className="col ">
                                             <h5 className="card-title title" >{item.title}</h5>
                                         </div>
                                     </div>
-                                    <div className="text-center">
+                                    <div className="text-center ">
                                         <p className="card-text body text-light">{item.subjects.replace(/['"\[\]]/g, '')}</p>
                                     </div>
                                 </div>
