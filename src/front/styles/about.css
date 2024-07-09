@@ -1,0 +1,17 @@
+.cardAbout {
+    position: relative;
+    box-shadow: 0px 1px 13px rgba(255, 255, 255, 0.164);
+    box-sizing: border-box;
+    cursor: pointer;
+    transition: all 120ms;
+    align-items: center;
+    justify-content: center;
+}
+
+.cardAbout:hover {
+    transform: scale(1.01);
+}
+
+.icono:hover {
+    transform: scale(1.10);
+}

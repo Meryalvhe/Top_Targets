@@ -35,7 +35,7 @@ const getState = ({ getStore, getActions, setStore }) => {
 			setCurrentCriminalId: (id)=>{setStore({currentCriminalId:id})},
 			setCurrentStoryId: (storyId)=>{setStore({currentStoryId:storyId})},
 			getLocalStorage: () => {
-				if (localStorage.length > 0) {
+				if (localStorage.getItem('user').length > 0) {
 					setStore({ isLogin: 'true' })
 					setStore({user: JSON.parse(localStorage.getItem('user'))})
 					}
@@ -117,7 +117,6 @@ const getState = ({ getStore, getActions, setStore }) => {
 					}
 				}
 				const data = await response.json();
-
 				setStore({ favoritesCriminals: [...getStore().favoritesCriminals, data.results] })
 			},
 			addFavoritesMissingPersons: async (id) => {
@@ -131,8 +130,6 @@ const getState = ({ getStore, getActions, setStore }) => {
 					headers: {
 						'Content-Type': 'application/json'
 					},
-
-
 					body: JSON.stringify(dataToSend)
 				};
 				const response = await fetch(uri, options);
@@ -177,7 +174,6 @@ const getState = ({ getStore, getActions, setStore }) => {
 					return
 				}
 				const data = await response.json();
-
 				localStorage.setItem('currentMissingPerson', JSON.stringify(data.results) ),
 				setStore({currentMissingPerson: JSON.parse(localStorage.getItem('currentMissingPerson'))})
 			},
@@ -327,9 +323,7 @@ const getState = ({ getStore, getActions, setStore }) => {
 						return true
 					}
 				})
-
 				setStore({ toptencriminals: toptencriminals })
-
 			},
 			getSavedMissingPersons: async () => {
 				const response = await fetch(process.env.BACKEND_URL + "/api/users/" + JSON.parse(localStorage.getItem('user')).id +"/saved-missing-persons");
@@ -339,7 +333,6 @@ const getState = ({ getStore, getActions, setStore }) => {
 				}
 				const data = await response.json();
 				const result = data.results
-
 				setStore({ favoritesMissingPersons: result })
 			},
 			getSavedCriminals: async () => {
@@ -348,14 +341,12 @@ const getState = ({ getStore, getActions, setStore }) => {
 					console.log('Error');
 					return
 				}
-				
 				const data = await response.json();
 				const result = data.results
 				if(result.length!=0){
 					setStore({ favoritesCriminals: result })
 				}
-					
-			}
+			},
 		}
 	};
 };

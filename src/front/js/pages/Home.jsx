@@ -32,7 +32,7 @@ export const Home = () => {
                             {store.toptencriminals.map((item, id) =>
                                 <div key={id} className="bg-primary col m-1 col-lg-2 col-md-6 col-sm-10 cardHome rounded-3">
                                     <div className="cardCss ">
-                                        <Link to={"/current-top-ten-criminal"} onClick={() => handleCriminal(item.id)} className="bg-primary">
+                                        <Link to={"/current-top-ten-criminal"} onClick={() => handleCriminal(item.id)} className="bg-primary underline">
                                             <div className="container">
                                                 <div className="d-flex align-items-start row justify-content-start">
                                                     <div className="d-flex col-4 jalign-items-start">
@@ -64,9 +64,9 @@ export const Home = () => {
                     {!store.mostwantedterrorists ? <p className="text-warning f-1"> not found </p> :
                         <div className="row row-cols-1 row-cols-md-3 justify-content-center">
                             {store.mostwantedterrorists.map((item, id) =>
-                                <div className="bg-primary col m-1 col-lg-2 col-md-6 col-sm-10 cardHome rounded-3">
-                                    <div key={id} className="cardCss ">
-                                        <Link to={"/current-most-wanted-criminal"} onClick={() => handleCriminal(item.id)} className="bg-primary">
+                                <div key={id} className="bg-primary col m-1 col-lg-2 col-md-6 col-sm-10 cardHome rounded-3">
+                                    <div  className="cardCss ">
+                                        <Link to={"/current-most-wanted-criminal"} onClick={() => handleCriminal(item.id)} className="bg-primary underline">
                                             <div className="container">
                                                 <div className="d-flex align-items-start row justify-content-start">
                                                     <div className="d-flex col-4 jalign-items-start">

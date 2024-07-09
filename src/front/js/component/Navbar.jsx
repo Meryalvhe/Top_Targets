@@ -1,10 +1,8 @@
 import React, { useContext } from "react";
 import { Link } from "react-router-dom";
 import { Context } from "../store/appContext";
-import "../../styles/index.css";
 import "../../styles/navbar.css";
 import logoURL from "../../img/logo.png";
-import kruegerURL from "../../img/freddykrueger.jpg";
 import freddy from "../../img/freddykrueger.jpg";
 import hannibal from "../../img/hannibal.webp";
 import jason from "../../img/jason.webp";
@@ -66,8 +64,8 @@ export const Navbar = () => {
 
 					{localStorage.getItem("user") ?
 						<div className="dropdown">
-							<Link to="#" className="d-block text-decoration-none dropdown-toggle custom-dropdown" data-bs-toggle="dropdown" aria-expanded="false">
-								<img src={avatars[store.user.avatar]} alt="mdo" width="32" height="32" className="rounded-circle object-fit-cover" />
+							<Link to="#" className="d-block text-decoration-none dropdown-toggle custom-dropdown perfil" data-bs-toggle="dropdown" aria-expanded="false">
+								<img src={avatars[store.user.avatar]} alt="mdo" width="32" height="32" className="rounded-circle object-fit-cover perfil"/>
 							</Link>
 							<ul className="dropdown-menu dropdown-menu-end">
 								<li><Link to="/profile" className="dropdown-item title">Profile</Link></li>

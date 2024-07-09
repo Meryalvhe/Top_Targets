@@ -22,8 +22,6 @@ export const CurrentTopTenCriminals = () => {
 	const avatars=[freddy,missery,hannibal,jason,karla,psycho,tiffany,american,monster,ma,dahmer,bundy];
 
 
-    console.log(comment)
-    console.log(store.user.id, store.currentCriminal.id)
 
     useEffect(() => {
         actions.getCurrentCriminal()
@@ -138,7 +136,6 @@ export const CurrentTopTenCriminals = () => {
                         )}
                         {store.isLogin ?
                             <div>
-
                                 <div className="mb-3 mt-3 justify-content-end">
                                     <label htmlFor="exampleFormControlTextarea1" className="form-label text-light"> Write your comment here</label>
                                     <textarea className="form-control" id="exampleFormControlTextarea1" rows="3" value={comment} onChange={(event) => setComment(event.target.value)}></textarea>

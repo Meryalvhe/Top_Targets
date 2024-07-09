@@ -1,6 +1,5 @@
 import React from "react";
 import { Link } from "react-router-dom";
-import "../../styles/index.css";
 import "../../styles/footer.css";
 
 export const Footer = () => (
@@ -33,12 +32,12 @@ export const Footer = () => (
                     </ul>
                 </div>
                 <div className="col-12 col-md-6 d-flex justify-content-center justify-content-md-end">
-                    <span className="m-2">
+                    <span className="m-2 icono">
                         <a href="mailto:toptargets@protonmail.com">
                             <i className="fas fa-inbox" style={{ color: "#ffffff" }} />
                         </a>
                     </span>
-                    <span className="m-2">
+                    <span className="m-2 icono">
                         <a href="https://www.facebook.com/profile.php?id=61561687935433&locale=ca_ES">
                             <i className="fa-brands fa-facebook" style={{ color: "#ffffff" }} />
                         </a>

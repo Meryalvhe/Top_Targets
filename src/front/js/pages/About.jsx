@@ -1,14 +1,12 @@
 import React from "react";
-import "../../styles/index.css";
-import mar  from "../../img/mar.jpg"
-import mery from "../../img/mery.jpg"
-import fide from "../../img/fide.jpg"
-import profes from "../../img/edo y hector.jpg"
+import "../../styles/about.css";
+import mar from "../../img/mar.jpg";
+import mery from "../../img/mery.jpg";
+import fide from "../../img/fide.jpg";
+import profes from "../../img/edo y hector.jpg";
 import { Link } from "react-router-dom";
 
-
 export const About = () => {
-
     return (
         <div className="bg-dark p-5">
             <section className="row bg-dark text-white">
@@ -30,19 +28,14 @@ export const About = () => {
                     </ul>
 
                     <div className="d-flex justify-content-center justify-content-md-start">
-                        <span className="m-3">
+                        <span className="m-3 icono">
                             <a href="mailto:toptargets@protonmail.com">
                                 <i className="fas fa-inbox fa-xl" style={{ color: "#ffffff" }} />
                             </a>
                         </span>
-                        <span className="m-3">
-                            <a href="https://www.google.com">
-                                <i className="fab fa-instagram fa-xl" style={{ color: "#ffffff" }} />
-                            </a>
-                        </span>
-                        <span className="m-3">
-                            <a href="https://www.google.com">
-                                <i className="fab fa-linkedin fa-xl" style={{ color: "#ffffff" }} />
+                        <span className="m-3 icono">
+                            <a href="https://www.facebook.com/profile.php?id=61561687935433&locale=ca_ES">
+                                <i className="fab fa-facebook fa-xl" style={{ color: "#ffffff" }} />
                             </a>
                         </span>
                     </div>
@@ -53,13 +46,13 @@ export const About = () => {
                 <h3 className="mt-3 mb-3 title text-white">Developers</h3>
 
                 <div className="col-12 col-md-4 px-1 mb-3">
-                    <aside className="card bg-primary text-white">
-                        <img className="card-img-top mt-3 img-fluid w-75 mx-auto d-block" src={mar} alt="Card image cap"/>
-                        <div className="card-body ">
+                    <aside className="card bg-primary text-white fixed-size-card rounded-3 cardAbout">
+                        <img className="card-img-top mt-3 img-fluid w-75 mx-auto d-block rounded-3" src={mar} alt="Mar Aguayo" />
+                        <div className="card-body">
                             <h5 className="card-title">Mar Aguayo</h5>
                             <p className="card-text">Living in survival mode while learning to code. Student at 4Geeks.</p>
                             <aside className="d-flex justify-content-center">
-                                <span className="m-3">
+                                <span className="m-3 icono">
                                     <a href="https://www.linkedin.com/in/mar-aguayo-florit-a49a77135/">
                                         <i className="fab fa-linkedin fa-xl" style={{ color: "#ffffff" }} />
                                     </a>
@@ -70,13 +63,13 @@ export const About = () => {
                 </div>
 
                 <div className="col-12 col-md-4 px-1 mb-3">
-                <aside className="card bg-primary text-white">
-                <img className="card-img-top mt-3 img-fluid w-75 mx-auto d-block" src={mery} alt="Card image cap"/>
+                    <aside className="card bg-primary text-white fixed-size-card rounded-3 cardAbout">
+                        <img className="card-img-top mt-3 img-fluid w-75 mx-auto d-block rounded-3" src={mery} alt="Mery Alvarez" />
                         <div className="card-body">
                             <h5 className="card-title">Mery Alvarez</h5>
                             <p className="card-text">"It's just murder. All God's creatures do it. You look in the forests and you see species killing other species, our species killing all species including the forests, and we just call it industry, not murder" - Natural born killers</p>
                             <aside className="d-flex justify-content-center">
-                                <span className="m-3">
+                                <span className="m-3 icono">
                                     <a href="https://www.linkedin.com/in/luz-mery-alvarez-herrera-223533129/">
                                         <i className="fab fa-linkedin fa-xl" style={{ color: "#ffffff" }} />
                                     </a>
@@ -87,13 +80,13 @@ export const About = () => {
                 </div>
 
                 <div className="col-12 col-md-4 px-1 mb-3">
-                <aside className="card bg-primary text-white">
-                <img className="card-img-top mt-3 img-fluid w-75 mx-auto d-block" src={fide} alt="José Fidel Paredes"/>
+                    <aside className="card bg-primary text-white fixed-size-card rounded-3 cardAbout">
+                        <img className="card-img-top mt-3 img-fluid w-75 mx-auto d-block rounded-3" src={fide} alt="José Fidel Paredes" />
                         <div className="card-body">
                             <h5 className="card-title">José Fidel Paredes</h5>
                             <p className="card-text">Computer Science student at 4Geeks Academy. Currently studying computer science and developing my knowledge.</p>
                             <aside className="d-flex justify-content-center">
-                                <span className="m-3">
+                                <span className="m-3 icono">
                                     <a href="https://www.linkedin.com/in/josé-fidel-paredes">
                                         <i className="fab fa-linkedin fa-xl" style={{ color: "#ffffff" }} />
                                     </a>
@@ -108,13 +101,13 @@ export const About = () => {
                 <h3 className="mt-3 mb-3 text-white">Managers</h3>
 
                 <div className="col-12 col-md-4 px-1 mb-3">
-                <aside className="card bg-primary text-white">
-                <img className="card-img-top mt-3 img-fluid w-75 mx-auto d-block" src={profes} alt="Card image cap"/>
+                    <aside className="card bg-primary text-white fixed-size-card rounded-3 cardAbout">
+                        <img className="card-img-top mt-3 img-fluid w-75 mx-auto d-block rounded-3" src={profes} alt="Hector Chocobar & Eduardo Fernandez" />
                         <div className="card-body">
                             <h5 className="card-title">Hector Chocobar & Eduardo Fernandez</h5>
-                            <p className="card-text">Driving some crazy people onto the fascinating world of coding. </p>
+                            <p className="card-text">Driving some crazy people onto the fascinating world of coding.</p>
                             <aside className="d-flex justify-content-center">
-                                <span className="m-3">
+                                <span className="m-3 icono">
                                     <a href="https://www.linkedin.com/school/4geeksacademyes/posts/?feedView=all">
                                         <i className="fab fa-linkedin fa-xl" style={{ color: "#ffffff" }} />
                                     </a>
@@ -123,7 +116,6 @@ export const About = () => {
                         </div>
                     </aside>
                 </div>
-
             </section>
         </div>
     );
