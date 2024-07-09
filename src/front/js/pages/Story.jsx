@@ -10,8 +10,7 @@ export const Story = () => {
     return (
 
        <div>
-            {
-                !store.currentStory.body ? <Spinner/> :
+            {!store.currentStory.body ? <Spinner/> :
         <div className=" p-5 d-flex justify-content-center bg-dark text-white  " >
             <article className="card shadow bg-dark w-75  row" >
                 <header className="card-header bg-dark">

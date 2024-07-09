@@ -24,7 +24,8 @@ export const EditStoryCriminal = () => {
             "prompt":store.currentStory.prompt, "creation_date":store.currentStory.creation_date, "modification_date":new Date()};
 
         console.log("los datos que se mandan:", dataToSend);
-        const url = ⁠ ${process.env.BACKEND_URL}/api/stories-criminals/ ⁠ + store.currentStory.id;
+   
+        const url = `${process.env.BACKEND_URL}/api/stories-criminals/` + store.currentStory.id;
         const options = {
             method: 'PUT',
             body: JSON.stringify(dataToSend),

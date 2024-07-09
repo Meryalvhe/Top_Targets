@@ -44,17 +44,20 @@ export const Profile = () => {
             <div className="row justify-content-center">
                 <article className="card d-flex flex-column flex-md-row w-100 bg-dark p-3">
                     <aside className="col-12 col-md-3 mb-3 mb-md-0">
-                        <img className="img-fluid stories-avatar rounded-circle border border-black border-3 object-fit-cover" src={user.avatar ==  null ? avatars[0] : avatars[user.avatar]} alt="Card image cap" />
+                        <img className="img-fluid stories-avatar rounded-circle border border-black border-3 object-fit-cover" src={user.avatar == null ? avatars[0] : avatars[user.avatar]} alt="Card image cap" />
                         <h4 className="text-white text-center mt-3 mb-1">{user.name} {user.surname}</h4>
                         {user.admin ? <span className="badge rounded-pill text-bg-warning">Admin</span> : ""}
-                        {!user.description == '' ? 
-                          <div className="card mt-3 bg-primary">
-                            <div className="card-body px-2 py-1">
-                                <p className="text-white"> {user.description}</p>
+                        <div>
+
+                            <div className="card mt-3 bg-primary">
+                                <div className="card-body px-2 py-1">
+                                    <p className="text-white"> {user.description}</p>
+                                </div>
+
                             </div>
+                            <a href="/edit-profile" className="btn my-2 w-100 btn-outline-light mt-3 body rounded-3">Edit Profile</a>
 
                         </div>
-                        <a href="/edit-profile" className="btn my-2 w-100 btn-outline-light mt-3 body rounded-3">Edit Profile</a>
 
                     </aside>
 
@@ -105,7 +108,7 @@ export const Profile = () => {
                             <section className="tab-pane fade" id="profile-tab-pane" role="tabpanel" aria-labelledby="profile-tab" tabIndex="0">
                                 {store.storiesMissingPersons == '' ?
                                     <div>
-                                        <h1 className="text-white text-center mt-5">No Missing Persons Storiess</h1>
+                                        <h1 className="text-white text-center mt-5">No Missing Persons Stories</h1>
                                         <p className="text-white text-center">"You better start working on that"</p>
                                     </div>
                                     :
