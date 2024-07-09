@@ -46,6 +46,7 @@ export const EditProfile = () => {
         console.log(temp)
     }
 
+
     const user= JSON.parse(localStorage.getItem('user'))
     const updateUser = async (e) => {
         console.log(profile)
@@ -90,7 +91,7 @@ export const EditProfile = () => {
                         <section className="col-lg-4 col-md-12  ">
 
                             <button type="button" className="btn btn-dark rounded-circle p-1" data-bs-toggle="modal" data-bs-target="#exampleModal">
-                                <img className="img-fluid profile-avatar rounded-circle border border-black border-3 object-fit-cover" src={avatars[profile.avatar]} alt="Card image cap"/>
+                                <img className="img-fluid profile-avatar rounded-circle border border-black border-3 object-fit-cover" src={user.avatar ==  null ? avatars[0] : avatars[user.avatar]} alt="Card image cap"/>
                             </button>
 
                         

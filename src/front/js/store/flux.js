@@ -35,7 +35,7 @@ const getState = ({ getStore, getActions, setStore }) => {
 			setCurrentCriminalId: (id)=>{setStore({currentCriminalId:id})},
 			setCurrentStoryId: (storyId)=>{setStore({currentStoryId:storyId})},
 			getLocalStorage: () => {
-				if (localStorage.getItem('user').length > 0) {
+				if (localStorage.getItem('user')) {
 					setStore({ isLogin: 'true' })
 					setStore({user: JSON.parse(localStorage.getItem('user'))})
 					}

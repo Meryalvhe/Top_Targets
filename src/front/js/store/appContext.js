@@ -31,8 +31,6 @@ const injectContext = PassedComponent => {
 			  store, instead use actions, like this:
 			*/
 		  	// Calling this function from the flux.js actions
-			state.actions.getSavedCriminals();
-			state.actions.getSavedMissingPersons();
 			state.actions.getCriminals(); 
 			state.actions.getMissing();
 			state.actions.getStories();

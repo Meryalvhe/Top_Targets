@@ -16,6 +16,7 @@ export const EditStoryCriminal = () => {
     }
     const handleSubmit = async(e) => {
         e.preventDefault();
+        navigate("/profile")
         console.log("This is the updated story: title: "+updatedTitle+" body: "+updatedBody)
         const dataToSend = {"id":store.currentStory.id,"user_id": store.currentStory.user_id, "criminal_id": store.currentStory.criminal_id, "title": updatedTitle, 
             "description": store.currentStory.description, "body": updatedBody, 
@@ -36,9 +37,8 @@ export const EditStoryCriminal = () => {
 			return
 		}
 		const data = await response.json()
-        navigate("/profile");
-		return data;
-
+        
+		return data
     }
     
     return (

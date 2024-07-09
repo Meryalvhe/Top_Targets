@@ -44,14 +44,16 @@ export const Profile = () => {
             <div className="row justify-content-center">
                 <article className="card d-flex flex-column flex-md-row w-100 bg-dark p-3">
                     <aside className="col-12 col-md-3 mb-3 mb-md-0">
-                        <img className="img-fluid stories-avatar rounded-circle border border-black border-3 object-fit-cover" src={avatars[user.avatar]} alt="Card image cap" />
+                        <img className="img-fluid stories-avatar rounded-circle border border-black border-3 object-fit-cover" src={user.avatar ==  null ? avatars[0] : avatars[user.avatar]} alt="Card image cap" />
                         <h4 className="text-white text-center mt-3 mb-1">{user.name} {user.surname}</h4>
                         {user.admin ? <span className="badge rounded-pill text-bg-warning">Admin</span> : ""}
-                        <div className="card mt-3 bg-primary">
+                        {!user.description == '' ? <div className="card mt-3 bg-primary">
                             <div className="card-body px-2 py-1">
-                                <p className="text-white">{user.description}</p>
+                                <p className="text-white"> {user.description}</p>
                             </div>
-                        </div>
+                        </div> 
+                        : ''
+                        }
                         <a href="/edit-profile" className="btn btn-info my-2 w-100">Edit Profile</a>
                     </aside>
 
@@ -121,11 +123,8 @@ export const Profile = () => {
                                 )}
                             </section>
                             <section className="tab-pane fade" id="contact-tab-pane" role="tabpanel" aria-labelledby="contact-tab" tabIndex="0">
-                                {!store.favoritesCriminals ?
-                                    <div>
-                                        <h1 className="text-white text-center mt-5">No criminals saved</h1>
-                                        <p className="text-white text-center">"Criminals won't save you either"</p>
-                                    </div>
+                                {!store.favoritesCriminals ? 
+                                    <p> not found </p>
                                     :
                                     <div className="row row-cols-1 row-cols-md-3 justify-content-center">
                                         {store.favoritesCriminals.map((item, id) =>
