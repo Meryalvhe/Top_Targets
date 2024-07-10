@@ -1,0 +1,108 @@
+.cardM {
+  position: relative;
+  width: 21.875em;
+  height: 34.5em;
+  box-shadow: 0px 1px 13px rgba(0, 0, 0, 0.1);
+  box-sizing: border-box;
+  border: solid #000000 1px;
+  cursor: pointer;
+  transition: all 120ms;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  background: #fff;
+  padding: 0.5em;
+  padding-bottom: 3.4em;
+}
+
+.cardM img {
+  background: rgb(241, 241, 241);
+  width: 320px;
+  height: 400px;
+  box-sizing: border-box;
+  border: solid #000000 1px;
+}
+
+.border-card {
+  border: solid black 1px;
+}
+
+.favoriteLocation {
+  position: absolute;
+  bottom: 20;
+  right: 0;
+  margin-right: 17px;
+  margin-top: 10px;
+}
+
+.favoriteSize {
+  font-size: 30px;
+  color: rgb(255, 0, 0);
+  text-align: center;
+}
+
+.cardM:hover {
+  transform: scale(1.01);
+}
+
+.innerCard:hover {
+  outline: none;
+}
+
+.btn-save {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  padding: 20px 20px;
+  width: 40px;
+  height: 30px;
+  border: none;
+  border-radius: 4px;
+  background-color: #ffffff;
+  color: #333;
+  font-size: 16px;
+  font-weight: bold;
+}
+
+.sing-close {
+  color: white;
+  margin-right: 50px;
+  margin-top: 40px;
+  font-size: 30px;
+}
+
+.current-card {
+  border: solid #fffdfd 10px;
+  box-shadow: 0px 0px 10px 5px rgba(0, 0, 0, 0.705);
+  height: 700px;
+  width: 400px;
+  background-color: #fff;
+}
+
+.current-card img {
+  width: 500px;
+  height: 500px;
+}
+
+.avatar-comment img {
+  height: 40px;
+  width: 40px;
+}
+
+.user-comment {
+  padding: 0px;
+}
+
+.comment {
+  margin-left: 20px;
+}
+
+.heart {
+  color: red;
+}
+
+.text-Location {
+  justify-content: start;
+  margin-right: 20px;
+  margin-top: 430px;
+}

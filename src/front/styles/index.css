@@ -1,3 +1,35 @@
-/* 
-    General Styles used on every website (Don't Repeat Yourself)
-*/
+.body {
+  font-family: "Red Hat Display", sans-serif;
+  font-optical-sizing: auto;
+  font-weight: 500;
+  font-style: normal;
+}
+
+.title {
+    font-family: "Red Hat Mono", monospace;
+    font-optical-sizing: auto;
+    font-weight: 400;
+    font-style: normal;
+  }
+
+  .fixed-size-card {
+    height: 650px; /* Para pantallas grandes */
+    overflow: hidden;
+}
+
+@media (max-width: 992px) { /* Pantallas medianas y pequeñas */
+    .fixed-size-card {
+        height: 600px; /* Altura mínima para pantallas más pequeñas */
+    }
+}
+
+.fixed-size-card .card-body {
+    display: flex;
+    flex-direction: column;
+    justify-content: space-between;
+    height: 100%;
+}
+
+.fixed-size-card .card-text {
+    flex-grow: 1;
+}
