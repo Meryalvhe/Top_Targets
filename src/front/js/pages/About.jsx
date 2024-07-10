@@ -84,7 +84,7 @@ export const About = () => {
                         <img className="card-img-top mt-3 img-fluid w-75 mx-auto d-block rounded-3" src={fide} alt="José Fidel Paredes" />
                         <div className="card-body">
                             <h5 className="card-title">José Fidel Paredes</h5>
-                            <p className="card-text">Computer Science student at 4Geeks Academy. Currently studying computer science and developing my knowledge.</p>
+                            <p className="card-text">Frankestein is considered a monster, but he ain't done a website application. So if we are speaking about monsters, I am the biggest one! </p>
                             <aside className="d-flex justify-content-center">
                                 <span className="m-3 icono">
                                     <a href="https://www.linkedin.com/in/josé-fidel-paredes">

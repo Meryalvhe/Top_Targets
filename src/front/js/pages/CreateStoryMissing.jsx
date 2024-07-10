@@ -8,7 +8,7 @@ export const CreateStoryMissing = () => {
     const { store, actions } = useContext(Context);
     const [updatedTitle, setTitle] = useState("")
     const [updatedDescription,setDescription] = useState("")
-    const [genre, setGenre] =useState("a criminal biography")
+    const [genre, setGenre] =useState("a biography")
     const [length, setLength] =useState("250")
     const [era, setEra] =useState("in no specific time")
     const [language, setLanguage] =useState("english")
@@ -69,22 +69,13 @@ export const CreateStoryMissing = () => {
 			console.log("Error loading message from backend", response.status, response.statusText)
 			return
 		}
-        const today = new Date();
-        const month = today.getMonth()+1;
-        const year = today.getFullYear();
-        const date = today. getDate();
-        const currentDate = month + "/" + date + "/" + year;
-        const showTime = today.getHours() 
-        + ':' + today.getMinutes() 
-        + ":" + today.getSeconds();
-
 		const data = await response.json()
 		console.log("this is what IA RETURNS")
         console.log(data.message)
 
         const dataToSend2 = {"user_id": store.user.id, "missing_person_id": store.currentMissingPerson.id,"title": updatedTitle, 
                             "description": updatedDescription, "body": data.message, 
-                            "prompt":dataToSend.story, "creation_date":currentDate + "-" + showTime};
+                            "prompt":dataToSend.story, "creation_date":new Date()};
         actions.setCurrentStory(dataToSend2)
         console.log("data to send 2", dataToSend2)
         const url2 = `${process.env.BACKEND_URL}/api/stories-missing-persons`;

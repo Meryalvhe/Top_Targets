@@ -24,6 +24,8 @@ const getState = ({ getStore, getActions, setStore }) => {
 			toptencriminals: [],
 			mostwantedterrorists: [],
 			missingFromCriminals: [],
+			existFavoritesCriminals:false,
+			existFavoritesMissing:false
 		},
 		actions: {
 			setIsLogin: (login) => { setStore({ isLogin: login }) },
@@ -115,9 +117,12 @@ const getState = ({ getStore, getActions, setStore }) => {
 					if (response.status == 400) {
 						return;
 					}
+					
+				
 				}
 				const data = await response.json();
-				setStore({ favoritesCriminals: [...getStore().favoritesCriminals, data.results] })
+				setStore({ favoritesCriminals: [...getStore().favoritesCriminals, data.results], existFavoritesCriminals:true })
+			
 			},
 			addFavoritesMissingPersons: async (id) => {
 				const uri = (process.env.BACKEND_URL + "/api/saved-missing-persons")
@@ -133,7 +138,7 @@ const getState = ({ getStore, getActions, setStore }) => {
 					body: JSON.stringify(dataToSend)
 				};
 				const response = await fetch(uri, options);
-				console.log(response)
+				console.log("addfavorites" +response)
 				if (!response.ok) {
 					console.log('Error: ', response.status, response.statusText);
 					if (response.status == 400) {
@@ -142,7 +147,8 @@ const getState = ({ getStore, getActions, setStore }) => {
 				}
 				const data = await response.json();
 				console.log(data.results)
-				setStore({ favoritesMissingPersons: [...getStore().favoritesMissingPersons, data.results] })
+				setStore({ favoritesMissingPersons: [...getStore().favoritesMissingPersons, data.results], existFavoritesMissing:true })
+				
 			},
 			removeFavoriteCriminalDB: async (id) => {
 				const criminalFavoriteId = getStore().favoritesCriminals.filter((item) => id == item.criminal_id)
@@ -177,29 +183,7 @@ const getState = ({ getStore, getActions, setStore }) => {
 				localStorage.setItem('currentMissingPerson', JSON.stringify(data.results) ),
 				setStore({currentMissingPerson: JSON.parse(localStorage.getItem('currentMissingPerson'))})
 			},
-			addFavoritesMissingPersons: async (id) => {
-				const uri = (process.env.BACKEND_URL + "/api/saved-missing-persons")
-				const dataToSend = {
-					user_id: getStore().user.id,
-					missing_person_id: id
-				}
-				const options = {
-					method: 'POST',
-					headers: {
-						'Content-Type': 'application/json'
-					},
-					body: JSON.stringify(dataToSend)
-				};
-				const response = await fetch(uri, options);
-				if (!response.ok) {
-					console.log('Error: ', response.status, response.statusText);
-					if (response.status == 400) {
-						return;
-					}
-				}
-				const data = await response.json();
-				setStore({ favoritesMissingPersons: [...getStore().favoritesMissingPersons, data.results] })
-			}, 
+			
 			removeFavoritesMissingPersons: async (id) => {
 				const missingFavoriteId = getStore().favoritesMissingPersons.filter((item) => id == item.missing_person_id)
 
@@ -293,7 +277,7 @@ const getState = ({ getStore, getActions, setStore }) => {
 				if (getStore().favoritesCriminals.includes(text)) {
 					return
 				}
-				setStore({ favoritesCriminals: [...getStore().favoritesCriminals, text] })
+				setStore({ favoritesCriminals: [...getStore().favoritesCriminals, text], favoritesCriminals:true })
 			},
 			getMostWantedTerrorists: async () => {
 				const response = await fetch(process.env.BACKEND_URL + "/api/criminals");
@@ -327,13 +311,14 @@ const getState = ({ getStore, getActions, setStore }) => {
 			},
 			getSavedMissingPersons: async () => {
 				const response = await fetch(process.env.BACKEND_URL + "/api/users/" + JSON.parse(localStorage.getItem('user')).id +"/saved-missing-persons");
+				console.log("missingget" +response)
 				if (!response.ok) {
 					console.log('Error');
 					return
 				}
 				const data = await response.json();
 				const result = data.results
-				setStore({ favoritesMissingPersons: result })
+				setStore({ favoritesMissingPersons: result , favoritesMissing:true  })
 			},
 			getSavedCriminals: async () => {
 				const response = await fetch(process.env.BACKEND_URL + "/api/users/" + JSON.parse(localStorage.getItem('user')).id +"/saved-criminals");
@@ -344,7 +329,7 @@ const getState = ({ getStore, getActions, setStore }) => {
 				const data = await response.json();
 				const result = data.results
 				if(result.length!=0){
-					setStore({ favoritesCriminals: result })
+					setStore({ favoritesCriminals: result,  existfavoritesCriminals: true})
 				}
 			},
 		}

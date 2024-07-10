@@ -113,7 +113,7 @@ export const EditStoryCriminal = () => {
                     </div>
                 </section>
                 <footer className="card-footer">
-                    <button className="btn btn-primary btn-block my-2 titlebtn my-2 btn-outline-light mt-3 body rounded-3" onClick={handleSubmit} type="submit">EDIT</button>
+                    <button className="btn btn-primary btn-block my-2 titlebtn my-2 btn-outline-light mt-3 body rounded-3" onClick={handleSubmit} type="submit">UPDATE</button>
                 </footer>
             </article>
         </div>

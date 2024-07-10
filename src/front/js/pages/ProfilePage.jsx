@@ -33,6 +33,40 @@ export const Profile = () => {
         navigate("/edit-story")
         return
     }
+    const handleDeleteCriminalStory = async(story)=>{
+        const url = `${process.env.BACKEND_URL}/api/stories-criminals/`+story.id;
+        const options = {
+            method: 'DELETE',
+            headers: {
+              'Content-Type': 'application/json'
+            }
+        }
+        const response = await fetch(url, options)
+		if (!response.ok) {
+            console.log(response)
+			console.log("Error loading message from backend", response.status, response.statusText)
+			return
+		}
+		const data = await response.json()
+        return
+    }
+    const handleDeleteMissingStory = async(story)=>{
+        const url = `${process.env.BACKEND_URL}/api/stories-missing-persons/`+story.id;
+        const options = {
+            method: 'DELETE',
+            headers: {
+              'Content-Type': 'application/json'
+            }
+        }
+        const response = await fetch(url, options)
+		if (!response.ok) {
+            console.log(response)
+			console.log("Error loading message from backend", response.status, response.statusText)
+			return
+		}
+		const data = await response.json()
+        return
+    }
     const handleButtonMissing = (story) => {
         actions.setCurrentStory(story)
         navigate("/edit-story-missing")
@@ -96,7 +130,7 @@ export const Profile = () => {
                                                 <p className="card-text text-white">Creation Date: {item.creation_date}</p>
                                             </div>
                                             <div className="col-2 col-md-1 px-1">
-                                                <button className="btn my-2 w-100 btn-outline-light mt-3 body rounded-3"><i className="fa-solid fa-trash" /></button>
+                                                <button className="btn my-2 w-100 btn-outline-light mt-3 body rounded-3" onClick={() => {handleDeleteCriminalStory(item) }}><i className="fa-solid fa-trash" /></button>
                                             </div>
                                             <div className="col-3 col-md-3 px-1">
                                                 <button onClick={() => { handleButtonCriminal(item) }} id-story={9} id-criminal={item.criminal_id} className="btn my-2 w-100 btn-outline-light mt-3 body rounded-3">Edit Story</button>
@@ -131,10 +165,10 @@ export const Profile = () => {
                                                         <p className="card-text text-white">Creation Date: {item.creation_date}</p>
                                                     </div>
                                                     <div className="col-2 col-md-1 px-1">
-                                                        <button className="btn my-2 w-100 btn-outline-light mt-3 body rounded-3"><i className="fa-solid fa-trash" /></button>
+                                                        <button className="btn my-2 w-100 btn-outline-light mt-3 body rounded-3" onClick={() => {handleDeleteMissingStory(item) }}><i className="fa-solid fa-trash" /></button>
                                                     </div>
                                                     <div className="col-3 col-md-3 px-1">
-                                                        <button onClick={() => { handleButtonCriminal(item) }} id-story={9} id-criminal={item.criminal_id} className="btn my-2 w-100 btn-outline-light mt-3 body rounded-3">Edit Story</button>
+                                                        <button onClick={() => { handleButtonMissing(item) }} id-story={9} id-criminal={item.criminal_id} className="btn my-2 w-100 btn-outline-light mt-3 body rounded-3">Edit Story</button>
                                                     </div>
                                                 </div>
                                             </article>
@@ -146,7 +180,7 @@ export const Profile = () => {
                             </section>
                             <section className="tab-pane fade" id="contact-tab-pane" role="tabpanel" aria-labelledby="contact-tab" tabIndex="0">
 
-                                {store.favoritesCriminals == [{}] ?
+                                {!store.existFavoritesCriminals ?
                                     <div>
                                         <h1 className="text-white text-center mt-5">No criminals saved</h1>
                                         <p className="text-white text-center">"Criminals won't save you either"</p>
@@ -182,8 +216,11 @@ export const Profile = () => {
                                 }
                             </section>
                             <section className="tab-pane fade" id="disabled-tab-pane" role="tabpanel" aria-labelledby="disabled-tab" tabIndex="0">
-                                {store.favoritesMissingPersons == '' ?
-                                    <p> not found </p>
+                                {!store.existFavoritesMissing ?
+                                    <div>
+                                        <h1 className="text-white text-center mt-5">No Missing Person saved</h1>
+                                        <p className="text-white text-center">"when you go missing no one will save you either"</p>
+                                    </div>
                                     :
                                     <div className="row row-cols-1 row-cols-md-3 justify-content-center">
                                         {store.favoritesMissingPersons.map((item, id) =>

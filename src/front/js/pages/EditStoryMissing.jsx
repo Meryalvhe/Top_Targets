@@ -106,7 +106,7 @@ export const EditStoryMissing = () => {
                     <textarea className="col-10 body my-2 " rows={25} onChange={handleBody} defaultValue={store.currentStory.body}  id="body"></textarea> 
                 </section>
                 <footer>
-                    <button className="btn btn-primary btn-block my-2 titlebtn my-2 btn-outline-light mt-3 body rounded-3" onClick={handleSubmit} type="submit">Button</button>
+                    <button className="btn btn-primary btn-block my-2 titlebtn my-2 btn-outline-light mt-3 body rounded-3" onClick={handleSubmit} type="submit">UPDATE</button>
                 </footer>
             </article>
         </div>
